@@ -2079,8 +2079,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
 
     if(mode == MMCSD_SUPPORT_MMC_HS400)
     {
-        MMCSD_phyDisableDLL(attrs->ssBaseAddr);
-
         phyMode = MMCSD_PHY_MODE_HS;
         MMCSD_phyConfigure(attrs->ssBaseAddr, phyMode, phyClkFreq, phyDriverType, tunedItap);
 
