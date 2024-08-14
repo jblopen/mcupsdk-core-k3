@@ -30,7 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * Auto generated file 
+ * Auto generated file
  */
 #include "ti_board_config.h"
 
@@ -43,42 +43,50 @@
 `system.getTemplate(subTemplate.board_config)()`
     % }
 % }
-
+% let socName = system.getScript('/common').getSocName();
 % let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
 void Board_init(void)
 {
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     if(0 == Armv8_getCoreId())
     {
 
+    % }
 % }
 % for(let subTemplate of args) {
     % if (subTemplate.board_init) {
 `system.getTemplate(subTemplate.board_init)()`
     % }
 % }
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     }
+    % }
 % }
 }
 
 void Board_deinit(void)
 {
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     if(0 == Armv8_getCoreId())
     {
 
+    % }
 % }
 % for(let subTemplate of args) {
     % if (subTemplate.board_deinit) {
 `system.getTemplate(subTemplate.board_deinit)()`
     % }
 % }
+% if(socName != "am62x") {
 % if(cpuName.match(/a53/)) {
 
     }
+    % }
 % }
 }

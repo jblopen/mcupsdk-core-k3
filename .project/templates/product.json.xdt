@@ -159,11 +159,17 @@
             "m4fss0-0",
             "r5fss0-0",
             "a53ss0-0",
+            "a53ss0-1",
+            "a53ss1-0",
+            "a53ss1-1",
         ],
         "AM62SIP": [
             "m4fss0-0",
             "r5fss0-0",
             "a53ss0-0",
+            "a53ss0-1",
+            "a53ss1-0",
+            "a53ss1-1",
         ],
 % }
 % if((args.device == "am62ax") || (args.device == "am62dx") || (isDevelopmentMode)) {

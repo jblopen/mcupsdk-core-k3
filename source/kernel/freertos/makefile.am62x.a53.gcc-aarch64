@@ -96,6 +96,7 @@ DEFINES_common := \
 
 DEFINES_atf := \
     -DATF_INTEGRATED_BOOT \
+    -DAMP_A53 \
 
 CFLAGS_common := \
     -mcpu=cortex-a53+fp+simd \

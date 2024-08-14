@@ -31,7 +31,7 @@
  */
 
 /*
- * Auto generated file 
+ * Auto generated file
  */
 
 #include "ti_drivers_open_close.h"
@@ -39,21 +39,23 @@
 
 void Drivers_open(void)
 {
-
+% let socName = system.getScript('/common').getSocName();
 % let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     if(0 == Armv8_getCoreId())
     {
-
+    % }
 % }
+
 % let driverOrder = system.getScript('/common').getDriverOpenOrder();
 % let orderedTemplates = [];
 % let otherTemplates = [];
 % for (let module_name of driverOrder) {
     % for(let subTemplate of args) {
-        % if ((subTemplate.driver_open && subTemplate.driver_open.match(module_name)) || 
-        %     (subTemplate.driver_close && subTemplate.driver_close.match(module_name)) || 
+        % if ((subTemplate.driver_open && subTemplate.driver_open.match(module_name)) ||
+        %     (subTemplate.driver_close && subTemplate.driver_close.match(module_name)) ||
         %     (subTemplate.driver_open_close_config && subTemplate.driver_open_close_config.match(module_name))) {
             % orderedTemplates.push(subTemplate);
         %}
@@ -82,19 +84,25 @@ void Drivers_open(void)
 `system.getTemplate(subTemplate.driver_open)()`
     %}
 % }
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     }
+    % }
 % }
+
 }
 
 void Drivers_close(void)
 {
-% if(cpuName.match(/a53/)) {
+
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     if(0 == Armv8_getCoreId())
     {
 
+    % }
 % }
 % for(let subTemplate of args) {
     % if (subTemplate.driver_close && !subTemplate.driver_close.match(/edma*/) && !subTemplate.driver_close.match(/mmcsd*/)) {
@@ -106,10 +114,13 @@ void Drivers_close(void)
 `system.getTemplate(subTemplate.driver_close)()`
     %}
 % }
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
 
     }
+    % }
 % }
+
 }
 
 % for(let subTemplate of args) {

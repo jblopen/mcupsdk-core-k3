@@ -277,7 +277,7 @@ function getStaticConfigArr() {
         }
         staticConfigArr = staticConfig_m4f;
     }
-    if (cpu.match(/a53ss0-0/)){
+    if (cpu.match(/a53*/)){
         let staticConfig_a53 = [];
         for(let i=0; i<8; i++)
         {
@@ -453,7 +453,7 @@ function getTimerClockSourceHz(clkSource) {
 function getBlockedTimers() {
     let cpu = common.getSelfSysCfgCoreName();
     if(cpu.match(/a53*/)) {
-        return ['DMTIMER6', 'DMTIMER7'];
+        return ['DMTIMER4','DMTIMER5','DMTIMER6', 'DMTIMER7'];
     }
     return [];
 }

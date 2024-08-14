@@ -133,6 +133,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM62X \
+    -DAMP_A53 \
     -DSW_VERSION=$(SW_VERSION)
 
 DEFINES_atf := \

@@ -4,6 +4,7 @@
     let config = module.getInstanceConfig(instance);
     let lockUnLockArgs = module.getInstanceConfig(instance);
     let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
+    let socName = system.getScript("/common").getSocName();
 %%}
 % if (! config.disableClkSourceConfig) {
     /* set timer clock source */
@@ -11,16 +12,20 @@
     *(volatile uint32_t*)(`config.name`_CLOCK_SRC_MUX_ADDR) = `config.name`_CLOCK_SRC_`config.clkSource`;
     SOC_controlModuleLockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
 % }
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
     /* Initialize Clock from Core0 only */
     if(0 == Armv8_getCoreId())
     {
 
+    % }
 % }
     /* initialize Clock */
     ClockP_init();
 
+%if(socName != "am62x") {
 % if(cpuName.match(/a53/)) {
 
     }
+    % }
 % }

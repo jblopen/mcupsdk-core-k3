@@ -70,9 +70,11 @@ void System_init(void)
      * to access SCICLIENT services, hence this needs to happen first
      */
     Dpl_init();
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
     if(0 == Armv8_getCoreId())
     {
+    % }
 % }
 % if (common.isSciClientSupported()) {
     /* We should do sciclient init before we enable power and clock to the peripherals */
@@ -113,17 +115,21 @@ void System_init(void)
 `system.getTemplate(subTemplate.driver_init)()`
     % }
 % }
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
     }
 
+    % }
 % }
 }
 
 void System_deinit(void)
 {
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
     if(0 == Armv8_getCoreId())
     {
+    % }
 % }
 % for(let subTemplate of args) {
     % if (subTemplate.driver_deinit) {
@@ -134,9 +140,11 @@ void System_deinit(void)
 % if (common.isSciClientSupported()) {
 `system.getTemplate(sciclientDeInitTemplate)()`
 % }
-% if(cpuName.match(/a53/)) {
+% if(socName != "am62x") {
+    % if(cpuName.match(/a53/)) {
     }
 
+    % }
 % }
     Dpl_deinit();
 }

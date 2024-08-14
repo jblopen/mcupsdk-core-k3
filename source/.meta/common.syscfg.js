@@ -18,6 +18,11 @@ function getSelfSysCfgCoreName() {
         case "awr294x":
             return "r5fss0-0";
         case "am62x":
+            if (system.context == "a53ss1-0")
+                return system.context;
+            else if (system.context == "a53ss1-1")
+                return system.context;
+            else
             return "m4fss0-0";
         case "am62ax":
             if (system.context == "c75ss0-0")

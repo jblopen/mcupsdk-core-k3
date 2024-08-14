@@ -166,7 +166,8 @@ const filedirs_a53 = {
 
 const defines_a53 = {
     common: [
-        "OS_NORTOS"
+        "OS_NORTOS",
+        "AMP_A53"
     ]
 };
 

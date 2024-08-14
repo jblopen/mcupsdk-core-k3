@@ -35,6 +35,8 @@
     let clockSetFrequencyTemplate = '/drivers/system/power_clock_module_set_frequency.c.xdt'
     let sblClockEnableTemplate = '/drivers/system/power_clock_sbl_module_enable.c.xdt'
     let sblClockSetFrequencyTemplate = '/drivers/system/power_clock_sbl_module_set_frequency.c.xdt'
+    let socName = system.getScript('/common').getSocName();
+    let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
 %%}
 /*
  * Auto generated file
