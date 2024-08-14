@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -39,6 +39,10 @@
 
 void hello_world_main(void *args)
 {
+#if defined (AMP_A53)
+    DebugP_log("Hello World! from a53_core%d \r\n",Armv8_getCoreId());
+#else
     DebugP_log("Hello World!\r\n");
+#endif
 }
 
