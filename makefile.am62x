@@ -427,6 +427,12 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1167,6 +1173,12 @@ BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk-lp_a53ss0-0_nortos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss0-0_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss0-1_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss1-0_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss1-1_nortos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64
+BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sip-sk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_demo_am62x-sk-lp_r5fss0-0_freertos_ti-arm-clang
@@ -2315,6 +2327,24 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dpl_demo_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile all
 
+ dpl_demo_am62x-sk_a53ss0-1_nortos_gcc-aarch64:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_nortos/gcc-aarch64 -f makefile all
+
+ dpl_demo_am62x-sk_a53ss1-0_nortos_gcc-aarch64:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_nortos/gcc-aarch64 -f makefile all
+
+ dpl_demo_am62x-sk_a53ss1-1_nortos_gcc-aarch64:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_nortos/gcc-aarch64 -f makefile all
+
+ dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile all
+
+ dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile all
+
+ dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile all
+
  dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -2961,6 +2991,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk-lp_a53ss0-0_nortos_gcc-aarch6
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss0-1_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-0_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-1_nortos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sip-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_demo_am62x-sk-lp_r5fss0-0_freertos_ti-arm-clang_clean
@@ -4109,6 +4145,24 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dpl_demo_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
 
+ dpl_demo_am62x-sk_a53ss0-1_nortos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_nortos/gcc-aarch64 -f makefile clean
+
+ dpl_demo_am62x-sk_a53ss1-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_nortos/gcc-aarch64 -f makefile clean
+
+ dpl_demo_am62x-sk_a53ss1-1_nortos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_nortos/gcc-aarch64 -f makefile clean
+
+ dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile clean
+
+ dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile clean
+
+ dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile clean
+
  dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -4755,6 +4809,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk-lp_a53ss0-0_nortos_gcc-aarch6
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss0-0_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss0-1_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss1-0_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss1-1_nortos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sip-sk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_demo_am62x-sk-lp_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -5902,6 +5962,24 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dpl_demo_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_scrub:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
+
+ dpl_demo_am62x-sk_a53ss0-1_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_nortos/gcc-aarch64 -f makefile scrub
+
+ dpl_demo_am62x-sk_a53ss1-0_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_nortos/gcc-aarch64 -f makefile scrub
+
+ dpl_demo_am62x-sk_a53ss1-1_nortos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_nortos/gcc-aarch64 -f makefile scrub
+
+ dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile scrub
+
+ dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile scrub
+
+ dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile scrub
 
  dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

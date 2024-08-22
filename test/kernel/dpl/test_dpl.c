@@ -125,6 +125,14 @@ static TaskP_Object gMyTask;
 #if defined(_TMS320C6X)
 void test_c66x(void);
 #endif
+#if defined(AMP_A53)
+#define APP_UART_BUFSIZE              (60U)
+uint8_t gUartBuffer[APP_UART_BUFSIZE];
+volatile uint32_t gNumBytesWritten = 0U;
+
+/* Semaphore to indicate Write completion used in callback api's */
+static SemaphoreP_Object gUartWriteDoneSem;
+#endif
 
 static void myISR1(void *args)
 {
@@ -144,6 +152,42 @@ static void myISR3(void *args)
 {
     gInISR = 1;
 }
+
+#if defined(AMP_A53)
+void spi_interrupt_callback(UART_Handle handle, UART_Transaction *trans)
+{
+    DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
+    gNumBytesWritten = trans->count;
+    SemaphoreP_post(&gUartWriteDoneSem);
+
+    return;
+}
+
+void test_spiInterrupt(void *args)
+{
+    int32_t          transferOK, status;
+    UART_Transaction trans;
+
+    DebugP_log("Testing of SPI Interrupt on a53_core%d started ...\r\n", Armv8_getCoreId());
+
+    status = SemaphoreP_constructBinary(&gUartWriteDoneSem, 0);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    UART_Transaction_init(&trans);
+
+    /* Send entry string */
+    gNumBytesWritten = 0U;
+    trans.buf   = &gUartBuffer[0U];
+    strncpy(trans.buf,"This is to test spi interrupt (uart) on core \r\n", APP_UART_BUFSIZE);
+    trans.count = strlen(trans.buf);
+    transferOK = UART_write(gUartHandle[CONFIG_UART0], &trans);
+
+    /* Wait for write completion */
+    SemaphoreP_pend(&gUartWriteDoneSem, SystemP_WAIT_FOREVER);
+    DebugP_assert(gNumBytesWritten == strlen(trans.buf));
+    DebugP_log("Testing of SPI Interrupt on a53_core%d Success ...!!!\r\n", Armv8_getCoreId());
+}
+#endif
 
 void test_hwiProfile(void *args)
 {
@@ -1362,7 +1406,6 @@ void test_main(void *args)
     RUN_TEST(test_debugLog, 292, NULL);
     RUN_TEST(test_hwiProfile, 293, NULL);
     RUN_TEST(test_queue, 3808, NULL);
-
     /* tasks are not supported in nortos */
     #if defined (OS_FREERTOS) || defined (OS_SAFERTOS)
     RUN_TEST(test_task, 294, NULL);
@@ -1399,7 +1442,9 @@ void test_main(void *args)
 #endif
 
     RUN_TEST(test_addrconversion, 898, NULL);
-
+#if defined(AMP_A53)
+    RUN_TEST(test_spiInterrupt, 3808, NULL);
+#endif
     UNITY_END();
 
 }
