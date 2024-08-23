@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -88,7 +88,11 @@ void sciclient_get_version_main(void *args)
 
         DebugP_log("[SCICLIENT] CPU clock frequency = %" PRId64 " Hz \r\n", clkRate);
     }
-
+#if defined (AMP_A53)
+    DebugP_log("All tests have passed on a53_core%d !!\r\n", Armv8_getCoreId());
+#else
     DebugP_log("All tests have passed!!\r\n");
+#endif
+
 
 }
