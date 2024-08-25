@@ -119,7 +119,11 @@ void ping_main(void *args)
     uint64_t curTime;
 
     DebugP_log("\r\n");
-    DebugP_log("[FreeRTOS] ping task ... start !!!\r\n");
+    #if defined(AMP_A53)
+    DebugP_log("[FreeRTOS] ping task ... start on a53_core%d !!!\r\n", Armv8_getCoreId());
+    #else
+    DebugP_log("[FreeRTOS] ping task ... start!!!\r\n");
+    #endif
     { /* switch between ping and pong tasks using semaphores */
         count = NUM_TASK_SWITCHES;
         curTime = ClockP_getTimeUsec();
@@ -181,9 +185,17 @@ void ping_main(void *args)
     vTaskDelay( ClockP_usecToTicks(101*1000) );
 
     DebugP_log("\r\n");
+    #if defined(AMP_A53)
+    DebugP_log("[FreeRTOS] ping task ... done on a53_core%d !!!\r\n", Armv8_getCoreId());
+    #else
     DebugP_log("[FreeRTOS] ping task ... done !!!\r\n");
+    #endif
     DebugP_log("\r\n");
+    #if defined(AMP_A53)
+    DebugP_log("All tests have passed on a53_core%d !!!\r\n", Armv8_getCoreId());
+    #else
     DebugP_log("All tests have passed!!\r\n");
+    #endif
 
     /* One MUST not return out of a FreeRTOS task instead one MUST call vTaskDelete */
     vTaskDelete(NULL);
