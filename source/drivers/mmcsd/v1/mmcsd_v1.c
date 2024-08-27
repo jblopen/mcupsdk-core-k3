@@ -977,6 +977,12 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
             ocrb31 = (trans.response[0] & (1 << 31));
             retry--;
         }
+                
+        if(retry == 0U)
+        {
+            status = SystemP_FAILURE;
+            return status;
+        }
     }
 
     obj->isUHS = FALSE;
