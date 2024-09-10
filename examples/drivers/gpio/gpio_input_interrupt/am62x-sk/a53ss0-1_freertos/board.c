@@ -1,11 +1,3 @@
-%%{
-    let options = args.options;
-
-    exampleType   = "input_interrupt";
-    if(options && options.exampleType)
-         exampleType = options.exampleType;
-
-%%}
 /*
  *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
@@ -41,46 +33,23 @@
 #include <stdlib.h>
 #include <drivers/hw_include/cslr_soc.h>
 #include <drivers/gpio.h>
-% if ( exampleType == "input_interrupt" ) {
 #include <drivers/sciclient.h>
-% }
 #include "ti_drivers_config.h"
 
 /*
  * Board info
  */
-% if ( exampleType == "input_interrupt" ) {
-% if ( args.project.cpu == "m4fss0-0" ) {
- /* On M4F, interrupt number as specified in TRM is input to the NVIC but from M4 point of view there are 16 internal interrupts
- * and then the NVIC input interrupts start, hence we need to add +16 to the value specified by TRM */
-
-#define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_MCU_M4FSS0_CORE0_NVIC_WKUP_MCU_GPIOMUX_INTROUTER0_OUTP_6 + 16u)
-#define BOARD_BUTTON_GPIO_SWITCH_NUM    ("MCU_GPIO0_15")
-%} else if ((args.project.cpu == "a53ss0-0") || (args.project.cpu == "a53ss0-1") || (args.project.cpu == "a53ss1-0") || (args.project.cpu == "a53ss1-1")) {
 #define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_GICSS0_COMMON_0_SPI_MAIN_GPIOMUX_INTROUTER0_OUTP_0)
 #define BOARD_BUTTON_GPIO_SWITCH_NUM    ("GPIO0_14")
-%}
 
 /** \brief bank interrupt source index base */
-% if ( args.project.cpu == "m4fss0-0" ) {
-#define SRC_IDX_BASE_GPIO_BANK   (CSLR_WKUP_MCU_GPIOMUX_INTROUTER0_IN_MCU_GPIO0_GPIO_BANK_0)
-%} else if ((args.project.cpu == "a53ss0-0") || (args.project.cpu == "a53ss0-1") || (args.project.cpu == "a53ss1-0") || (args.project.cpu == "a53ss1-1")) {
 #define SRC_IDX_BASE_GPIO_BANK  (CSLR_MAIN_GPIOMUX_INTROUTER0_IN_GPIO0_GPIO_BANK_0)
-%}
 
 /* This is based on TISCI device config and core */
-% if ( args.project.cpu == "m4fss0-0" ) {
-#define GPIO_MUX_INTROUTER_ID     (TISCI_DEV_WKUP_MCU_GPIOMUX_INTROUTER0)
-%} else if ((args.project.cpu == "a53ss0-0") || (args.project.cpu == "a53ss0-1") || (args.project.cpu == "a53ss1-0") || (args.project.cpu == "a53ss1-1")) {
 #define GPIO_MUX_INTROUTER_ID          (TISCI_DEV_MAIN_GPIOMUX_INTROUTER0)
-%}
 
 /* GPIO mux introuter output number */
-% if ( args.project.cpu == "m4fss0-0" ) {
-#define GPIOMUX_INTROUTER_OUTP (6U)
-%} else if ((args.project.cpu == "a53ss0-0") || (args.project.cpu == "a53ss0-1") || (args.project.cpu == "a53ss1-0") || (args.project.cpu == "a53ss1-1")) {
 #define GPIOMUX_INTROUTER_OUTP (0U)
-%}
 
 static void Sciclient_gpioIrqSet(void);
 static void Sciclient_gpioIrqRelease(void);
@@ -161,4 +130,3 @@ static void Sciclient_gpioIrqRelease(void)
 
     return;
 }
-% }

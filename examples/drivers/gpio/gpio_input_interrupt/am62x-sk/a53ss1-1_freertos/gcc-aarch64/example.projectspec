@@ -11,7 +11,7 @@
 
     <project
         title="Gpio Input Interrupt"
-        name = "gpio_input_interrupt_am62x-sk_a53ss0-0_freertos_gcc-aarch64"
+        name = "gpio_input_interrupt_am62x-sk_a53ss1-1_freertos_gcc-aarch64"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,
@@ -21,7 +21,7 @@
         toolChain="GNU"
         toolVersion="9.2"
         device="Cortex A.AM62x"
-        deviceCore="CortexA53_0"
+        deviceCore="CortexA53_3"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="false"
         endianness="little"
@@ -70,7 +70,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context a53ss0-0 --part Default --package ALW
+            --context a53ss1-1 --part Default --package ALW
         "
 
         description="A Gpio Input Interrupt FREERTOS project">
