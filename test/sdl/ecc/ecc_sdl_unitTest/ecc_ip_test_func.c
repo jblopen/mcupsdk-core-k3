@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2023-24
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,14 +48,22 @@
 #include <sdl/sdl_ecc.h>
 #include <sdl/ecc/sdl_ip_ecc.h>
 #include <sdl/ecc/V0/sdlr_ecc_ram.h>
+
 #if defined(SOC_AM62AX)
 #include <sdl/include/am62ax/sdlr_soc_baseaddress.h>
 #include <sdl/include/am62ax/sdlr_soc_ecc_aggr.h>
 #endif
+
+#if defined(SOC_AM62DX)
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <sdl/include/am62dx/sdlr_soc_ecc_aggr.h>
+#endif
+
 #if defined(SOC_AM62PX)
 #include <sdl/include/am62px/sdlr_soc_baseaddress.h>
 #include <sdl/include/am62px/sdlr_soc_ecc_aggr.h>
 #endif
+
 #if defined(SOC_AM62X)
 #include <sdl/include/am62x/sdlr_soc_baseaddress.h>
 #include <sdl/include/am62x/sdlr_soc_ecc_aggr.h>
@@ -82,7 +90,7 @@
 
 static int32_t ECC_funcAPITest(void)
 {
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCU_R5FSS0_CORE0_ECC_AGGR_BASE));
 #endif
 #if defined(SOC_AM62X)
@@ -99,7 +107,7 @@ static int32_t ECC_funcAPITest(void)
     injectErrorConfig.pErrMem = (uint32_t *)(0u);
     injectErrorConfig.flipBitMask = 0x3;
 
-    #if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+    #if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     SDL_ECC_InjectErrorType intsrc;
     uint32_t mainMem, subMemType, errSrc;
     #endif
@@ -824,7 +832,7 @@ static int32_t ECC_funcAPITest(void)
             DebugP_log("sdlEccAggr_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         mainMem    = SDL_ECC_MEMTYPE_MAX;

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2023-24
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -59,7 +59,7 @@
 #if defined (SOC_AM62X)
 #define AUX_NUM_DEVICES 32
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #define AUX_NUM_DEVICES 28
 #endif
 
@@ -204,7 +204,7 @@ uint32_t aux_devices[AUX_NUM_DEVICES] =
 };
 #endif
 
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 uint32_t aux_devices[AUX_NUM_DEVICES] =
 {
   TISCI_DEV_A53SS0,

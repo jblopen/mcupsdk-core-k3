@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 Texas Instruments Incorporated
+/* Copyright (c) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -58,6 +58,10 @@
 
 #if defined (SOC_AM62AX)
 #include <drivers/soc/am62ax/soc.h>
+#endif
+
+#if defined (SOC_AM62DX)
+#include <drivers/soc/am62dx/soc.h>
 #endif
 
 #if defined (SOC_AM62PX)
@@ -122,7 +126,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 
 #endif
 
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

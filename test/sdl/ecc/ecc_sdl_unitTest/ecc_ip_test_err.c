@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2023-24
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,10 +48,17 @@
 #include <sdl/sdl_ecc.h>
 #include <sdl/ecc/sdl_ip_ecc.h>
 #include <sdl/ecc/V0/sdlr_ecc_ram.h>
+
 #if defined(SOC_AM62AX)
 #include <sdl/include/am62ax/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62ax/sdl_ecc_soc.h>
 #endif
+
+#if defined(SOC_AM62DX)
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <sdl/ecc/soc/am62dx/sdl_ecc_soc.h>
+#endif
+
 #if defined(SOC_AM62PX)
 #include <sdl/include/am62px/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62px/sdl_ecc_soc.h>
@@ -79,7 +86,7 @@
 
 static int32_t ECC_errNegativeTest(void)
 {
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
     SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCU_R5FSS0_CORE0_ECC_AGGR_BASE));// R5 core
 #endif
 #if defined(SOC_AM62X)

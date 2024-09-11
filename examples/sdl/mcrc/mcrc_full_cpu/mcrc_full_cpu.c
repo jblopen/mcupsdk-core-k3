@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -126,7 +126,7 @@ static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
      MCRC_MCU_NAVSS,
 #endif
 
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	 MCU_MCRC64_0,
 #endif
      (uint32_t) SDL_MCRC_CHANNEL_1,
@@ -146,7 +146,7 @@ static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
      MCRC_MCU_NAVSS,
 #endif
 
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	 MCU_MCRC64_0,
 #endif
      (uint32_t) SDL_MCRC_CHANNEL_2,
@@ -238,7 +238,7 @@ static int32_t sdl_mcrc_full_cpu_test(void)
             }
 #endif
 
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
             if (params[useCase].instance == MCU_MCRC64_0 )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCU_MCRC64_0 \n\n");
@@ -255,7 +255,7 @@ static int32_t sdl_mcrc_full_cpu_test(void)
             }
 #endif
 
-#if defined(SOC_AM62X) || defined(SOC_AM62AX)|| defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX)|| defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			if (params[useCase].instance == MCU_MCRC64_0 )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCU_MCRC64_0 \n\n ");

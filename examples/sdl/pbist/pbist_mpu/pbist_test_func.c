@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1116,7 +1116,7 @@ int32_t PBIST_funcTest(void)
 			testResult = PBIST_runTest(i, true);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
             /* Excluded MCU instance*/
             testResult = PBIST_runTest(i, true);
 #endif
@@ -1142,7 +1142,7 @@ int32_t PBIST_funcTest(void)
                 testResult = PBIST_runTest(i, false);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
             /* Excluded MCU instance*/
                 testResult = PBIST_runTest(i, false);
 #endif

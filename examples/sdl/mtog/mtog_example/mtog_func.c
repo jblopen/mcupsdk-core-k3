@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -142,7 +142,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
     uint64_t prepTime, diffTime, restoreTime;
     volatile uint32_t timeoutCount = 0;
     uint32_t mtog_base_addr=0x0u;
-#if defined(SOC_AM62AX)	|| defined (SOC_AM62PX)
+#if defined(SOC_AM62AX)	|| defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	int32_t regstatus=0;
 #endif
     SDL_MTOG_getBaseaddr(instanceIndex, &mtog_base_addr);
@@ -226,7 +226,7 @@ int32_t MTOG_runTest(uint32_t instanceIndex)
           DebugP_log("\n SDL_MTOG_forceTimeout Failed \n");
           result = -1;
       }
-#if defined(SOC_AM62AX)	|| defined (SOC_AM62PX)
+#if defined(SOC_AM62AX)	|| defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	  regstatus = SDL_REG32_RD(MTOG_STATUS_REG);
 	  DebugP_log("\n MTOG Status Register Value for the instance%d = %d \n",instanceIndex, regstatus);
 #endif

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -67,6 +67,14 @@ extern "C"
 #include <sdl/esm/soc/am62ax/sdl_esm_soc.h>
 #include <sdl/include/am62ax/sdlr_intr_wkup_r5fss0_core0.h>
 #include <sdl/mtog/soc/am62ax/sdl_soc_mtog.h>
+#endif
+#if defined(SOC_AM62DX)
+#include <drivers/soc/am62dx/soc.h>
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <sdl/include/am62dx/sdlr_mcu_ctrl_mmr.h>
+#include <sdl/esm/soc/am62dx/sdl_esm_soc.h>
+#include <sdl/include/am62dx/sdlr_intr_wkup_r5fss0_core0.h>
+#include <sdl/mtog/soc/am62dx/sdl_soc_mtog.h>
 #endif
 #if defined(SOC_AM62PX)
 #include <drivers/soc/am62px/soc.h>

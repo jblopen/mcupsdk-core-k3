@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -80,7 +80,7 @@ extern "C" {
 #define APP_DCC_TEST_CLOCK_SRC_1_DRIFT  (5U)
 /**< Allowed drift in percentage (+/-) */
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #define APP_DCC_INST_STR                "MCU DCC0"
 #define APP_DCC_REF_SRC_CASE_0          SDL_DCC_CLK0_SRC_CLOCK0_0
 #define APP_DCC_REF_SRC_CASE_0_STR      "HFOSC0"

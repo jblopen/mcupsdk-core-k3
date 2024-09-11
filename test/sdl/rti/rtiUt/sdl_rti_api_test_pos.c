@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2022 Texas Instruments Incorporated
+ *    Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -64,7 +64,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif
@@ -90,7 +90,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif
@@ -117,7 +117,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif
@@ -143,7 +143,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif
@@ -169,7 +169,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif
@@ -195,7 +195,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif
@@ -221,7 +221,7 @@ int32_t SDL_RTI_posTest(void)
         for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI15_CFG; i++)
         {
 		#endif
-		#if defined (SOC_AM62AX)
+		#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 		for(i= SDL_INSTANCE_MCU_RTI0_CFG; i <= SDL_INSTANCE_RTI4_CFG; i++)
         {
 		#endif

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -47,18 +47,27 @@
 #include <kernel/dpl/DebugP.h>
 #include <sdl/sdl_ecc.h>
 #include <sdl/ecc/sdl_ip_ecc.h>
+
 #if defined(SOC_AM62X)
 #include <sdl/include/am62x/sdlr_soc_baseaddress.h>
 #include <sdl/include/am62x/sdlr_soc_ecc_aggr.h>
 #endif
+
 #if defined(SOC_AM62AX)
 #include <sdl/include/am62ax/sdlr_soc_baseaddress.h>
 #include <sdl/include/am62ax/sdlr_soc_ecc_aggr.h>
 #endif
+
+#if defined(SOC_AM62DX)
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <sdl/include/am62dx/sdlr_soc_ecc_aggr.h>
+#endif
+
 #if defined(SOC_AM62PX)
 #include <sdl/include/am62px/sdlr_soc_baseaddress.h>
 #include <sdl/include/am62px/sdlr_soc_ecc_aggr.h>
 #endif
+
 #include "ecc_test_main.h"
 #include <sdl/ecc/sdl_ecc_core.h>
 /* ========================================================================== */
@@ -118,7 +127,7 @@ static int32_t ECC_errNegativeTest(void)
         }
     }
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
             /*  SDL_ECC_EVENT_FOUND = 1U*/

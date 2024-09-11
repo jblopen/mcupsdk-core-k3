@@ -78,7 +78,7 @@
 #define APP_DCC_TEST_CLOCK_SRC_1_DRIFT  (5U)
 /**< Allowed drift in percentage (+/-) */
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #define APP_DCC_TEST_CLOCK_SRC_1_HIGHER (SDL_DCC2_DCCCLKSRC1_CLKSRC_2)
 /**< Clock source for Counter 1, expected to be higher than
         APP_DCC_TEST_CLOCK_SRC_1, in this example to simulate an error*/

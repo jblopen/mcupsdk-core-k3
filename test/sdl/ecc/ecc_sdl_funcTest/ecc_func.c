@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2019-2023
+ *   Copyright (c) Texas Instruments Incorporated 2019-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,6 +57,12 @@
 #include <sdl/ecc/soc/am62ax/sdl_ecc_soc.h>
 #include "soc/am62ax/ecc_func.h"
 #endif
+
+#if defined(SOC_AM62DX)
+#include <sdl/ecc/soc/am62dx/sdl_ecc_soc.h>
+#include "soc/am62dx/ecc_func.h"
+#endif
+
 
 #if defined(SOC_AM62PX)
 #include <sdl/ecc/soc/am62px/sdl_ecc_soc.h>
@@ -183,7 +189,7 @@ SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 #endif
 #endif
 
-#if defined(SOC_AM62AX)
+#if defined(SOC_AM62AX) || defined(SOC_AM62DX)
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -339,7 +345,7 @@ int32_t ECC_Memory_init (void)
 #if defined(SOC_AM62X)
         result = SDL_ESM_init(SDL_ESM_INST_WKUP_ESM0, &ECC_Test_esmInitConfig_WKUP, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
         result = SDL_ESM_init(SDL_ESM_INST_WKUP_ESM0, &ECC_Test_esmInitConfig_MCU, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 		if (result != SDL_PASS) {
@@ -454,7 +460,7 @@ int32_t ecc_aggr_test(void)
 #if defined(SOC_AM62X)
 		for (mainMem = SDL_COMPUTE_CLUSTER0_SAM62_A53_512KB_WRAP_A53_DUAL_WRAP_CBA_WRAP_A53_DUAL_WRAP_CBA_COREPAC_ECC_AGGR_CORE0; mainMem < SDL_ECC_MEMTYPE_MAX; mainMem++)
 #endif
-#if defined(SOC_AM62AX)
+#if defined(SOC_AM62AX) || defined(SOC_AM62DX)
 		for (mainMem = SDL_PSCSS0_SAM62A_MAIN_PSC_WRAP_ECC_AGGR; mainMem < SDL_ECC_MEMTYPE_MAX; mainMem++)
 #endif
 #if defined(SOC_AM62PX)
@@ -520,10 +526,10 @@ int32_t ecc_aggr_test(void)
 							{
 								intsrc = SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE;
 							}
-#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)) && defined (R5F_CORE)
+#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)) && defined (R5F_CORE)
 #if defined (SOC_AM62PX)
 							if ((mainMem != SDL_CSI_RX_IF0_CSI_RX_IF_ECC_AGGR) && (mainMem != SDL_DSS_DSI0_K3_DSS_DSI_DSI_TOP_ECC_AGGR_SYS))
-#elif defined (SOC_AM62AX) || defined (SOC_AM62X)
+#elif defined (SOC_AM62AX) || defined (SOC_AM62X) || defined(SOC_AM62DX)
                             if (mainMem != SDL_CSI_RX_IF0_CSI_RX_IF_ECC_AGGR)
 #endif
 							{
@@ -533,7 +539,7 @@ int32_t ecc_aggr_test(void)
 														intsrc,
 														&injectErrorConfig,
 														100000u);
-#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)) && defined (R5F_CORE)
+#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)) && defined (R5F_CORE)
 							}
 							else
 							{

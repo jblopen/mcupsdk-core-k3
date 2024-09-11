@@ -3,7 +3,7 @@
  *
  * Voltage and Thermal Monitor (VTM) Test Application
  *
- *  Copyright (c) 2023 Texas Instruments Incorporated
+ *  Copyright (c) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -447,7 +447,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             currEsmInstance = SDL_ESM_INST_WKUP_ESM0;
 #endif
 #endif
-#if defined (SOC_AM62AX)|| defined (SOC_AM62PX)
+#if defined (SOC_AM62AX)|| defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			currEsmInstance = SDL_ESM_INST_WKUP_ESM0;
 #endif
             retVal = vtmTriggerTh1();
@@ -470,7 +470,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             currEsmInstance = SDL_ESM_INST_WKUP_ESM0;
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			currEsmInstance = SDL_ESM_INST_WKUP_ESM0;
 #endif
             retVal = vtmTriggerTh1();
@@ -493,7 +493,7 @@ int32_t vtm_runTestCaseTrigger(uint8_t useCaseId)
             currEsmInstance = SDL_ESM_INST_WKUP_ESM0;
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 currEsmInstance = SDL_ESM_INST_WKUP_ESM0;
 #endif
             retVal = vtmTriggerTh1();

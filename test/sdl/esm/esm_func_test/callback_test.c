@@ -50,7 +50,7 @@
 #define APP_ESM_INSTANCE  SDL_ESM_INST_WKUP_ESM0
 #endif
 
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #define APP_ESM_INSTANCE  SDL_ESM_INST_WKUP_ESM0
 #endif
 volatile uint8_t cfg_triggered = 0x0u;
@@ -107,7 +107,7 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
 #endif
 #endif
 
-#if defined (SOC_AM62X) ||defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) ||defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
 SDL_ESM_config SDTF_esmInitConfig_Inst_appcallback =
 {
@@ -187,7 +187,7 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
 #if defined(SOC_AM64X)
             DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\n", result);
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
            DebugP_log("ESM_ECC_Example_init: Error initializing WKUP ESM: result = %d\n", result);
 #endif
         }
@@ -204,7 +204,7 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
 #if defined(SOC_AM64X)
             DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			DebugP_log("\nESM_ECC_Example_init: Init WKUP ESM complete \n");
 #endif
         }
@@ -279,7 +279,7 @@ int32_t SDTF_runESMInjectCfg_MCU(void)
 #endif
 
 
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 int32_t SDTF_runESMInjectCfg_WKUP(void)
 {
     int32_t retVal = 0x0;
@@ -353,7 +353,7 @@ int32_t SDTF_runESMInjectLow2_MCU(void)
 #endif
 
 
-#if defined (SOC_AM62X)|| defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X)|| defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 int32_t SDTF_runESMInjectHigh_WKUP(void)
 {
     int32_t retVal=0;
@@ -499,7 +499,7 @@ SDTF_commandList_t SDTF_commandList[SDTF_MAX_COMMANDS] =
     { "esm_injectLow2_MCU",            SDTF_runESMInjectLow2_MCU },
 	{ "esm_injectCfg_MCU",             SDTF_runESMInjectCfg_MCU},
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     { "esm_injectHigh_WKUP",            SDTF_runESMInjectHigh_WKUP },
     { "esm_injectLow1_WKUP",            SDTF_runESMInjectLow1_WKUP },
     { "esm_injectLow2_WKUP",            SDTF_runESMInjectLow2_WKUP },

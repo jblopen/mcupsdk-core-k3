@@ -1,4 +1,4 @@
-/* Copyright (c) 2023 Texas Instruments Incorporated
+/* Copyright (c) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -53,9 +53,15 @@
 #include <sdl/pok/v1/soc/am62ax/sdl_soc_pok.h>
 #include <sdl/include/am62ax/sdlr_intr_wkup_esm0.h>
 #endif
+
 #if defined (SOC_AM62PX)
 #include <sdl/pok/v1/soc/am62px/sdl_soc_pok.h>
 #include <sdl/include/am62px/sdlr_intr_wkup_esm0.h>
+#endif
+
+#if defined (SOC_AM62DX)
+#include <sdl/pok/v1/soc/am62dx/sdl_soc_pok.h>
+#include <sdl/include/am62dx/sdlr_intr_wkup_esm0.h>
 #endif
 
 /*===========================================================================*/

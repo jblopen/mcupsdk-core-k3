@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 Texas Instruments Incorporated
+/* Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -104,7 +104,7 @@ uint32_t RTI_devices[RTI_NUM_DEVICES] =
     TISCI_DEV_WKUP_RTI0
 };
 #endif
-#if defined (SOC_AM62AX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62DX)
 #define RTI_NUM_DEVICES SDL_RTI_MAX_INSTANCE
 uint32_t RTI_devices[RTI_NUM_DEVICES] =
 {

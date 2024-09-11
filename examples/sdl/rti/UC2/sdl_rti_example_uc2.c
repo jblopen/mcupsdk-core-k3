@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 Texas Instruments Incorporated
+ *  Copyright (c) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -100,7 +100,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t rtiModuleBase, uint32_t *pIsClosedWindow)
         SDL_RTI_getBaseaddr(SDL_INSTANCE_WKUP_RTI0,&baseAddr);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         SDL_RTI_getBaseaddr(SDL_INSTANCE_MCU_RTI0_CFG,&baseAddr);
 #endif
 		/* Get configured Window Size */
@@ -169,7 +169,7 @@ int32_t SDL_RTI_exampleTest(void)
     rtiModuleBase = SDL_WKUP_RTI0_CFG_BASE;
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     rtiModuleBase = SDL_MCU_RTI0_CFG_BASE;
 #endif
     DebugP_log("RTI Example code UC-2 started\n");
@@ -193,7 +193,7 @@ int32_t SDL_RTI_exampleTest(void)
     retVal = SDL_RTI_config(SDL_INSTANCE_WKUP_RTI0, &pConfig);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     retVal = SDL_RTI_config(SDL_INSTANCE_MCU_RTI0_CFG, &pConfig);
 #endif
 
@@ -211,7 +211,7 @@ int32_t SDL_RTI_exampleTest(void)
     retVal = SDL_RTI_verifyConfig(SDL_INSTANCE_WKUP_RTI0, &pConfig);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     retVal = SDL_RTI_verifyConfig(SDL_INSTANCE_MCU_RTI0_CFG, &pConfig);
 #endif
 
@@ -230,7 +230,7 @@ int32_t SDL_RTI_exampleTest(void)
         SDL_RTI_readStaticRegs(SDL_INSTANCE_WKUP_RTI0, &pStaticRegs);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         SDL_RTI_readStaticRegs(SDL_INSTANCE_MCU_RTI0_CFG, &pStaticRegs);
 #endif
 
@@ -278,7 +278,7 @@ int32_t SDL_RTI_exampleTest(void)
         SDL_RTI_start(SDL_INSTANCE_WKUP_RTI0);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         SDL_RTI_start(SDL_INSTANCE_MCU_RTI0_CFG);
 #endif
         /* Let DWWD expire here */
@@ -321,7 +321,7 @@ static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size
 	SDL_RTI_getBaseaddr(SDL_INSTANCE_WKUP_RTI0,&rtiModuleBase);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	SDL_RTI_getBaseaddr(SDL_INSTANCE_MCU_RTI0_CFG,&rtiModuleBase);
 #endif
     /* Set dwwd window size to 100 percent. */
@@ -344,7 +344,7 @@ static void RTIAppExpiredDwwdService(uint32_t rtiModule, uint32_t rtiWindow_size
     SDL_RTI_service(SDL_INSTANCE_WKUP_RTI0);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     SDL_RTI_service(SDL_INSTANCE_MCU_RTI0_CFG);
     SDL_RTI_writeWinSz(rtiModuleBase, rtiWindow_size);
     SDL_DPL_delay(1U);
@@ -376,7 +376,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
             break;
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         case SDL_MCU_RTI0_CFG_BASE:
 			baseAddr = (uint32_t)SDL_DPL_addrTranslate(SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL, SDL_WKUP_CTRL_MMR0_CFG0_SIZE);
             HW_WR_FIELD32(baseAddr,
@@ -428,7 +428,7 @@ static void IntrDisable(uint32_t intsrc)
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     SDL_RTI_getStatus(SDL_INSTANCE_MCU_RTI0_CFG, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_MCU_RTI0_CFG, intrStatus);
 

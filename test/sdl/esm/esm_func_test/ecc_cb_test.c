@@ -98,7 +98,7 @@ uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
 #endif
 #endif
 
-#if defined (SOC_AM62X) ||  defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) ||  defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {

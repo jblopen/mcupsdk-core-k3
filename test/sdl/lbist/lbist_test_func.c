@@ -48,16 +48,25 @@
 #include <sdl/lbist/v0/sdl_ip_lbist.h>
 #include <drivers/sciclient.h>
 #include <drivers/device_manager/sciclient.h>
+
 #if defined (SOC_AM62X)
 #include <sdl/include/am62x/sdlr_mcu_ctrl_mmr.h>
 #include <sdl/include/am62x/sdlr_soc_baseaddress.h>
 #include <drivers/sciclient/include/tisci/am62x/tisci_clocks.h>
 #endif
+
 #if defined (SOC_AM62AX)
 #include <sdl/include/am62ax/sdlr_mcu_ctrl_mmr.h>
 #include <sdl/include/am62ax/sdlr_soc_baseaddress.h>
 #include <drivers/sciclient/include/tisci/am62ax/tisci_clocks.h>
 #endif
+
+#if defined (SOC_AM62DX)
+#include <sdl/include/am62dx/sdlr_mcu_ctrl_mmr.h>
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <drivers/sciclient/include/tisci/am62dx/tisci_clocks.h>
+#endif
+
 #include <sdl/dpl/sdl_dpl.h>
 #include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/ClockP.h>

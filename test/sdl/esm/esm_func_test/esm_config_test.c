@@ -44,7 +44,7 @@
 
 #if defined (SOC_AM64X)
 #define APP_ESM_INSTANCE  SDL_ESM_INST_MCU_ESM0
-#elif defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#elif defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #define APP_ESM_INSTANCE  SDL_ESM_INST_WKUP_ESM0
 #endif
 
@@ -103,7 +103,7 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN =
 #endif
 #endif
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
 SDL_ESM_config SDTF_esmInitConfig_MAIN =
 {
@@ -165,7 +165,7 @@ void  esm_init(SDL_ESM_Inst esmType)
         if(esmType == APP_ESM_INSTANCE){
 #if defined(SOC_AM64X)
             DebugP_log("ESM_ECC_Example_init: Error initializing MCU ESM: result = %d\n", result);
-#elif defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#elif defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
             DebugP_log("ESM_ECC_Example_init: Error initializing WKUP ESM: result = %d\n", result);
 #endif
         }else{
@@ -176,7 +176,7 @@ void  esm_init(SDL_ESM_Inst esmType)
         if(esmType == APP_ESM_INSTANCE){
 #if defined(SOC_AM64X)
             DebugP_log("\nESM_ECC_Example_init: Init MCU ESM complete \n");
-#elif defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#elif defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			DebugP_log("\nESM_ECC_Example_init: Init WKUP ESM complete \n");
 #endif
         }else{
@@ -214,7 +214,7 @@ int32_t sdl_configGrp_MCU(void)
     return retVal;
 }
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
 int32_t sdl_config_WKUP(void)
 {
     esm_init(APP_ESM_INSTANCE );
@@ -266,7 +266,7 @@ SDTF_commandList_t SDTF_commandList_config[SDTF_MAX_COMMANDS] =
     { "esm_config_MCU",              sdl_config_MCU },
     { "esm_configGrp_MCU",           sdl_configGrp_MCU },
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
     { "esm_config_WKUP",              sdl_config_WKUP},
     { "esm_configGrp_WKUP",           sdl_configGrp_WKUP},
 #endif

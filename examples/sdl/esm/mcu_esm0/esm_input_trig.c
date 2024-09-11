@@ -65,7 +65,7 @@
 #define ESM_INST SDL_ESM_INST_MAIN_ESM0
 #endif
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
 #define ESM_INST SDL_ESM_INST_WKUP_ESM0
 #endif
@@ -160,7 +160,7 @@ static SDL_ESM_config ESM_Example_esmInitConfig_Inst=
 #endif
 #endif
 
-#if defined (SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
 static SDL_ESM_config ESM_Example_esmInitConfig_Inst =
 {
@@ -288,14 +288,14 @@ int32_t ESM_example_init (void)
         /* print error and quit */
 #if defined(SOC_AM64X)
         DebugP_log("TIMER_ESM_init: Error initializing MCU ESM: result = %d\n", result);
-#elif defined(SOC_AM62X) || defined(SOC_AM62AX)  || defined (SOC_AM62PX)
+#elif defined(SOC_AM62X) || defined(SOC_AM62AX)  || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         DebugP_log("TIMER_ESM_init: Error initializing WKUP ESM: result = %d\n",result);
 #endif
         retValue = -1;
     } else {
 #if defined(SOC_AM64X)
         DebugP_log("\nTIMER_ESM_init: Init MCU ESM complete \n");
-#elif defined(SOC_AM62X) || defined(SOC_AM62AX)  || defined (SOC_AM62PX)
+#elif defined(SOC_AM62X) || defined(SOC_AM62AX)  || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 		DebugP_log("\nTIMER_ESM_init: Init WKUP ESM complete \n");
 #endif
     }
@@ -419,7 +419,7 @@ void esm_example_app(void *args)
                     printTestCaseStepResult(esmOutputResult[i]),
                     printTestCaseStepResult(gesmPinClearResult[i]));
 #endif
-#if defined (SOC_AM62X) || defined(SOC_AM62AX)  || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined(SOC_AM62AX)  || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         DebugP_log("\nUse Case %d completed: Input Event Trigger = %s, \n" \
                     "                       Event Handler Complete = %s, \n" \
                     "                       WKUP_SAFETY_ERRORn Pin Clear = %s\n",

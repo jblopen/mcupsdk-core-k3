@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2023-24
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -50,15 +50,23 @@
 #include <dpl_interface.h>
 #include <kernel/dpl/DebugP.h>
 #include <unity.h>
+
 #if defined (SOC_AM62X)
 #include "soc/am62x/ecc_func.h"
 #endif /* SOC_AM62X */
+
 #if defined (SOC_AM62AX)
 #include "soc/am62ax/ecc_func.h"
 #endif /* SOC_AM62AX */
+
 #if defined (SOC_AM62PX)
 #include "soc/am62px/ecc_func.h"
 #endif /* SOC_AM62PX */
+
+#if defined (SOC_AM62DX)
+#include "soc/am62dx/ecc_func.h"
+#endif /* SOC_AM62DX */
+
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <sdl/r5/v0/sdl_r5_utils.h>
@@ -75,13 +83,13 @@
 #if defined (SOC_AM62PX)
 #define AUX_NUM_DEVICES 38
 #endif
-#if defined (SOC_AM62AX)
+#if defined (SOC_AM62AX) || defined(SOC_AM62DX)
 #define AUX_NUM_DEVICES 35
 #endif
 
 #if defined (SOC_AM62X)
 #define CSI_ESM_FATAL_ERROR    SDLR_ESM0_ESM_LVL_EVENT_CSI_RX_IF0_COMMON_0_CSI_FATAL_0
-#elif defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#elif defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
 #define CSI_ESM_FATAL_ERROR    SDLR_ESM0_ESM_LVL_EVENT_CSI_RX_IF0_CSI_FATAL_0
 #endif
 #if defined (SOC_AM62PX)
@@ -173,7 +181,7 @@ uint32_t aux_devices[AUX_NUM_DEVICES] =
   TISCI_DEV_DSS1_DPI0_PLLSEL_DEV_VD,
 };
 #endif
-#if defined(SOC_AM62AX)
+#if defined(SOC_AM62AX) || defined(SOC_AM62DX)
 uint32_t aux_devices[AUX_NUM_DEVICES] =
 {
   TISCI_DEV_A53SS0,
@@ -270,8 +278,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         DebugP_log("\r\nLow Priority Interrupt Executed\r\n");
     }
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
-#if defined (SOC_AM62X) || defined (SOC_AM62AX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined(SOC_AM62DX)
     if (intSrc == CSI_ESM_FATAL_ERROR)
 #endif
 #if defined (SOC_AM62PX)
@@ -310,7 +317,6 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     }
     else
     {
-#endif
         retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
 
         if (retVal == SDL_PASS)
@@ -335,7 +341,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
             retVal = SDL_ECC_ackIntr(eccmemtype, eccIntrSrc);
         }
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
     }
 #endif
 
@@ -394,7 +400,7 @@ static int32_t sdlApp_dplInit(void)
     return ret;
 }
 
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
 static int32_t sdlInit_CsiEcc(void)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -472,7 +478,7 @@ void ecc_app_runner(void)
 int32_t test_main(void)
 {
     sdlApp_dplInit();
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)
     sdlInit_CsiEcc();
 #if defined (SOC_AM62PX)
     sdlInit_DsiEcc();

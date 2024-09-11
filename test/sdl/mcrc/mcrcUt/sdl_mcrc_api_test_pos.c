@@ -49,7 +49,7 @@ int32_t sdl_mcrc_posTest(void)
 	SDL_MCRC_InstType endInstance = MCRC_MCU_NAVSS;
 #endif
 
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     SDL_MCRC_InstType             instance = MCU_MCRC64_0;
 	SDL_MCRC_InstType startInstance = MCU_MCRC64_0;
 	SDL_MCRC_InstType endInstance = MCRC64_0;

@@ -3,7 +3,7 @@
  *
  * Voltage and Thermal Monitor (VTM) Test Application
  *
- *  Copyright (c) 2023 Texas Instruments Incorporated
+ *  Copyright (c) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -139,7 +139,7 @@ static SDL_ESM_config VTM_Test_esmInitConfig_WKUP =
 };
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 static SDL_ESM_config VTM_Test_esmInitConfig_Main =
 {
  .esmErrorConfig = {0u, 3u}, /* Self test error config */
@@ -243,7 +243,7 @@ int32_t VTM_ESM_init (void)
 		result = SDL_ESM_init(SDL_ESM_INST_WKUP_ESM0, &VTM_Test_esmInitConfig_WKUP, SDL_ESM_applicationCallbackFunction, &apparg);
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 		result = SDL_ESM_init(SDL_ESM_INST_WKUP_ESM0, &VTM_Test_esmInitConfig_Main, SDL_ESM_applicationCallbackFunction, &apparg);
 #endif
         if (result != SDL_PASS) {
@@ -256,7 +256,7 @@ int32_t VTM_ESM_init (void)
 			DebugP_log("VTM_ESM_init: Error initializing WKUP ESM: result = %d\n", result);
 			#endif
 			#endif
-			#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+			#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			DebugP_log("VTM_ESM_init: Error initializing WKUP ESM: result = %d\n", result);
             #endif
 
@@ -270,7 +270,7 @@ int32_t VTM_ESM_init (void)
 			DebugP_log("\nVTM_ESM_init: Init WKUP ESM complete \n");
 			#endif
 			#endif
-			#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+			#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 			DebugP_log("\nVTM_ESM_init: Init WKUP ESM complete \n");
 			#endif
         }
@@ -304,7 +304,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
         {
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         SDL_ESM_getBaseAddr(SDL_ESM_INST_WKUP_ESM0, &esmInstBaseAddr);
         if ((esmInstType == SDL_ESM_INST_WKUP_ESM0) && (esmIntType == SDL_ESM_INT_TYPE_LO)) {
         /* UC-1: Low Priority interrupt on MAIN ESM -
@@ -346,7 +346,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
 		{
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
         } else if (intEsmSrc == SDLR_WKUP_ESM0_ESM_LVL_EVENT_WKUP_VTM0_THERM_LVL_LT_TH0_INTR_0)
         {
 #endif
@@ -369,7 +369,7 @@ static int32_t deactivateTrigger(SDL_ESM_Inst esmInstType,
                (esmIntType == SDL_ESM_INT_TYPE_HI)) {
 #endif
 #endif
-#if defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	} else if ((esmInstType == SDL_ESM_INST_WKUP_ESM0) &&
                (esmIntType == SDL_ESM_INT_TYPE_HI)) {
 #endif

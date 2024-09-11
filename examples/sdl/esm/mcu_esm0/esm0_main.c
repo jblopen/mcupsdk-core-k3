@@ -73,7 +73,7 @@
 #define MODID_ESM	modId = TISCI_DEV_MCU_ESM0;
 #define CLKID_ESM   clkId = TISCI_DEV_MCU_ESM0_CLK;
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined (SOC_AM62DX)
 #define  ESM_INST SDL_ESM_INST_WKUP_ESM0
 #define SDL_ESM_BASE  SDL_WKUP_ESM0_CFG_BASE
 #define MODID_ESM	modId = TISCI_DEV_WKUP_ESM0;
@@ -146,7 +146,7 @@ int32_t esmPinTimeInit(uint32_t pinClearTime)
     DebugP_log("  MCU ESM pin minimum interval is %d cycles\n",
                 gesmPinMinIntervalCycles);
 #endif
-#if defined(SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined(SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
 	DebugP_log("  WKUP ESM pin minimum interval is %d cycles\n",
                 gesmPinMinIntervalCycles);
 #endif
@@ -168,7 +168,7 @@ int32_t esmPinTimeInit(uint32_t pinClearTime)
             DebugP_log("  MCU ESM input clock is %d\n", esmInputClk);
 #endif
 #endif
-#if defined(SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined(SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
 #ifdef PRINT_DEBUG
 			DebugP_log("  WKUP ESM input clock is %d\n", esmInputClk);
 #endif
@@ -184,7 +184,7 @@ int32_t esmPinTimeInit(uint32_t pinClearTime)
         DebugP_log("\n  Any clear of MCU_SAFETY_ERRORn pin will first wait " \
                     "%d usecs", pinClearTime);
 #endif
-#if defined (SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined (SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
         DebugP_log("\n  Any clear of WKUP_SAFETY_ERRORn pin will first wait " \
                     "%d usecs", pinClearTime);
 #endif
@@ -262,7 +262,7 @@ void timerExpPinDisable(uintptr_t arg)
 	volatile SDL_ESM_Inst instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
 #endif
-#if defined(SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined(SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
 	volatile SDL_ESM_Inst instance = ESM_INST;
 #endif
     pinStatus = SDL_ESM_getNErrorStatus(instance,&gpStatus);
@@ -275,7 +275,7 @@ void timerExpPinDisable(uintptr_t arg)
                 "MCU_SAFETY_ERRORn pin is %d\n",
                 instance, pinStatus);
 #endif
-#if defined(SOC_AM62X)|| defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#if defined(SOC_AM62X)|| defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined (SOC_AM62DX)
     DebugP_log("\n  timerExpPinDisable: before clear, ESM instance %d view of " \
                 "WKUP_SAFETY_ERRORn pin is %d\n",
                 instance, pinStatus);
@@ -314,7 +314,7 @@ void timerExpPinDisable(uintptr_t arg)
                 instance, pinStatus);
 #endif
 #endif
-#if defined(SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined(SOC_AM62X)|| defined(SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
 #ifdef DEBUG
     DebugP_log("  timerExpPinDisable: after clear, ESM instance %d view of " \
                 "WKUP_SAFETY_ERRORn pin is %d\n\n",
@@ -345,12 +345,12 @@ int32_t cfgIntrTrigger(uint32_t group)
     esm_base_addr = (uint32_t) AddrTranslateP_getLocalAddr(SDL_WKUP_ESM0_CFG_BASE);
 #endif
 #endif
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
     esm_base_addr = (uint32_t) AddrTranslateP_getLocalAddr(SDL_ESM0_CFG_BASE);
 #endif
 #endif
-#if defined(SOC_AM62AX) || defined(SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined(SOC_AM62PX) || defined (SOC_AM62DX)
 #if defined (R5F_CORE)
     esm_base_addr = (uint32_t) AddrTranslateP_getLocalAddr(SDL_ESM_BASE);
 #endif
@@ -385,7 +385,7 @@ int32_t useCaseTrigger(uint8_t useCaseId)
             gcurrEsmInstance =SDL_ESM_INST_MAIN_ESM0;
 #endif
 #endif
-#if defined (SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined (SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
             gcurrEsmInstance = ESM_INST;
 #endif
             gesmEventInputTrig[2] = USE_CASE_STATUS_COMPLETED_SUCCESS;
@@ -408,7 +408,7 @@ int32_t useCaseTrigger(uint8_t useCaseId)
             gcurrEsmInstance = SDL_ESM_INST_MAIN_ESM0;
 #endif
 #endif
-#if defined (SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined (SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
             gcurrEsmInstance = ESM_INST;
 #endif
             gesmEventInputTrig[0] = USE_CASE_STATUS_COMPLETED_SUCCESS;
@@ -428,7 +428,7 @@ int32_t useCaseTrigger(uint8_t useCaseId)
             gcurrEsmInstance = SDL_ESM_INST_MAIN_ESM0;
 #endif
 #endif
-#if defined (SOC_AM62AX)|| defined(SOC_AM62PX)
+#if defined (SOC_AM62AX)|| defined(SOC_AM62PX) || defined (SOC_AM62DX)
             gcurrEsmInstance = ESM_INST;
 #endif
             retVal = cfgIntrTrigger(0x1);

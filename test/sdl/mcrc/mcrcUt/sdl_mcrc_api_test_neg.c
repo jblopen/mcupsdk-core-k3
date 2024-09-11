@@ -47,7 +47,7 @@ int32_t sdl_mcrc_negTest(void)
     SDL_MCRC_InstType             instance = MCRC_MCU_NAVSS;
 #endif
 
-#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62X) || defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     SDL_MCRC_InstType             instance = MCU_MCRC64_0;
 #endif
     SDL_MCRC_Channel_t            channel = SDL_MCRC_CHANNEL_1;

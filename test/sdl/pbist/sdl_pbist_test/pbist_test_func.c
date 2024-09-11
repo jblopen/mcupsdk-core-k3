@@ -755,7 +755,7 @@ int32_t PBIST_funcTest(void)
         for (i = 0; i < PBIST_NUM_INSTANCE; i++)
         {
             /* Run test on selected instance */
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
             testResult = PBIST_runTest(i, true);
 #endif
             if ( testResult != 0)
@@ -770,7 +770,7 @@ int32_t PBIST_funcTest(void)
             for (i = 0; i < PBIST_NUM_INSTANCE; i++)
             {
                 /* Run test on selected instance */
-#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
                 testResult = PBIST_runTest(i, false);
 #endif
                 if ( testResult != 0)

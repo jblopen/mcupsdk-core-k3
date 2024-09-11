@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2019-2023
+ *   Copyright (c) Texas Instruments Incorporated 2019-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -52,6 +52,7 @@
 #include <sdl/ecc/sdl_ecc_utils.h>
 #include <sdl/sdl_exception.h>
 #include <sdl/r5/v0/sdl_interrupt.h>
+
 #if defined(SOC_AM62X)
 #include <sdl/include/am62x/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62x/sdl_ecc_soc.h>
@@ -305,10 +306,18 @@ static SDL_ECC_InitConfig_t ECC_Test_MAINMSMCA0ECCInitConfig =
 #if defined(SOC_AM62AX)
 #include <sdl/include/am62ax/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62ax/sdl_ecc_soc.h>
+#endif
+
+#if defined(SOC_AM62DX)
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <sdl/ecc/soc/am62dx/sdl_ecc_soc.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
+
+#if defined(SOC_AM62AX) || defined(SOC_AM62DX)
 #define SDL_PMU_CTR_MAX_VALUE 				(0xffffffffu)
 
 #define SDL_ECC_ATCM_SINGLE_BIT_ERROR_EVENT (0x67u)
@@ -771,7 +780,7 @@ int32_t ECC_Test_init (void)
         }
     }
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
     /* Initialise exception handler */
     ECC_Test_exceptionInit();
 
@@ -823,7 +832,7 @@ int32_t ECC_Test_init (void)
             /* print error and quit */
             DebugP_log("\r\nECC_Test_init: Error initializing M4F core ECC: result = %d\r\n", result);
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
             /* print error and quit */
             DebugP_log("\r\nECC_Test_init: Error initializing R5F core ECC: result = %d\r\n", result);
 #endif
@@ -832,7 +841,7 @@ int32_t ECC_Test_init (void)
 #if defined(SOC_AM62X)
             DebugP_log("\r\nECC_Test_init: M4F Core ECC Init complete \r\n");
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
             DebugP_log("\r\nECC_Test_init: R5F Core ECC Init complete \r\n");
 #endif
         }
@@ -849,13 +858,13 @@ int32_t ECC_Test_init (void)
 #if defined(SOC_AM62X)
             DebugP_log("\r\nECC_Test_init: M4F Memtype Register Readback successful \n\r\n");
 #endif
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
             DebugP_log("\r\nECC_Test_init: R5F Memtype Register Readback successful \n\r\n");
 #endif
         }
     }
 
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 
     /* Initialize an ECC aggregator type that requires mapping.
      * This example only shows MCAN0 instance.*/
@@ -1612,7 +1621,7 @@ int32_t ECC_Test_runECCSEC_DED_MCAN1SelfTest(void)
 
 #endif
 
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 
 /*********************************************************************
  * @fn      ECC_Test_runECC1BitInjectTest
@@ -2584,7 +2593,7 @@ static int32_t ECC_sdlFuncTest(void)
     }
 #endif
 
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 	result = ECC_Test_runECC1BitInjectTest();
     if (result != SDL_PASS) {
         retVal = -1;

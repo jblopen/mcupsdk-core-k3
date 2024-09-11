@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2019-2023
+ *   Copyright (c) Texas Instruments Incorporated 2019-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -51,13 +51,20 @@
 #include <sdl/include/am62x/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62x/sdl_ecc_soc.h>
 #endif
+
 #if defined(SOC_AM62AX)
 #include <sdl/include/am62ax/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62ax/sdl_ecc_soc.h>
 #endif
+
 #if defined(SOC_AM62PX)
 #include <sdl/include/am62px/sdlr_soc_baseaddress.h>
 #include <sdl/ecc/soc/am62px/sdl_ecc_soc.h>
+#endif
+
+#if defined(SOC_AM62DX)
+#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
+#include <sdl/ecc/soc/am62dx/sdl_ecc_soc.h>
 #endif
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -492,7 +499,7 @@ static int32_t ECC_errNegativeTest(void)
 #endif
 #endif
 
-#if defined(SOC_AM62AX) || defined (SOC_AM62PX)
+#if defined(SOC_AM62AX) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 static int32_t ECC_errNegativeTest(void)
 {
     int32_t result;
