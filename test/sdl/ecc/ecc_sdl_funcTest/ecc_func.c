@@ -526,10 +526,10 @@ int32_t ecc_aggr_test(void)
 							{
 								intsrc = SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE;
 							}
-#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)) && defined (R5F_CORE)
+#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)) && defined (R5F_CORE)
 #if defined (SOC_AM62PX)
 							if ((mainMem != SDL_CSI_RX_IF0_CSI_RX_IF_ECC_AGGR) && (mainMem != SDL_DSS_DSI0_K3_DSS_DSI_DSI_TOP_ECC_AGGR_SYS))
-#elif defined (SOC_AM62AX) || defined (SOC_AM62X) || defined(SOC_AM62DX)
+#elif defined (SOC_AM62AX) || defined (SOC_AM62X)
                             if (mainMem != SDL_CSI_RX_IF0_CSI_RX_IF_ECC_AGGR)
 #endif
 							{
@@ -539,7 +539,7 @@ int32_t ecc_aggr_test(void)
 														intsrc,
 														&injectErrorConfig,
 														100000u);
-#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX) || defined(SOC_AM62DX)) && defined (R5F_CORE)
+#if (defined (SOC_AM62X) || defined (SOC_AM62AX) || defined (SOC_AM62PX)) && defined (R5F_CORE)
 							}
 							else
 							{
