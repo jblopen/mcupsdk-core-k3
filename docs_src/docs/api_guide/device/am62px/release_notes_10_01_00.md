@@ -38,7 +38,7 @@ FreeRTOS FAT will now work with FreeRTOS application as well                    
 
 Tools/Components        | Supported CPUs           | Version
 ------------------------|--------------------------|-----------------------
-Code Composer Studio    | MCU-R5F, WKUP-R5F        | 12.7.0
+Code Composer Studio    | MCU-R5F, WKUP-R5F        | 12.8.0
 SysConfig               | MCU-R5F, WKUP-R5F        | 1.20.0, build 3587
 TI ARM CLANG            | MCU-R5F, WKUP-R5F        | 3.2.2.LTS
 GCC AARCH64             | A53                      | 9.2-2019.12

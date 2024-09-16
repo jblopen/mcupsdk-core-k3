@@ -64,7 +64,7 @@ Drivers listed for A53 in "SOC Device Drivers" section  | Low power mode support
 
 Tools/Components        | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | M4F, R5F, A53  | 12.7.0
+Code Composer Studio    | M4F, R5F, A53  | 12.8.0
 SysConfig               | M4F, R5F, A53  | 1.20.0, build 3587
 TI ARM CLANG            | M4F, R5F       | 3.2.2.LTS
 GCC AARCH64             | A53            | 9.2-2019.12
