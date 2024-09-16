@@ -111,7 +111,6 @@ const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_ECLIPSE_THREADX_THREADX_HELLO_WORLD";
 
-
 const templates_r5f =
 [
     {
@@ -168,7 +167,6 @@ const templates_c75 =
     }
 ];
 
-
 const templates_a53 =
 [
     {
@@ -207,7 +205,6 @@ function getComponentProperty() {
 
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
-
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs;
