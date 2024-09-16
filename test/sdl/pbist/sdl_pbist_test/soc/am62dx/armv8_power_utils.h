@@ -1,5 +1,5 @@
-/*
- *   Copyright (c) Texas Instruments Incorporated 2024
+/********************************************************************
+ * Copyright (C) 2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,69 +29,36 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- */
-
- /**
- *  \file     pbist_test_cfg.h
- *
- *  \brief    This file contains PBIST test configuration
- *
- *  \details  PBIST Test configuration
- **/
-#ifndef PBIST_TEST_CFG_H
-#define PBIST_TEST_CFG_H
+ *  Name        : armv8_power_utils.h
+*/
+#ifndef ARMV8_POWER_UTILS_H_
+#define ARMV8_POWER_UTILS_H_
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include <sdl/include/am62dx/sdlr_soc_baseaddress.h>
-#include <pbist_test_func.h>
-#include <drivers/hw_include/am62dx/cslr_main_ctrl_mmr.h>
-#include <drivers/hw_include/am62dx/cslr_mcu_ctrl_mmr.h>
-#include <drivers/hw_include/am62dx/cslr_wkup_ctrl_mmr.h>
-#include <drivers/sciclient/include/tisci/am62dx/tisci_devices.h>
-/* #define DEBUG */
+
+/* None */
 
 /* ========================================================================== */
-/*                                Macros                                      */
+/*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* Note the following are array indexes into the test config array */
+/* None */
 
-#define PBIST_INSTANCE_MPU     					(0U)
-#define PBIST_INSTANCE_C7X       				(1U)
-#define PBIST_INSTANCE_VPAC 					(2U)
-#define PBIST_INSTANCE_MAIN  					(3U)
-#define PBIST_INSTANCE_MCU 						(4U)
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
 
-#define PBIST_MAX_INSTANCE                (PBIST_INSTANCE_MCU+1U)
-#define PBIST_NUM_INSTANCE                (PBIST_INSTANCE_MAIN+1U)
-
-#define PBIST_MAX_TIMEOUT_VALUE           (10000000u)
-
-#define MPU_NUM_AUX_DEVICES               	5
-
-#define MAIN_NUM_AUX_DEVICES             	11
-
-#define MCU_NUM_AUX_DEVICES               	2
-
-#define C7X_NUM_AUX_DEVICES					2
-
-
-#define PBIST_NEG_TEST_PBIST_CFG_BASE    (SDL_PBIST0_BASE)
-
-#define APP_PBIST_TEST_NEG_INST          (PBIST_INSTANCE_MPU)
-#define APP_PCONFIG_TEST_INSTANCE        (PBIST_INSTANCE_MPU)
-
-extern PBIST_TestHandle_t PBIST_TestHandleArray[PBIST_MAX_INSTANCE+1];
+int32_t armv8_powerDownSequence(uint8_t processorId);
+int32_t armv8_powerPrepareForPowerUpSequence(uint8_t processorId);
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* PBIST_TEST_CFG_H */
-/* Nothing past this point */
+#endif /* ARMV8_POWER_UTILS_H_ */

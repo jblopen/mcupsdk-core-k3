@@ -64,9 +64,10 @@ extern "C"
 
 #define PBIST_INSTANCE_MPU     					(0U)
 #define PBIST_INSTANCE_C7X       				(1U)
-#define PBIST_INSTANCE_VPAC 					(2U)
+#define PBIST_INSTANCE_VPAC  					(2U)
 #define PBIST_INSTANCE_MAIN  					(3U)
-#define PBIST_INSTANCE_MCU 						(4U)
+#define PBIST_INSTANCE_MCU						(4U)
+
 
 #define PBIST_MAX_INSTANCE                (PBIST_INSTANCE_MCU+1U)
 #define PBIST_NUM_INSTANCE                (PBIST_INSTANCE_MAIN+1U)
@@ -80,7 +81,6 @@ extern "C"
 #define MCU_NUM_AUX_DEVICES               	2
 
 #define C7X_NUM_AUX_DEVICES					2
-
 
 #define PBIST_NEG_TEST_PBIST_CFG_BASE    (SDL_PBIST0_BASE)
 

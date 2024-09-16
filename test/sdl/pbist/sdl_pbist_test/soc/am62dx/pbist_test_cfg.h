@@ -64,13 +64,17 @@ extern "C"
 
 #define PBIST_INSTANCE_MPU     					(0U)
 #define PBIST_INSTANCE_C7X       				(1U)
-#define PBIST_INSTANCE_VPAC 					(2U)
+#define PBIST_INSTANCE_VPAC  					(2U)
 #define PBIST_INSTANCE_MAIN  					(3U)
-#define PBIST_INSTANCE_MCU 						(4U)
+#define PBIST_INSTANCE_MCU						(4U)
+
 
 #define PBIST_MAX_INSTANCE                (PBIST_INSTANCE_MCU+1U)
+#if defined (MCU_PBIST)
+#define PBIST_NUM_INSTANCE                (PBIST_INSTANCE_MCU+1U)
+#else
 #define PBIST_NUM_INSTANCE                (PBIST_INSTANCE_MAIN+1U)
-
+#endif
 #define PBIST_MAX_TIMEOUT_VALUE           (10000000u)
 
 #define MPU_NUM_AUX_DEVICES               	5
@@ -81,12 +85,10 @@ extern "C"
 
 #define C7X_NUM_AUX_DEVICES					2
 
-
 #define PBIST_NEG_TEST_PBIST_CFG_BASE    (SDL_PBIST0_BASE)
 
 #define APP_PBIST_TEST_NEG_INST          (PBIST_INSTANCE_MPU)
 #define APP_PCONFIG_TEST_INSTANCE        (PBIST_INSTANCE_MPU)
-
 extern PBIST_TestHandle_t PBIST_TestHandleArray[PBIST_MAX_INSTANCE+1];
 
 #ifdef __cplusplus
