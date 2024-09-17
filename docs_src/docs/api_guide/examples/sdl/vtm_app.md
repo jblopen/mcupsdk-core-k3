@@ -36,7 +36,7 @@ UC-1     | Configuration of VTM to trigger early warning, then alter the thresho
 
 \endcond
 
-\cond SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
 
  Parameter      | Value
  ---------------|-----------

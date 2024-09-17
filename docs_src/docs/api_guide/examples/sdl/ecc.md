@@ -21,7 +21,7 @@ UC-1     | Single SEC error on Main ESM for wrapper RAM ID type
 UC-2     | Parity error injection on Main ESM for interconnect RAM ID type
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 Use Cases
 ---------
 Use Case | Description
@@ -58,7 +58,7 @@ UC-4     | Single DED error on Main ESM for wrapper RAM ID type
 
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 
  Parameter      | Value
  ---------------|-----------
@@ -131,7 +131,7 @@ All tests have passed
 \endcode
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 \code
 ECC Example Application
 

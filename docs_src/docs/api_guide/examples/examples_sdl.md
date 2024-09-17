@@ -14,7 +14,7 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_R5F_ECC_TCM
 \endcond
 
-\cond SOC_AM62PX || SOC_AM62AX || SOC_AM62X
+\cond SOC_AM62PX || SOC_AM62AX || SOC_AM62X || SOC_AM62DX
 -# DCC
    -# \subpage EXAMPLES_SDL_DCC
 -# ECC

@@ -15,7 +15,7 @@ Use Cases
  UC-1     | MAIN INSTANCE
  UC-2     | WKUP INSTANCE
 \endcond
-\cond SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
  Use Case | Description
  ---------|------------
  UC-1     | WKUP0 INSTANCE
@@ -34,7 +34,7 @@ Use Cases
  Example folder | examples/sdl/mtog/mtog_example/
 
 \endcond
-\cond SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
 
  Parameter      | Value
  ---------------|-----------
@@ -91,7 +91,7 @@ TIMER_ESM_init: Init MCU ESM complete
 
 \endcode
 \endcond
-\cond SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
 \code
 
 TIMER_ESM_init: Init MCU ESM complete

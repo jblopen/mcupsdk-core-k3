@@ -20,7 +20,7 @@ The SDL provides support for the ECC through:
 There are 37 ECC aggregators on the device each supporting multiple memories and interconnects.
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 There are 49 ECC aggregators on the device each supporting multiple memories and interconnects.
 \endcond
 
@@ -153,7 +153,7 @@ To configure ECC for an instance and specified ram IDs:
 \endcode
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 Initialization structure for ESM instances
 
 \code{.c}
@@ -217,7 +217,7 @@ SDL_ESM_config ECC_Test_esmInitConfig_MCU =
 To configure ECC for an instance and specified ram IDs:
 \code{.c}
 static SDL_ECC_MemSubType ECC_Test_AGGR0_A0subMemTypeList[MAIN_AGGR0_AGGR0_MAX_MEM_SECTIONS] =
-{ 
+{
 	SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR_AM62A_MAIN_IPCSS_CBASS_HSM_CLK_2_CLK_EDC_CTRL_CBASS_INT_HSM_CLK_2_BUSECC_RAM_ID,
 	SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR_AM62A_MAIN_CENTRAL_CBASS_HSM_CLK_1_CLK_EDC_CTRL_CBASS_INT_HSM_CLK_1_BUSECC_RAM_ID,
 };
@@ -231,7 +231,7 @@ static SDL_ECC_InitConfig_t ECC_Test_AGGR0A0ECCInitConfig =
 };
 
 static SDL_ECC_MemSubType ECC_Test_PSRAM0subMemTypeList[PSRAM0_MAX_MEM_SECTIONS] =
-{ 
+{
 	SDL_PSRAMECC1_PSRAM256X32E_ECC_AGGR_PSRAM256X32E_PSRAM0_ECC_RAM_ID,
 };
 
@@ -244,7 +244,7 @@ static SDL_ECC_InitConfig_t ECC_Test_PSRAM0ECCInitConfig =
 };
 
 static SDL_ECC_MemSubType ECC_Test_MCUMCAN1subMemTypeList[MCUMCAN1_MAX_MEM_SECTIONS] =
-{ 
+{
     SDL_MCU_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
 };
 
@@ -258,8 +258,8 @@ static SDL_ECC_InitConfig_t ECC_Test_MCUMCAN1ECCInitConfig =
 \endcode
 \endcond
 
-Initialization of ECC 
-\cond SOC_AM62AX
+Initialization of ECC
+\cond SOC_AM62AX || SOC_AM62DX
 \code{.c}
 int32_t ECC_Example_init (void)
 {
@@ -279,7 +279,7 @@ int32_t ECC_Example_init (void)
             DebugP_log("\rECC_Example_init: Init MAIN ESM complete \n\n");
         }
     }
-    if (retValue == SDL_APP_TEST_PASS) 
+    if (retValue == SDL_APP_TEST_PASS)
 	{
         /* Initialize WKUP ESM module */
 
@@ -294,43 +294,43 @@ int32_t ECC_Example_init (void)
             DebugP_log("\rECC_Example_init: Init WKUP ESM complete \n\n");
         }
     }
-    if (retValue == SDL_APP_TEST_PASS) 
+    if (retValue == SDL_APP_TEST_PASS)
 	{
 		/* Initialize AGGR0 SAM62A ECC */
         result = SDL_ECC_init(SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR, &ECC_Test_AGGR0A0ECCInitConfig);
-		if (result != SDL_APP_TEST_PASS) 
+		if (result != SDL_APP_TEST_PASS)
 		{
 			/* print error and quit */
 			DebugP_log("\r\nECC_init: Error initializing SAM62A ECC: result = %d\r\n", result);
 
 			retValue = SDL_APP_TEST_FAILED;
-        } 
+        }
 		else {
             DebugP_log("\r\nECC_init: AGGR0 ECC Init complete \r\n");
         }
-		
+
 		/* Initialize PSRAM ECC */
         result = SDL_ECC_init(SDL_PSRAMECC1_PSRAM256X32E_ECC_AGGR, &ECC_Test_PSRAM0ECCInitConfig);
-		if (result != SDL_APP_TEST_PASS) 
+		if (result != SDL_APP_TEST_PASS)
 		{
 			/* print error and quit */
 			DebugP_log("\r\nECC_init: Error initializing PSRAM ECC: result = %d\r\n", result);
 
 			retValue = SDL_APP_TEST_FAILED;
-        } 
+        }
 		else {
             DebugP_log("\r\nECC_init: PSRAM ECC Init complete \r\n");
         }
-		
+
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_MCU_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR, &ECC_Test_MCUMCAN1ECCInitConfig);
-        if (result != SDL_APP_TEST_PASS) 
+        if (result != SDL_APP_TEST_PASS)
         {
             /* print error and quit */
             DebugP_log("\r\nECC_init: Error initializing MCU MCAN1 ECC: result = %d\r\n", result);
 
             retValue = SDL_APP_TEST_FAILED;
-        } 
+        }
         else {
             DebugP_log("\r\nECC_init: MCU MCAN1 ECC Init complete \r\n");
         }
@@ -361,7 +361,7 @@ int32_t ECC_Example_init (void)
         }
     }
 
-    if (retValue == SDL_APP_TEST_PASS) 
+    if (retValue == SDL_APP_TEST_PASS)
 	{
         /* Initialize WKUP ESM module */
 
@@ -376,7 +376,7 @@ int32_t ECC_Example_init (void)
         }
     }
 
-    if (retValue == SDL_APP_TEST_PASS) 
+    if (retValue == SDL_APP_TEST_PASS)
 	{
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_ECC_AGGR0_SAM62_SEC_ECC_AGGR, &ECC_Test_AGGR0A0ECCInitConfig);
@@ -446,7 +446,7 @@ result = SDL_ECC_selfTest(geccMemType,
 #endif
 \endcode
 \endcond
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 \code{.c}
 /* Note the address is relative to start of ram */
 injectErrorConfig.pErrMem = (uint32_t *)(0x04E10000u);
@@ -486,7 +486,7 @@ result = SDL_ECC_injectError(geccMemType,
                              &injectErrorConfig);
 \endcode
 \endcond
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 \code{.c}
 /* Note the address is relative to start of ram */
 injectErrorConfig.pErrMem = (uint32_t *)(0x04E10000u);
@@ -517,13 +517,13 @@ return retVal;
 
 Read the Static registers:
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 \code{.c}
 /* Read back the static registers */
 result = SDL_ECC_getStaticRegisters(SDL_ECC_AGGR0_SAM62_SEC_ECC_AGGR, &staticRegs);
 \endcode
 \endcond
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 \code{.c}
 /* Read back the static registers */
 result = SDL_ECC_getStaticRegisters(SDL_MCU_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR, &staticRegs);

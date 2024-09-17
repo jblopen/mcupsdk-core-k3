@@ -37,7 +37,7 @@ SDL consists of below sub-modules
 - \subpage SDL_ESM_PAGE
 \endcond
 
-\cond SOC_AM62X || SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62X || SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
 - \subpage SDL_DCC_PAGE
 - \subpage SDL_DPL_PAGE
 - \subpage SDL_ECC_PAGE

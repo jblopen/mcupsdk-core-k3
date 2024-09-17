@@ -32,7 +32,7 @@ Instances in WKUP domain:
 1)	WKUP_RTI0
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 There are 7 RTI Modules in the device – 1 in the MCU domain and 5 in the Main domain and 1 in wakup domain.
 
 Instances in MCU domain:
@@ -70,7 +70,7 @@ Include the below file to access the APIs
 #include <sdl/sdl_rti.h>
 \endcode
 
-\cond SOC_AM62X || SOC_AM62AX
+\cond SOC_AM62X || SOC_AM62AX || SOC_AM62DX
 Config an RTI Instance
 \code{.c}
 SDL_RTI_configParms pConfig;

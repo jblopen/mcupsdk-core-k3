@@ -15,7 +15,7 @@ Use Cases
  UC-1     | Calculate ROM CHECKSUM from R5F Core.
 \endcond
 
-\cond SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
 Use Cases
 ---------
  Use Case | Description
@@ -37,7 +37,7 @@ Use Cases
 
 \endcond
 
-\cond SOC_AM62AX || SOC_AM62PX
+\cond SOC_AM62AX || SOC_AM62PX || SOC_AM62DX
 
  Parameter      | Value
  ---------------|-----------

@@ -30,7 +30,7 @@ Use Cases
 
 \endcond
 
-\cond SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
 
  Parameter      | Value
  ---------------|-----------
@@ -101,8 +101,8 @@ Shown below is a sample output when the application is run,
 \endcond
 
 
-\cond SOC_AM62AX
-# Sample Output SOC_AM62AX
+\cond SOC_AM62AX || SOC_AM62DX
+# Sample Output SOC_AM62AX || SOC_AM62DX
 
 \code
  MCRC Application
