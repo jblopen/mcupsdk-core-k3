@@ -88,7 +88,7 @@ static int32_t VissApp_init();
 AppViss_TestObject  gAppVissTestObject[VHWA_M2M_VISS_MAX_HANDLES];
 
 bool gConfigThroughUDMA = false;
-
+bool gCopyGlbceCtxThroughBcdmaFlag = false;
 uint32_t configTicks;
 
 /* ========================================================================== */
@@ -172,6 +172,7 @@ int32_t AppViss_Init(Udma_DrvHandle udmaDrvHndl)
 
     /* enable config through UDMA */
     initPrms.configThroughUdmaFlag = gConfigThroughUDMA;
+    initPrms.copyGlbceCtxThroughBcdmaFlag = gCopyGlbceCtxThroughBcdmaFlag;
 
     status = Vhwa_m2mVissInit(&initPrms);
     if (FVID2_SOK != status)
