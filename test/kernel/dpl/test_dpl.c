@@ -1390,8 +1390,6 @@ void tearDown(void)
 
 void test_main(void *args)
 {
-    Drivers_open();
-
     UNITY_BEGIN();
 
     RUN_TEST(test_hwi, 282, NULL);
