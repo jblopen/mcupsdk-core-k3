@@ -13661,7 +13661,8 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../examples/networking/enet_layer2_cpsw_switch/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
-            "AM62x_SK_EVM"
+            "SK-AM62B",
+            "SK-AM62B-P1"
         ],
         "kernel": [
             "freertos"
@@ -13672,6 +13673,39 @@
         "subCategories": [
             "networking",
             "enet_layer2_cpsw_switch",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Est Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_est",
+        "location": "../../examples/networking/enet_cpsw_est/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_cpsw_est",
             "a53ss0-0_freertos"
         ],
         "mainCategories": [

@@ -130,6 +130,7 @@ const example_file_list = [
     "examples/networking/lwip/enet_cpsw_udpclient/.project/project.js",
     "examples/networking/enet_layer2_cpsw/.project/project.js",
     "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
+    "examples/networking/enet_cpsw_est/.project/project.js",
 
     // Driver/Kernel tests
     "test/board/flash/.project/project.js",
