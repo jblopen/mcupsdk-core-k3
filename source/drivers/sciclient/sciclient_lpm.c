@@ -80,7 +80,7 @@ int32_t Sciclient_lpmSetModuleConstraint(uint32_t moduleId,
     int32_t retVal = SystemP_SUCCESS;
     Sciclient_ReqPrm_t reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
-    struct tisci_msg_lpm_set_device_constraint_req request;
+    struct tisci_msg_lpm_set_device_constraint_req request = {0};
 
     request.id = moduleId;
     request.state = state;
@@ -112,8 +112,8 @@ int32_t Sciclient_lpmGetModuleConstraint(uint32_t moduleId,
     int32_t retVal = SystemP_SUCCESS;
     Sciclient_ReqPrm_t reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
-    struct tisci_msg_lpm_get_device_constraint_req request;
-    struct tisci_msg_lpm_get_device_constraint_resp response;
+    struct tisci_msg_lpm_get_device_constraint_req request = {0};
+    struct tisci_msg_lpm_get_device_constraint_resp response = {0};
 
     request.id = moduleId;
 
@@ -148,7 +148,7 @@ int32_t Sciclient_lpmSetLatencyConstraint(uint16_t resumeLatency,
     int32_t retVal = SystemP_SUCCESS;
     Sciclient_ReqPrm_t reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
-    struct tisci_msg_lpm_set_latency_constraint_req request;
+    struct tisci_msg_lpm_set_latency_constraint_req request = {0};
 
     request.resume_latency = resumeLatency;
     request.state = state;
@@ -180,8 +180,8 @@ int32_t Sciclient_lpmGetLatencyConstraint(uint16_t *resumeLatency,
     int32_t retVal = SystemP_SUCCESS;
     Sciclient_ReqPrm_t reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
-    struct tisci_msg_lpm_get_latency_constraint_req request;
-    struct tisci_msg_lpm_get_latency_constraint_resp response;
+    struct tisci_msg_lpm_get_latency_constraint_req request = {0};
+    struct tisci_msg_lpm_get_latency_constraint_resp response = {0};
 
     reqParam.messageType      = (uint16_t) TISCI_MSG_LPM_GET_LATENCY_CONSTRAINT;
     reqParam.flags            = (uint32_t) TISCI_MSG_FLAG_AOP;
@@ -219,8 +219,8 @@ int32_t Sciclient_lpmGetNextSysMode(uint32_t timeout,
     int32_t retVal = SystemP_SUCCESS;
     Sciclient_ReqPrm_t reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
-    struct tisci_msg_lpm_get_next_sys_mode_req request;
-    struct tisci_msg_lpm_get_next_sys_mode_resp response;
+    struct tisci_msg_lpm_get_next_sys_mode_req request = {0};
+    struct tisci_msg_lpm_get_next_sys_mode_resp response = {0};
 
     reqParam.messageType      = TISCI_MSG_LPM_GET_NEXT_SYS_MODE;
     reqParam.flags            = TISCI_MSG_FLAG_AOP;
@@ -250,8 +250,8 @@ int32_t Sciclient_lpmGetNextHostState(uint32_t timeout,
     int32_t retVal = SystemP_SUCCESS;
     Sciclient_ReqPrm_t reqParam = {0};
     Sciclient_RespPrm_t respParam = {0};
-    struct tisci_msg_lpm_get_next_host_state_req request;
-    struct tisci_msg_lpm_get_next_host_state_resp response;
+    struct tisci_msg_lpm_get_next_host_state_req request = {0};
+    struct tisci_msg_lpm_get_next_host_state_resp response = {0};
 
     reqParam.messageType      = TISCI_MSG_LPM_GET_NEXT_HOST_STATE;
     reqParam.flags            = TISCI_MSG_FLAG_AOP;
