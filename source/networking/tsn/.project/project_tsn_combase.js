@@ -44,6 +44,26 @@ const includes = {
     ],
 };
 
+
+const includes_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
+        "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
+    ],
+};
+
 const defines = {
     common: [
         'TSNPKGVERSION=\\"1.1.3\\"',
@@ -52,8 +72,19 @@ const defines = {
     ],
 };
 
+const defines_a53 = {
+    common: [
+        'TSNPKGVERSION=\\"1.1.3\\"',
+        //'-Wno-format',
+        'PRINT_FORMAT_NO_WARNING',
+        "ENET_ENABLE_PER_CPSW=1",
+    ],
+};
 
 const soc_defines = {
+    am62x : [
+
+    ],
     am243x : [
     ],
     am64x : [
@@ -109,6 +140,15 @@ const deviceSpecificIncludes = {
     ],
 };
 
+const deviceSpecificIncludes_a53 = {
+
+    am62x : [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am62x/a53",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am62x",
+    ],
+
+};
+
 const cflags = {
     common: [
         "-Wno-extra",
@@ -117,6 +157,16 @@ const cflags = {
     ],
     release: [
         "-Oz",
+        "-flto",
+    ],
+};
+
+const cflags_a53 = {
+    common: [
+        "-Wno-extra",
+        "--include tsn_buildconf/sitara_buildconf.h",
+    ],
+    release: [
         "-flto",
     ],
 };
@@ -152,6 +202,12 @@ const deviceSpecific_cflags = {
     ],
 };
 
+const deviceSpecific_cflags_a53 = {
+    am62x : [
+        "-fno-strict-aliasing",
+    ],
+};
+
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
@@ -161,6 +217,7 @@ const buildOptionCombos = [
     { device: "am62ax",  cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am62px",  cpu: "wkup-r5f", cgt: "ti-arm-clang"},
     { device: "am62dx",  cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am62x", cpu: "a53", cgt: "gcc-aarch64"},
 ];
 
 function getComponentProperty(device) {
@@ -197,6 +254,20 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
+
+    if(buildOption.cpu.match(/a53*/)){
+        includes_a53.common = _.union(includes_a53.common, deviceSpecificIncludes_a53[device]);
+        build_property.includes = includes_a53;
+
+        defines_a53.common = _.union(defines_a53.common, soc_defines[device])
+        build_property.defines = defines_a53;
+
+        cflags_a53.common = _.union(cflags_a53.common, deviceSpecific_cflags_a53[device]);
+        build_property.cflags = cflags_a53;
+
+        return build_property;
+        
+    }
 
     includes.common = _.union(includes.common, deviceSpecificIncludes[device]);
     build_property.includes = includes;
