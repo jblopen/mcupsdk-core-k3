@@ -129,6 +129,12 @@ const lnkfiles = {
     ]
 };
 
+const defines_a53_amp = {
+    common: [
+        "AMP_A53",
+    ],
+};
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_EMPTY";
@@ -213,10 +219,55 @@ const templates_freertos_m4f =
     }
 ];
 
-const templates_freertos_a53 =
+const templates_freertos_a53ss00 =
 [
     {
-        input: ".project/templates/am62x/common/linker_a53.cmd.xdt",
+        input: ".project/templates/am62x/common/linker_a53ss0-0.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am62x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "empty_main",
+        },
+    }
+];
+
+const templates_freertos_a53ss01 =
+[
+    {
+        input: ".project/templates/am62x/common/linker_a53ss0-1.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am62x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "empty_main",
+        },
+    }
+];
+
+const templates_freertos_a53ss10 =
+[
+    {
+        input: ".project/templates/am62x/common/linker_a53ss1-0.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am62x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "empty_main",
+        },
+    }
+];
+
+const templates_freertos_a53ss11 =
+[
+    {
+        input: ".project/templates/am62x/common/linker_a53ss1-1.cmd.xdt",
         output: "linker.cmd",
     },
     {
@@ -235,6 +286,9 @@ const buildOptionCombos = [
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos", isPartOfSystemProject: true},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64",  board: "am62x-sk-lp", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss1-0", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss1-1", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: false},
 ];
 
 const buildOptionCombos_dm_r5 = [
@@ -348,7 +402,25 @@ function getComponentBuildProperty(buildOption) {
             build_property.includes = includes_freertos_a53;
             build_property.libdirs = libdirs_freertos_a53;
             build_property.libs = libs_freertos_a53;
-            build_property.templates = templates_freertos_a53;
+            build_property.isLogSHM = true;
+            build_property.isAmpSHM = true;
+            build_property.defines = defines_a53_amp;
+            if(buildOption.cpu.match(/a53ss1-1/))
+            {
+                build_property.templates = templates_freertos_a53ss11;
+            }
+            else if(buildOption.cpu.match(/a53ss1-0/))
+            {
+                build_property.templates = templates_freertos_a53ss10;
+            }
+            else if(buildOption.cpu.match(/a53ss0-1/))
+            {
+                build_property.templates = templates_freertos_a53ss01;
+            }
+            else
+            {
+                build_property.templates = templates_freertos_a53ss00;
+            }
         }
     }
 
