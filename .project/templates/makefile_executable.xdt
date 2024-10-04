@@ -9,10 +9,10 @@ include $(`args.sdkPath`)/devconfig/devconfig.mak
 CG_TOOL_ROOT=$(`args.cgtOptions.path`)
 
 % let atf_build = false;
-% if ((args.project.device == "am62x") && (args.project.cpu.match(/a53*/))) {
+% if ((args.project.device == "am62x") && (args.project.cpu.match(/a53ss0-0/))) {
 %    atf_build = true;
 % }
-% if (args.project.cpu.match(/a53*/)) {
+% if (args.project.cpu.match(/a53ss0-0/)) {
 LD=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.ld`
 % }
 CC=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cc`

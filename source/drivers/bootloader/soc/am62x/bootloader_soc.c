@@ -247,7 +247,7 @@ extern int32_t Sciclient_waitForBootNotification(void);
 
 uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId)
 {
-    uint32_t cslCoreId = CSL_CORE_ID_MAX; 
+    uint32_t cslCoreId = CSL_CORE_ID_MAX;
     uint32_t i;
 
     uint32_t rprcCoreIds[CSL_CORE_ID_MAX] =
@@ -725,9 +725,27 @@ int32_t Bootloader_socCpuPowerOnResetR5f(uint32_t cpuId, uintptr_t entry_point, 
 int32_t Bootloader_socCpuPowerOnResetA53(uint32_t cpuId)
 {
     int32_t status = SystemP_SUCCESS;
+    uint32_t moduleState = TISCI_MSG_VALUE_DEVICE_HW_STATE_TRANS;
+    uint32_t resetState = 0U;
+    uint32_t contextLossState = 0U;
 
-    /* nothing to do, we keep A53 powered off since we dont need it powered-on to load code for it */
-    status = Sciclient_pmSetModuleState(TISCI_DEV_A53SS0, TISCI_MSG_VALUE_DEVICE_SW_STATE_ON, 0, SystemP_WAIT_FOREVER);
+    /* Get the module state.
+       No need to change the module state if it
+       is already in the required state
+     */
+    status = Sciclient_pmGetModuleState(TISCI_DEV_A53SS0,
+                                        &moduleState,
+                                        &resetState,
+                                        &contextLossState,
+                                        SystemP_WAIT_FOREVER);
+    if(TISCI_MSG_VALUE_DEVICE_SW_STATE_ON != moduleState)
+    {
+        /* nothing to do, we keep A53 powered off since we dont need it powered-on to load code for it */
+        status = Sciclient_pmSetModuleState(TISCI_DEV_A53SS0, TISCI_MSG_VALUE_DEVICE_SW_STATE_ON, 0, SystemP_WAIT_FOREVER);
+    }
+
+
+
     if(status != SystemP_SUCCESS)
     {
         DebugP_logError("CPU cluster power on failed for %s\r\n", Bootloader_socGetCoreName(cpuId));

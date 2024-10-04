@@ -17,7 +17,7 @@ include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 % }
 
 % let atf_build = false;
-% if ((args.project.device == "am62x") && (args.project.cpu.match(/a53*/))) {
+% if ((args.project.device == "am62x") && (args.project.cpu.match(/a53ss0-0/))) {
 %    atf_build = true;
 % }
 % if (atf_build == true) {
@@ -27,7 +27,7 @@ ifeq ($(PROFILE), Debug)
 endif
 
 % }
-% if (args.project.cpu.match(/a53*/)) {
+% if (args.project.cpu.match(/a53ss0-0/)) {
 LD=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.ld`
 % }
 STRIP=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.strip`
