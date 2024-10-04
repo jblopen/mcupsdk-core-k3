@@ -131,7 +131,6 @@ const cflags_a53 = {
     common: [
         "-Wno-extra",
         "--include tsn_buildconf/sitara_buildconf.h",
-        "-Wno-unused-function",
     ],
     release: [
         "-flto",

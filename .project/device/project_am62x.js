@@ -19,8 +19,10 @@ const component_file_list = [
     "source/networking/lwip/.project/project_stack_freertos.js",
     "source/networking/mbedtls_library/.project/project.js",
     "source/networking/tsn/.project/project_tsn_combase.js",
+    "source/networking/tsn/.project/project_tsn_gptp.js",
     "source/networking/tsn/.project/project_tsn_unibase.js",
     "source/networking/tsn/.project/project_tsn_uniconf.js",
+    
     "source/sdl/.project/project.js",
     "source/sdl/sdl_sbl/.project/project.js",
     "source/safety_checkers/.project/project.js",

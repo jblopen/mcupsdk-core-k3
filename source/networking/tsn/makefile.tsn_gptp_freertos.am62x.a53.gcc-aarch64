@@ -13,51 +13,85 @@ AR=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-gcc-ar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=tsn_combase-freertos.am62x.a53.gcc-aarch64.$(PROFILE).lib
+LIBNAME:=tsn_gptp-freertos.am62x.a53.gcc-aarch64.$(PROFILE).lib
 
 FILES_common := \
-    cb_noipcshmem.c \
-    cb_lld_ethernet.c \
-    cb_lld_thread.c \
-    cb_lld_tmevent.c \
-    ub_lld_binding.c \
-    lldenet.c \
-    lldenetext.c \
-    bufring.c \
-    lldtsync.c \
-    cb_link_tilld.c \
-    cb_xtimer.c \
-    cb_rate_reporter.c \
+    announce_interval_setting_sm.c \
+    clock_master_sync_offset_sm.c \
+    clock_master_sync_receive_sm.c \
+    clock_master_sync_send_sm.c \
+    clock_slave_sync_sm.c \
+    gm_stable_sm.c \
+    gptp_capable_receive_sm.c \
+    gptp_capable_transmit_sm.c \
+    gptp2_debug_defs.c \
+    gptpclock.c \
+    gptpcommon.c \
+    gptpman.c \
+    gptpmasterclock.c \
+    link_delay_interval_setting_sm.c \
+    md_abnormal_hooks.c \
+    md_announce_receive_sm.c \
+    md_announce_send_sm.c \
+    md_pdelay_req_sm.c \
+    md_pdelay_resp_sm.c \
+    md_signaling_receive_sm.c \
+    md_signaling_send_sm.c \
+    md_sync_receive_sm.c \
+    md_sync_send_sm.c \
+    mdeth.c \
+    mind.c \
+    one_step_tx_oper_setting_sm.c \
+    port_announce_information_ext_sm.c \
+    port_announce_information_sm.c \
+    port_announce_receive_sm.c \
+    port_announce_transmit_sm.c \
+    port_state_selection_sm.c \
+    port_state_setting_ext_sm.c \
+    port_sync_sync_receive_sm.c \
+    port_sync_sync_send_sm.c \
+    site_sync_sync_sm.c \
+    sync_interval_setting_sm.c \
+    gptpgcfg.c \
+    lld_gptpnet.c \
+    lld_gptpclock.c \
+    lld_ptpdevclock.c \
+    xl4-extmod-xl4gptp.c \
+    xl4-extmod-xl4gptp_runconf.c \
+    gptp_perfmon.c \
 
 FILES_PATH_common = \
-    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase \
-    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld \
-    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
-    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/a53 \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53 \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/ \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/mod \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am62x/a53 \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am62x \
 
 DEFINES_common := \
     -DSOC_AM62X \
-    -DTSNPKGVERSION=\"1.1.3\" \
+    -DTSNPKGVERSION=\"1.2.3\" \
     -DPRINT_FORMAT_NO_WARNING \
-    -DENET_ENABLE_PER_CPSW=1 \
+    -DUB_LOGCAT=3 \
+    -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
     -DSW_VERSION=$(SW_VERSION)
 
 CFLAGS_common := \
@@ -77,6 +111,7 @@ CFLAGS_common := \
     -ffunction-sections \
     -Wno-extra \
     --include tsn_buildconf/sitara_buildconf.h \
+    --include lld_gptp_private.h \
     -fno-strict-aliasing \
 
 CFLAGS_release := \
@@ -102,7 +137,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am62x/gcc-aarch64/$(PROFILE)/a53/tsn_combase-freertos/
+OBJDIR := obj/am62x/gcc-aarch64/$(PROFILE)/a53/tsn_gptp-freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

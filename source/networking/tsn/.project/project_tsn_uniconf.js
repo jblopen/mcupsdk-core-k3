@@ -114,7 +114,6 @@ const includes_a53 = {
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/hal",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos",
-       // "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cores/generated",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/cunc/generated",
@@ -216,7 +215,6 @@ const cflags_a53 = {
     common: [
         "-Wno-extra",
         "--include tsn_buildconf/sitara_buildconf.h",
-        "-Wno-unused-function",
     ],
     release: [
         "-flto",
