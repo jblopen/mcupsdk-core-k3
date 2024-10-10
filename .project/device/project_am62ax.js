@@ -156,6 +156,8 @@ const example_file_list = [
     "examples/networking/tsn/gptp_cpsw_app/.project/project.js",
     "examples/networking/tsn/gptp_lwip_cpsw/.project/project.js",
     "examples/networking/tsn/lldp_cpsw_app/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_mac/.project/project.js",
+    "examples/networking/netxduo/enet_netxduo_cpsw_switch/.project/project.js",
     "examples/otp/ext_otp/.project/project.js",
     "examples/otp/otp_revision/.project/project.js",
     "examples/safety/safety_app/.project/project.js",
