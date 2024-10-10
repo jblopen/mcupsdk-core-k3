@@ -18,7 +18,7 @@ In this example, We have one Rx and two Tx DMA channel to handle all the traffic
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 \endcond
 
-\cond SOC_AM263X || SOC_AM243X || SOC_AM64x || SOC_AM62DX
+\cond SOC_AM263X || SOC_AM243X || SOC_AM64x || SOC_AM62DX || SOC_AM62X
 In this example, We use two Rx and two Tx DMA channel, one Rx and one Tx channel specific to gPTP traffic.
 Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 \endcond
@@ -36,6 +36,16 @@ See also :\ref ENET_CPSW_TSN_GPTP
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/networking/tsn/gptp_cpsw_app
 
+\endcond
+
+\cond SOC_AM62X 
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | a53ss0-0_freertos
+ Toolchain      | gcc-arch64
+ Boards         | @VAR_BOARD_NAME_LOWER
+Example folder | examples/networking/tsn/gptp_cpsw_app
 \endcond
 
 \cond SOC_AM243X
@@ -150,6 +160,19 @@ delay_mechanism         P2P
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
+
+\endcond
+
+\cond SOC_AM62X
+
+### AM62X-SK
+
+#### For CPSW based example
+
+- Connect a ethernet cable to the EVM from host PC as shown below
+
+  \imageStyle{am62x_sk_cpsw_example.jpg,width:40%}
+  \image html am62x_sk_cpsw_example.jpg Ethernet cable for CPSW based ethernet
 
 \endcond
 

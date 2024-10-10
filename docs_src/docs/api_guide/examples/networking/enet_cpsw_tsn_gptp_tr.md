@@ -36,6 +36,17 @@ See also :\ref ENET_CPSW_TSN_GPTP
 
 \endcond
 
+\cond SOC_AM62X 
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | a53ss0-0_freertos
+ Toolchain      | gcc-arch64
+ Boards         | @VAR_BOARD_NAME_LOWER
+Example folder | examples/networking/tsn/gptp_cpsw_app
+
+\endcond
+
 \cond SOC_AM243X
 
  Parameter      | Value
@@ -148,6 +159,19 @@ delay_mechanism         P2P
 
   \imageStyle{am64x_evm_lwip_example_00.png,width:30%}
   \image html am64x_evm_lwip_example_00.png Ethernet cable for CPSW based ethernet
+
+\endcond
+
+\cond SOC_AM62X
+
+### AM62X-SK
+
+#### For CPSW based example
+
+- Connect a ethernet cable to the EVM from host PC as shown below
+
+  \imageStyle{am62x_sk_cpsw_example.jpg,width:40%}
+  \image html am62x_sk_cpsw_example.jpg Ethernet cable for CPSW based ethernet
 
 \endcond
 

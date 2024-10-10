@@ -11,8 +11,20 @@ On the gPTP front, the application used here supports all the below modes:
 
 In this example, We use two Rx and two Tx DMA channel, one Rx and one Tx channel specific to gPTP traffic and one Rx and one Tx channel specific to non-gPTP traffic, this is handled by LwIP stack.
 
+  \cond SOC_AM62PX || SOC_AM62DX || AM64X
+
   \imageStyle{gPTPwithLwIP.png,width:20%}
   \image html gPTPwithLwIP.png 
+
+  \endcond
+
+  \cond SOC_AM62X
+   \imageStyle{gPTP_LWIP.jpg,width:20%}
+  \image html gPTP_LWIP.jpg
+
+  \endcond
+
+
 
 Please refer to the \ref EXAMPLES_ENET_LWIP_CPSW_TCPSERVER page for LwIP TCP echo server documentation.
 
@@ -54,6 +66,17 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/networking/tsn/gptp_lwip_cpsw
+
+\endcond
+
+\cond SOC_AM62X 
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | a53ss0-0_freertos
+ Toolchain      | gcc-arch64
+ Boards         | @VAR_BOARD_NAME_LOWER
+Example folder | examples/networking/tsn/gptp_lwip_cpsw
 
 \endcond
 
