@@ -14382,9 +14382,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is A53SS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14396,9 +14396,55 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
             "a53ss0-0_freertos"
         ],
         "mainCategories": [
@@ -14418,7 +14464,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14430,7 +14476,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_lwip_cpsw",
             "a53ss0-0_freertos"
@@ -14452,7 +14503,7 @@
         ],
         "description": "A Cpsw Lwip Https Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "cpsw_lwip_https",
-        "location": "../../examples/networking/lwip/cpsw_lwip_https/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14464,7 +14515,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "cpsw_lwip_https",
             "a53ss0-0_freertos"
@@ -14486,7 +14542,7 @@
         ],
         "description": "A Enet Cpsw Tcpclient Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14498,7 +14554,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpclient",
             "a53ss0-0_freertos"
@@ -14520,7 +14581,7 @@
         ],
         "description": "A Enet Cpsw Socket Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_cpsw_socket",
-        "location": "../../examples/networking/lwip/enet_cpsw_socket/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14532,7 +14593,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_socket",
             "a53ss0-0_freertos"
@@ -14554,7 +14620,7 @@
         ],
         "description": "A Enet Cpsw Tcpserver Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14566,7 +14632,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpserver",
             "a53ss0-0_freertos"
@@ -14588,7 +14659,7 @@
         ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
-        "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14600,7 +14671,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_udp_igmp",
             "a53ss0-0_freertos"
@@ -14622,7 +14698,7 @@
         ],
         "description": "A Enet Cpsw Udpclient Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_cpsw_udpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14634,7 +14710,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_udpclient",
             "a53ss0-0_freertos"
@@ -14656,7 +14737,7 @@
         ],
         "description": "A Enet L2 Cpsw Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw",
-        "location": "../../examples/networking/enet_layer2_cpsw/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14668,7 +14749,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_cpsw",
             "a53ss0-0_freertos"
         ],
@@ -14689,7 +14775,7 @@
         ],
         "description": "A Enet L2 Cpsw Switch Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw_switch",
-        "location": "../../examples/networking/enet_layer2_cpsw_switch/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14701,7 +14787,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_cpsw_switch",
             "a53ss0-0_freertos"
         ],
@@ -14722,7 +14813,7 @@
         ],
         "description": "A Enet Cpsw Est Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "enet_cpsw_est",
-        "location": "../../examples/networking/enet_cpsw_est/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am62x-sk/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
@@ -14734,7 +14825,12 @@
             "gcc"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_cpsw_est",
             "a53ss0-0_freertos"
         ],

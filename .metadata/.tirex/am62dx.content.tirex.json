@@ -7672,7 +7672,7 @@
         ],
         "description": "A Enet Cpsw Est Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_est",
-        "location": "../../examples/networking/enet_cpsw_est/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7683,7 +7683,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_cpsw_est",
             "mcu-r5fss0-0_freertos"
         ],
@@ -7704,7 +7709,7 @@
         ],
         "description": "A Enet L2 Cpsw Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw",
-        "location": "../../examples/networking/enet_layer2_cpsw/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7715,7 +7720,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_cpsw",
             "mcu-r5fss0-0_freertos"
         ],
@@ -7736,7 +7746,7 @@
         ],
         "description": "A Enet L2 Cpsw Switch Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw_switch",
-        "location": "../../examples/networking/enet_layer2_cpsw_switch/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7747,7 +7757,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_cpsw_switch",
             "mcu-r5fss0-0_freertos"
         ],
@@ -7766,9 +7781,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am62dx-evm-dp83867/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am62dx-evm-dp83867/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7779,9 +7794,15 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_phy_end",
             "mcu-r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -7799,9 +7820,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am62dx-evm-dp83tg721/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am62dx-evm-dp83tg721/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7812,9 +7833,54 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "mcu-r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am62dx-evm-dp83867/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AUDIO-AM62D-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
             "mcu-r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -7834,7 +7900,7 @@
         ],
         "description": "A Cpsw Lwip Https Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "cpsw_lwip_https",
-        "location": "../../examples/networking/lwip/cpsw_lwip_https/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7845,7 +7911,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "cpsw_lwip_https",
             "mcu-r5fss0-0_freertos"
@@ -7867,7 +7938,7 @@
         ],
         "description": "A Cpsw Lwip Mqtt Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "cpsw_lwip_mqtt",
-        "location": "../../examples/networking/lwip/cpsw_lwip_mqtt/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_mqtt/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7878,7 +7949,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "cpsw_lwip_mqtt",
             "mcu-r5fss0-0_freertos"
@@ -7900,7 +7976,7 @@
         ],
         "description": "A Enet Cpsw Rawhttpserver Example. CPU is MCU-R5FSS0-0 running NORTOS.",
         "name": "enet_cpsw_rawhttpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_rawhttpserver/am62dx-evm/mcu-r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am62dx-evm/mcu-r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7911,7 +7987,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_rawhttpserver",
             "mcu-r5fss0-0_nortos"
@@ -7933,7 +8014,7 @@
         ],
         "description": "A Enet Cpsw Socket Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_socket",
-        "location": "../../examples/networking/lwip/enet_cpsw_socket/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7944,7 +8025,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_socket",
             "mcu-r5fss0-0_freertos"
@@ -7966,7 +8052,7 @@
         ],
         "description": "A Enet Cpsw Tcpclient Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -7977,7 +8063,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpclient",
             "mcu-r5fss0-0_freertos"
@@ -7999,7 +8090,7 @@
         ],
         "description": "A Enet Cpsw Tcpserver Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8010,7 +8101,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpserver",
             "mcu-r5fss0-0_freertos"
@@ -8032,7 +8128,7 @@
         ],
         "description": "A Enet Cpsw Udpclient Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8043,7 +8139,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_udpclient",
             "mcu-r5fss0-0_freertos"
@@ -8065,7 +8166,7 @@
         ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
-        "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8076,7 +8177,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_udp_igmp",
             "mcu-r5fss0-0_freertos"
@@ -8098,7 +8204,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8109,7 +8215,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_lwip_cpsw",
             "mcu-r5fss0-0_freertos"
@@ -8131,7 +8242,7 @@
         ],
         "description": "A Gptp App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "gptp_app",
-        "location": "../../examples/networking/tsn/gptp_cpsw_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8142,7 +8253,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "gptp_cpsw_app",
             "mcu-r5fss0-0_freertos"
@@ -8164,7 +8280,7 @@
         ],
         "description": "A Gptp Lwip Cpsw Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "gptp_lwip_cpsw",
-        "location": "../../examples/networking/tsn/gptp_lwip_cpsw/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8175,7 +8291,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "gptp_lwip_cpsw",
             "mcu-r5fss0-0_freertos"
@@ -8197,7 +8318,7 @@
         ],
         "description": "A Lldp App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "lldp_app",
-        "location": "../../examples/networking/tsn/lldp_cpsw_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/lldp_cpsw_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8208,7 +8329,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "lldp_cpsw_app",
             "mcu-r5fss0-0_freertos"
@@ -8230,7 +8356,7 @@
         ],
         "description": "A Avblistener App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "avblistener_app",
-        "location": "../../examples/networking/tsn/avb_cpsw_app/avb_listener/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avb_cpsw_app/avb_listener/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8241,7 +8367,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avb_cpsw_app",
             "avb_listener",
@@ -8264,7 +8395,7 @@
         ],
         "description": "A Avblistener App Example. CPU is C75SS0-0 running FREERTOS.",
         "name": "avblistener_app",
-        "location": "../../examples/networking/tsn/avb_cpsw_app/avb_listener/am62dx-evm/c75ss0-0_freertos/ti-c7000/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avb_cpsw_app/avb_listener/am62dx-evm/c75ss0-0_freertos/ti-c7000/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8275,7 +8406,12 @@
             "ccs"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avb_cpsw_app",
             "avb_listener",
@@ -8298,7 +8434,7 @@
         ],
         "description": "A Avbtalker App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "avbtalker_app",
-        "location": "../../examples/networking/tsn/avb_cpsw_app/avb_talker/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avb_cpsw_app/avb_talker/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8309,7 +8445,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avb_cpsw_app",
             "avb_talker",
@@ -8332,7 +8473,7 @@
         ],
         "description": "A Avbtalker App Example. CPU is C75SS0-0 running FREERTOS.",
         "name": "avbtalker_app",
-        "location": "../../examples/networking/tsn/avb_cpsw_app/avb_talker/am62dx-evm/c75ss0-0_freertos/ti-c7000/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avb_cpsw_app/avb_talker/am62dx-evm/c75ss0-0_freertos/ti-c7000/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8343,7 +8484,12 @@
             "ccs"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avb_cpsw_app",
             "avb_talker",
@@ -8366,7 +8512,7 @@
         ],
         "description": "A Avtplistener App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "avtplistener_app",
-        "location": "../../examples/networking/tsn/avtplistener_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avtplistener_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8377,7 +8523,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avtplistener_app",
             "mcu-r5fss0-0_freertos"
@@ -8399,7 +8550,7 @@
         ],
         "description": "A Avtptalker App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "avtptalker_app",
-        "location": "../../examples/networking/tsn/avtptalker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avtptalker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8410,7 +8561,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avtptalker_app",
             "mcu-r5fss0-0_freertos"
@@ -8432,7 +8588,7 @@
         ],
         "description": "A Aafpcmtalker App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "aafpcmtalker_app",
-        "location": "../../examples/networking/tsn/aafpcmtalker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/aafpcmtalker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8443,7 +8599,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "aafpcmtalker_app",
             "mcu-r5fss0-0_freertos"
@@ -8465,7 +8626,7 @@
         ],
         "description": "A Aafpcmlistener App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "aafpcmlistener_app",
-        "location": "../../examples/networking/tsn/aafpcmlistener_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/aafpcmlistener_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8476,7 +8637,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "aafpcmlistener_app",
             "mcu-r5fss0-0_freertos"
@@ -8498,7 +8664,7 @@
         ],
         "description": "A Crftalker App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "crftalker_app",
-        "location": "../../examples/networking/tsn/crftalker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/crftalker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8509,7 +8675,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "crftalker_app",
             "mcu-r5fss0-0_freertos"
@@ -8531,7 +8702,7 @@
         ],
         "description": "A Dolbyec3listener App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "dolbyec3listener_app",
-        "location": "../../examples/networking/tsn/dolbyec3listener_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/dolbyec3listener_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8542,7 +8713,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "dolbyec3listener_app",
             "mcu-r5fss0-0_freertos"
@@ -8564,7 +8740,7 @@
         ],
         "description": "A Dolbyec3listener App Example. CPU is C75SS0-0 running FREERTOS.",
         "name": "dolbyec3listener_app",
-        "location": "../../examples/networking/tsn/dolbyec3listener_app/am62dx-evm/c75ss0-0_freertos/ti-c7000/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/dolbyec3listener_app/am62dx-evm/c75ss0-0_freertos/ti-c7000/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8575,7 +8751,12 @@
             "ccs"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "dolbyec3listener_app",
             "c75ss0-0_freertos"
@@ -8597,7 +8778,7 @@
         ],
         "description": "A Dolbyec3talker App Example. CPU is MCU-R5FSS0-0 running FREERTOS.",
         "name": "dolbyec3talker_app",
-        "location": "../../examples/networking/tsn/dolbyec3talker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/dolbyec3talker_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -8608,7 +8789,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "dolbyec3talker_app",
             "mcu-r5fss0-0_freertos"
@@ -9774,7 +9960,7 @@
         ],
         "description": "A Avblistener App System Example.",
         "name": "avblistener_app",
-        "location": "../../examples/networking/tsn/avb_cpsw_app/avb_listener/am62dx-evm/system_avblistener_app/system.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avb_cpsw_app/avb_listener/am62dx-evm/system_avblistener_app/system.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -9782,7 +9968,12 @@
             "freertos"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avb_cpsw_app",
             "avb_listener",
@@ -9805,7 +9996,7 @@
         ],
         "description": "A Avbtalker App System Example.",
         "name": "avbtalker_app",
-        "location": "../../examples/networking/tsn/avb_cpsw_app/avb_talker/am62dx-evm/system_avbtalker_app/system.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/avb_cpsw_app/avb_talker/am62dx-evm/system_avbtalker_app/system.projectspec",
         "devtools": [
             "AUDIO-AM62D-EVM"
         ],
@@ -9813,7 +10004,12 @@
             "freertos"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "avb_cpsw_app",
             "avb_talker",

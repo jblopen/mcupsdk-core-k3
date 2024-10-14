@@ -3332,7 +3332,7 @@
         ],
         "description": "A Enet L2 Cpsw Switch Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw_switch",
-        "location": "../../examples/networking/enet_layer2_cpsw_switch/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62P-LP"
         ],
@@ -3343,7 +3343,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_layer2_cpsw_switch",
             "wkup-r5fss0-0_freertos"
         ],
@@ -3362,9 +3367,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Cpsw Loopback Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
-        "name": "enet_cpsw_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Enet Cpsw Loopback Phy End Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_phy_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62P-LP"
         ],
@@ -3375,9 +3380,54 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "enet_loopback",
             "enet_cpsw_loopback",
+            "loopback_phy_end",
+            "wkup-r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Loopback Mac End Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_loopback_mac_end",
+        "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "SK-AM62P-LP"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "source",
+            "networking",
+            "enet",
+            "core",
+            "examples",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "loopback_mac_end",
             "wkup-r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -3397,7 +3447,7 @@
         ],
         "description": "A Enet Cpsw Tcpserver Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62P-LP"
         ],
@@ -3408,7 +3458,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_cpsw_tcpserver",
             "wkup-r5fss0-0_freertos"
@@ -3430,7 +3485,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62P-LP"
         ],
@@ -3441,7 +3496,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "lwip",
             "enet_lwip_cpsw",
             "wkup-r5fss0-0_freertos"
@@ -3463,7 +3523,7 @@
         ],
         "description": "A Gptp App Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
         "name": "gptp_app",
-        "location": "../../examples/networking/tsn/gptp_cpsw_app/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62P-LP"
         ],
@@ -3474,7 +3534,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "gptp_cpsw_app",
             "wkup-r5fss0-0_freertos"
@@ -3496,7 +3561,7 @@
         ],
         "description": "A Gptp Lwip Cpsw Example. CPU is WKUP-R5FSS0-0 running FREERTOS.",
         "name": "gptp_lwip_cpsw",
-        "location": "../../examples/networking/tsn/gptp_lwip_cpsw/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62P-LP"
         ],
@@ -3507,7 +3572,12 @@
             "ticlang"
         ],
         "subCategories": [
+            "..",
+            "source",
             "networking",
+            "enet",
+            "core",
+            "examples",
             "tsn",
             "gptp_lwip_cpsw",
             "wkup-r5fss0-0_freertos"
