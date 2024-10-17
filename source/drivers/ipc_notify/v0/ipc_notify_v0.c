@@ -53,6 +53,7 @@ typedef struct
     uint32_t                interruptConfigNum; /* number of interrupts to setup, i.e number of element in interruptConfig array */
     uint16_t                syncMsgPend[CSL_CORE_ID_MAX]; /* Number of sync messages pending */
     uint32_t                linuxCoreId; /* core ID of core running linux */
+    uint32_t                timeout; /* timeout for IpcNotify_sendMsg if waitForFifoNotFull is set to 1 */
 } IpcNotify_Ctrl;
 
 IpcNotify_Ctrl gIpcNotifyCtrl;
@@ -141,6 +142,7 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
     uintptr_t oldIntState;
     uint32_t mailboxBaseAddr, hwFifoId, isFull;
     int32_t status = SystemP_FAILURE;
+    uint32_t startTicks, eslapedTicks;
 
     if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcNotifyCtrl.isCoreEnabled[remoteCoreId] != 0U))
     {
@@ -149,6 +151,7 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
         if (mailboxBaseAddr != 0U)
         {
             oldIntState = HwiP_disable();
+            startTicks = ClockP_getTicks();
             do
             {
                 isFull = IpcNotify_mailboxIsFull(mailboxBaseAddr, hwFifoId);
@@ -157,8 +160,9 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
                     /* allow interrupt enable and check again */
                     HwiP_restore(oldIntState);
                     oldIntState = HwiP_disable();
+                    eslapedTicks = ClockP_getTicks() - startTicks;
                 }
-            } while((isFull != 0U) && (waitForFifoNotFull != 0U));
+            } while((isFull != 0U) && ((waitForFifoNotFull != 0U) && (gIpcNotifyCtrl.timeout > eslapedTicks)));
 
             if(isFull == 0U)
             {
@@ -227,6 +231,7 @@ void IpcNotify_Params_init(IpcNotify_Params *params)
     }
     params->selfCoreId = CSL_CORE_ID_MAX;
     params->linuxCoreId = CSL_CORE_ID_MAX;
+    params->timeout = 0xFFFFFFFF;
 }
 
 
@@ -239,7 +244,7 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     uint32_t mailboxBaseAddr, hwFifoId, userId;
 
     gIpcNotifyCtrl.linuxCoreId = params->linuxCoreId;
-
+    gIpcNotifyCtrl.timeout = params->timeout;
     IpcNotify_getConfig(&gIpcNotifyCtrl.interruptConfig, &gIpcNotifyCtrl.interruptConfigNum);
 
     /* translate mailbox address to local CPU addresses */

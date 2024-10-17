@@ -125,6 +125,8 @@ typedef struct IpcNotify_Params_ {
                           */
 
     uint32_t linuxCoreId; /**< When linux IPC is enabled, this is the core ID of linux */
+
+    uint32_t timeout;
 } IpcNotify_Params;
 
 /**
