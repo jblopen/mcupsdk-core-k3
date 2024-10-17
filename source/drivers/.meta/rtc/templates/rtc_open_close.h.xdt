@@ -1,0 +1,25 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/rtc/rtc'];
+%%}
+/*
+ * RTC
+ */
+#include <drivers/rtc.h>
+#include <kernel/dpl/AddrTranslateP.h>
+
+/* RTC Driver handles */
+extern RTC_Handle gRTCHandle[RTC_NUM_INSTANCES];
+
+/*
+ * RTC Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+/* RTC Driver Parameters */
+
+extern RTC_Params gRTCParams[RTC_NUM_INSTANCES];
+/* RTC Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_RTCOpen(void);
+void Drivers_RTCClose(void);

@@ -62,6 +62,9 @@ const driverVer = {
     "mcspi": {
         version: "v0",
     },
+    "rtc": {
+        version: "v0",
+    },
     "udma": {
         version: "v0",
     },
@@ -84,6 +87,7 @@ const topModules_wkup = [
     "/drivers/ipc/ipc",
     "/drivers/udma/udma",
     "/drivers/mcspi/mcspi",
+    "/drivers/rtc/rtc",
     "/drivers/mcan/mcan",
     "/drivers/qos/qos",
 ];
@@ -110,6 +114,7 @@ const topModules_a53 = [
     "/drivers/mcasp/mcasp",
     "/drivers/mcspi/mcspi",
     "/drivers/mmcsd/mmcsd",
+    "/drivers/rtc/rtc",
     "/drivers/ospi/ospi",
     "/drivers/uart/uart",
     "/drivers/udma/udma",

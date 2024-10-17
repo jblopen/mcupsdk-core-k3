@@ -1,0 +1,96 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("rtc");
+    let module = system.modules['/drivers/rtc/rtc'];
+%%}
+/*
+ * RTC
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `config.$name`_CLOCK_SRC_MUX_ADDR (0x`config.clkSelMuxAddr.toString(16).toUpperCase()`u)
+#define `config.$name`_CLOCK_SRC_`config.clkSource` (0x`config.clkSelMuxValue.toString(16).toUpperCase()`u)
+%}
+
+/* RTC Driver handles */
+RTC_Handle gRTCHandle[RTC_NUM_INSTANCES];
+
+/* RTC Driver Parameters */
+RTC_Params gRTCParams[RTC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .isfreezemode = `config.isFreezeMode`,
+        .on_offcallback = `config.on_offCallback`,
+        .off_oncallback = `config.off_onCallback`,
+    },
+% }
+};
+
+void Drivers_RTCOpen(void)
+{
+    uint32_t    instCnt;
+    int32_t     status = SystemP_SUCCESS;
+
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    /* Set timer clock source */
+    SOC_controlModuleUnlockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+    *(volatile uint32_t*)AddrTranslateP_getLocalAddr(`config.$name`_CLOCK_SRC_MUX_ADDR) = `config.$name`_CLOCK_SRC_`config.clkSource`;
+    SOC_controlModuleLockMMR(`config.lockUnlockDomain`, `config.lockUnlockPartition`);
+    % }
+
+    for(instCnt = 0U; instCnt < RTC_NUM_INSTANCES; instCnt++)
+    {
+        gRTCHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < RTC_NUM_INSTANCES; instCnt++)
+    {
+        gRTCHandle[instCnt] = RTC_open(instCnt, &gRTCParams[instCnt]);
+        if(NULL == gRTCHandle[instCnt])
+        {
+            DebugP_logError("RTC open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+        % if(config.startTimer == true) {
+    RTC_start(gRTCHandle[`i`]);
+        % }
+    % }
+
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_RTCClose();   /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_RTCClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < RTC_NUM_INSTANCES; instCnt++)
+    {
+        if(gRTCHandle[instCnt] != NULL)
+        {
+            RTC_close(gRTCHandle[instCnt]);
+            gRTCHandle[instCnt] = NULL;
+        }
+    }
+
+    return;
+}
