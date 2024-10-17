@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -554,6 +554,7 @@ uint32_t Bootloader_getBootMedia(Bootloader_Handle handle)
 int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
 {
     int32_t status = SystemP_SUCCESS, authStatus = SystemP_FAILURE;
+    static int32_t flashAuthStatus = SystemP_SUCCESS;
     uint32_t certLen = 0U, imageLen = 0U, ddrCopy = 1U;
     uint32_t certLoadAddr = 0xFFFFFFFFU;
 
@@ -593,7 +594,7 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
             {
                 Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
 
-                if(flashArgs->flashType == CONFIG_FLASH_TYPE_SERIAL_NOR)
+                if(flashArgs->flashType == CONFIG_FLASH_TYPE_SERIAL_NOR && flashAuthStatus == SystemP_SUCCESS)
                 {
                     ddrCopy = 0;
 
@@ -606,6 +607,14 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
                     /* Enable OSPI Phy if configured to do so*/
                     flashArgs->enablePhyPipeline = TRUE;
                     status = config->fxns->imgCustomFxn(config->args);
+
+                    flashAuthStatus = Bootloader_socAuthImage(certLoadAddr);
+
+                    if(flashAuthStatus == SystemP_FAILURE)
+                    {
+                        DebugP_logWarn("Failed to authenticate and copy on the go, reading the image to DDR.\n\r");
+                        ddrCopy = 1;
+                    }
                 }
                 else
                 {
