@@ -145,7 +145,8 @@ int32_t IpcNotify_sendMsg(uint32_t remoteCoreId, uint16_t remoteClientId, uint32
     int32_t status = SystemP_FAILURE;
     uint32_t startTicks, eslapedTicks;
 
-    if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcNotifyCtrl.isCoreEnabled[remoteCoreId] != 0U))
+    if((remoteCoreId < CSL_CORE_ID_MAX) && (gIpcNotifyCtrl.isCoreEnabled[remoteCoreId] != 0U) &&
+        (remoteClientId < IPC_NOTIFY_CLIENT_ID_MAX) && (msgValue < IPC_NOTIFY_MSG_VALUE_MAX))
     {
         IpcNotify_getWriteMailbox(remoteCoreId, &mailboxBaseAddr, &hwFifoId);
 
