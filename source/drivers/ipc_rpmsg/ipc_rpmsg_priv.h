@@ -59,6 +59,10 @@ extern "C" {
 #define RPMESSAGE_MAX_LOCAL_MSG_OBJ     (16U)
 #endif
 
+/* Status flag to freeQ availability*/
+#define FREE_QUEUE_AVAILABLE 		(1U)
+#define FREE_QUEUE_NOT_AVAILABLE 	(0U)
+
 /*
  * End Point used to communicate control messages.
  * Primarily used to communicate available end point on a core ID

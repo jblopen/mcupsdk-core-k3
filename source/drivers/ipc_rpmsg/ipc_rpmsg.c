@@ -37,6 +37,7 @@ IpcRpmsg_Ctrl gIpcRpmsgCtrl __attribute__ ((section (".bss.ipcctrl"), aligned (8
 #else
 IpcRpmsg_Ctrl gIpcRpmsgCtrl;
 #endif
+volatile uint32_t gFreeQueueStatus = FREE_QUEUE_AVAILABLE;
 
 RPMessage_LocalMsg *RPMessage_allocEndPtMsg(uint32_t remoteCoreId)
 {
@@ -132,6 +133,7 @@ void RPMessage_recvHandler(uint16_t remoteCoreId)
     pMsg = RPMessage_allocEndPtMsg(remoteCoreId);
     if(pMsg!=NULL)
     {
+        gFreeQueueStatus = FREE_QUEUE_AVAILABLE;
         status = RPMessage_vringGetFullRxBuf(remoteCoreId, &vringBufId);
         if(status == SystemP_SUCCESS)
         {
@@ -196,6 +198,11 @@ void RPMessage_recvHandler(uint16_t remoteCoreId)
             RPMessage_freeEndPtMsg(remoteCoreId, pMsg);
         }
     }
+    else
+    {
+        /* Queue is not free. Don't check for it's availablity again with in the same loop*/
+        gFreeQueueStatus = FREE_QUEUE_NOT_AVAILABLE;
+    }
 }
 
 void RPMessage_notifyCallback(uint16_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
@@ -227,6 +234,10 @@ void RPMessage_notifyCallback(uint16_t remoteCoreId, uint16_t localClientId, uin
             while((RPMessage_vringIsFullRxBuf(remoteCoreId) != 0U))
             {
                 RPMessage_recvHandler(remoteCoreId);
+                if(gFreeQueueStatus == FREE_QUEUE_NOT_AVAILABLE)
+                {
+                    break;
+                }
             }
         }
         else
