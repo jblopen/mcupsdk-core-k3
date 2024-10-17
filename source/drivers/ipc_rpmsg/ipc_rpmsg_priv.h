@@ -315,7 +315,7 @@ uint8_t *RPMessage_vringGetRxBufAddr(uint16_t remoteCoreId, uint16_t vringBufId)
 void     RPMessage_vringPutEmptyRxBuf(uint16_t remoteCoreId, uint16_t vringBufId);
 /* functions for VRING initialization and other utility functions */
 uint32_t RPMessage_vringGetSize(uint32_t numBuf, uint16_t msgSize, uint32_t align);
-void     RPMessage_vringReset(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_Params *params);
+int32_t     RPMessage_vringReset(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_Params *params);
 void     RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_ResourceTable *rscTable);
 
 void RPMessage_vringResetInternal(RPMessage_Vring *vringObj, uint32_t numBuf, uint16_t msgSize, uintptr_t vringBaseAddr, uint32_t offset_desc, uint32_t offset_avail, uint32_t offset_used, uint32_t offset_buf, uint32_t isTx);

@@ -397,23 +397,27 @@ int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreatePara
     RPMessage_Struct *obj = (RPMessage_Struct *)handle;
     int32_t status = SystemP_FAILURE;
 
-    DebugP_assert(sizeof(RPMessage_Object) >= sizeof(RPMessage_Struct));
-
-    if((createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
-        && (gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL))
+    if(sizeof(RPMessage_Object) >= sizeof(RPMessage_Struct))
     {
-        obj->localEndPt = createParams->localEndPt;
-        obj->recvCallback = createParams->recvCallback;
-        obj->recvCallbackArgs = createParams->recvCallbackArgs;
-        obj->recvNotifyCallback = createParams->recvNotifyCallback;
-        obj->recvNotifyCallbackArgs = createParams->recvNotifyCallbackArgs;
-        obj->doRecvUnblock = 0;
-        RPMessage_queueReset(&obj->endPtQ);
-        SemaphoreP_constructBinary(&obj->newEndPtMsgSem, 0);
+        if((createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
+            && (gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL))
+        {
+            obj->localEndPt = createParams->localEndPt;
+            obj->recvCallback = createParams->recvCallback;
+            obj->recvCallbackArgs = createParams->recvCallbackArgs;
+            obj->recvNotifyCallback = createParams->recvNotifyCallback;
+            obj->recvNotifyCallbackArgs = createParams->recvNotifyCallbackArgs;
+            obj->doRecvUnblock = 0;
+            RPMessage_queueReset(&obj->endPtQ);
+            SemaphoreP_constructBinary(&obj->newEndPtMsgSem, 0);
+
+
+            gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] = obj;
 
         gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] = obj;
 
-        status = SystemP_SUCCESS;
+            status = SystemP_SUCCESS;
+        }
     }
     return status;
 }
@@ -480,9 +484,9 @@ int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *param
     if((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] != 0U) && (RPMessage_isLinuxCore(remoteCoreId) == 0U))
     {
         /* reset RX ring */
-        RPMessage_vringReset(remoteCoreId, 0, params);
+        status = RPMessage_vringReset(remoteCoreId, 0, params);
         /* reset TX ring */
-        RPMessage_vringReset(remoteCoreId, 1, params);
+        status = RPMessage_vringReset(remoteCoreId, 1, params);
 
         /* mark core data structure as initialized, now we can handle interrupts */
         gIpcRpmsgCtrl.isCoreInitialized[remoteCoreId] = 1;
