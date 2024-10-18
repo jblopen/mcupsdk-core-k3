@@ -291,10 +291,10 @@ LED        | MCU-R5F, A53, C75   | Yes
     <th> Applicable Releases
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> SITSW-4867
+    <td> Potential Infinite loop in OSPI_utilLog2 defined in ospi_v0.c
+    <td> OSPI
+    <td> 10.01.00
 </tr>
 </table>
 

@@ -244,10 +244,10 @@ ROM_CHECKSUM     |MCU-R5F         | No
     <th> Applicable Releases
 </tr>
 <tr>
-    <td> TBD
-    <td> TBD
-    <td> TBD
-    <td> TBD
+    <td> SITSW-4867
+    <td> Potential Infinite loop in OSPI_utilLog2 defined in ospi_v0.c
+    <td> OSPI
+    <td> 10.01.00
 </tr>
 </table>
 
