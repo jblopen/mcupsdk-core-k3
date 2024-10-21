@@ -478,6 +478,12 @@ function getConfigurables()
                     inst.flashSize = serialNorDefaultCfg.flashSize;
                     inst.flashPageSize = serialNorDefaultCfg.flashPageSize;
 
+                    ui.flashSpareAreaMap.hidden = true;
+                    ui.flashSpareAreaSize.hidden = true;
+
+                    inst.flashSpareAreaMap = "";
+                    inst.flashSpareAreaSize = 0;
+
                     inst.flashManfId = serialNorDefaultCfg.flashManfId;
                     inst.flashDeviceId = serialNorDefaultCfg.flashDeviceId;
 
@@ -523,6 +529,12 @@ function getConfigurables()
                     inst.protocol = serialNandDefaultProtocolName;
                     inst.flashSize = serialNandDefaultCfg.flashSize;
                     inst.flashPageSize = serialNandDefaultCfg.flashPageSize;
+
+                    ui.flashSpareAreaMap.hidden = false;
+                    ui.flashSpareAreaSize.hidden = false;
+
+                    inst.flashSpareAreaMap = serialNandDefaultCfg.flashSpareAreaMap;
+                    inst.flashSpareAreaSize = serialNandDefaultCfg.flashSpareAreaSize;
 
                     inst.flashManfId = serialNandDefaultCfg.flashManfId;
                     inst.flashDeviceId = serialNandDefaultCfg.flashDeviceId;
@@ -860,6 +872,19 @@ function getConfigurables()
                     displayName: "Flash Page Size In Bytes",
                     default: soc.getDefaultFlashConfig().flashPageSize,
                     displayFormat: "dec",
+                },
+                {
+                    name: "flashSpareAreaSize",
+                    displayName: "Flash Spare Area Size In Bytes",
+                    default: 0,
+                    displayFormat: "dec",
+                    hidden: true,
+                },
+                {
+                    name: "flashSpareAreaMap",
+                    displayName: "Flash Spare Area Map",
+                    default: "",
+                    hidden: true,
                 },
                 {
                     name: "flashManfId",

@@ -37,58 +37,65 @@
 #include "ti_board_open_close.h"
 
 % let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
-% let socName = system.getScript('/common').getSocName();
 int32_t Board_driversOpen(void)
 {
     int32_t status = SystemP_SUCCESS;
-% if(socName != "am62x") {
-    % if(cpuName.match(/a53/)) {
+% if(cpuName.match(/a53/)) {
 
     if(0 == Armv8_getCoreId())
     {
-    % }
+
 % }
 % for(let subTemplate of args) {
     % if (subTemplate.board_open) {
 `system.getTemplate(subTemplate.board_open)()`
     % }
 % }
-% if(socName != "am62x") {
-    % if(cpuName.match(/a53/)) {
+% for(let subTemplate of args) {
+    % if (subTemplate.stack_open) {
+`system.getTemplate(subTemplate.stack_open)()`
+    % }
+% }
+% if(cpuName.match(/a53/)) {
 
     }
 
-    % }
 % }
     return status;
 }
 
 void Board_driversClose(void)
 {
-% if(socName != "am62x") {
-    % if(cpuName.match(/a53/)) {
+% if(cpuName.match(/a53/)) {
 
     if(0 == Armv8_getCoreId())
     {
 
-    % }
 % }
 % for(let subTemplate of args) {
     % if (subTemplate.board_close) {
 `system.getTemplate(subTemplate.board_close)()`
     % }
 % }
-% if(socName != "am62x") {
-    % if(cpuName.match(/a53/)) {
+% for(let subTemplate of args) {
+    % if (subTemplate.stack_close) {
+`system.getTemplate(subTemplate.stack_close)()`
+    % }
+% }
+% if(cpuName.match(/a53/)) {
 
     }
 
-    % }
 % }
 }
 
 % for(let subTemplate of args) {
     % if (subTemplate.board_open_close_config) {
 `system.getTemplate(subTemplate.board_open_close_config)()`
+    % }
+% }
+% for(let subTemplate of args) {
+    % if (subTemplate.stack_open_close_config) {
+`system.getTemplate(subTemplate.stack_open_close_config)()`
     % }
 % }

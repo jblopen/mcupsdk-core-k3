@@ -1,6 +1,8 @@
 {
     "flashSize": 134217728,
     "flashPageSize": 4096,
+    "flashSpareAreaSize": 256,
+    "flashSpareAreaMap": "{{2,6}}",
     "flashManfId": "0xEF",
     "flashDeviceId": "0xDC21",
     "flashBlockSize": 262144,
