@@ -18,7 +18,9 @@ AM62P  | MCU R5F, WKUP R5F           | @VAR_BOARD_NAME EVM (referred to as am62p
 Feature                                                                                        | Module
 -----------------------------------------------------------------------------------------------|-----------------------------------
 OSPI FLASH DIAG EXAMPLE                                                                        | OSPI
--                                                                                              |-
+Use DDR copy in case of flash in place authentication failure                                  | Bootloader
+-                                                                                              | -
+
 
 
 ## Other Updates on This Release

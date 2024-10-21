@@ -20,7 +20,8 @@ AM62Dx | MCU R5F, WKUP R5F, A53, C75 | @VAR_BOARD_NAME EVM (referred to as am62d
 Feature                                                                                        | Module
 -----------------------------------------------------------------------------------------------|-----------------------------------
 OSPI FLASH DIAG EXAMPLE                                                                        | OSPI
--                                                                                              |-
+Use DDR copy in case of flash in place authentication failure                                  | Bootloader
+-                                                                                              | -
 
 
 ## Other Updates on This Release

@@ -23,7 +23,8 @@ AM62x  | M4F, R5F, A53   | SK-AM62 (referred as am62x-sk in code), SK-AM62-LP (r
 Feature                                                                                        | Module
 -----------------------------------------------------------------------------------------------|-----------------------------------
 OSPI FLASH DIAG EXAMPLE                                                                        | OSPI
--                                                                                              |-
+Use DDR copy in case of flash in place authentication failure                                  | Bootloader
+-                                                                                              | -
 
 
 ### Experimental Features {#EXPERIMENTAL_FEATURES}
