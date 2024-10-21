@@ -7,6 +7,7 @@ const topModules_wkup = [
 
 const topModules_a53 = [
     "/fs/freertos_fat/freertos_fat",
+    "/fs/filex/filex",
 ];
 const topModules_mcu = [
 

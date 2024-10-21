@@ -83,6 +83,7 @@ Flash_Attrs gFlashAttrs_`config.fname` =
     .blockSize = `config.flashBlockSize`,
     .pageCount = `Math.round(config.flashBlockSize/config.flashPageSize)`,
     .pageSize = `config.flashPageSize`,
+    .spareAreaSize = `config.flashSpareAreaSize`
 };
 % }
 % }
