@@ -51,6 +51,7 @@
             --diag_suppress=69
             --diag_suppress=70
             -DSOC_AM62AX
+            -DREMOTE_CORE
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib

@@ -127,12 +127,19 @@ const lnkfiles = {
 const defines_mcu = {
     common:[
         "ENABLE_MCU_ONLY_LPM",
+        "REMOTE_CORE",
     ]
 }
 
 const defines_dm_r5f = {
     common:[
         "ENABLE_SCICLIENT_DIRECT",
+    ]
+};
+
+const defines_c75 = {
+    common:[
+        "REMOTE_CORE",
     ]
 };
 
@@ -305,6 +312,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libdirs = libdirs_freertos_c75;
         build_property.libs = libs_freertos_c75;
         build_property.templates = templates_freertos_c75;
+        build_property.defines = defines_c75;
     }
 
     return build_property;

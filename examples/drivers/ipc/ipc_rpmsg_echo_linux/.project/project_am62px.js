@@ -103,6 +103,7 @@ const lnkfiles = {
 const defines_mcu = {
     common:[
         "ENABLE_MCU_ONLY_LPM",
+        "REMOTE_CORE",
     ]
 }
 

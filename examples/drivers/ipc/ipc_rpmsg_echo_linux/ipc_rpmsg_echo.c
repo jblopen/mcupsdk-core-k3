@@ -108,16 +108,17 @@ RPMessage_Object gIpcAckReplyMsgObject;
 
 #if defined (SOC_AM62AX)
 #define IPC_RPMESSAGE_TASK_STACK_SIZE  (32*1024U)
+#define LPM_MCU_SUSPEND_TASK_STACK_SIZE   (32*1024U)
 #else
 #define IPC_RPMESSAGE_TASK_STACK_SIZE  (8*1024U)
-#endif
 #define LPM_MCU_SUSPEND_TASK_STACK_SIZE   (1024U)
+#endif
 
 uint8_t gIpcTaskStack[IPC_RPMESSAGE_NUM_RECV_TASKS][IPC_RPMESSAGE_TASK_STACK_SIZE] __attribute__((aligned(32)));
 TaskP_Object gIpcTask[IPC_RPMESSAGE_NUM_RECV_TASKS];
 
 uint8_t gLpmSuspendTaskStack[LPM_MCU_SUSPEND_TASK_STACK_SIZE] __attribute__((aligned(32)));
-TaskP_Object gLpmUartWakeupTask;
+TaskP_Object gLpmSuspendTask;
 
 /* number of iterations of message exchange to do */
 uint32_t gMsgEchoCount = 100000u;
@@ -240,7 +241,7 @@ void ipc_recv_task_main(void *args)
     gRecvTaskExitCounter++;
     if (gRecvTaskExitCounter >= IPC_RPMESSAGE_NUM_RECV_TASKS)
     {
-        /* Follow the sequence for gracefull shutdown for the last recv task */
+        /* Follow the sequence for graceful shutdown for the last recv task */
         DebugP_log("[IPC RPMSG ECHO] Closing all drivers and going to WFI ... !!!\r\n");
 
         /* Close the drivers */
@@ -420,12 +421,12 @@ void ipc_rp_mbox_callback(uint16_t remoteCoreId, uint16_t clientId, uint32_t msg
 {
     if (clientId == IPC_NOTIFY_CLIENT_ID_RP_MBOX)
     {
-        if (msgValue == IPC_NOTIFY_RP_MBOX_SHUTDOWN) /* Shutdown request from the remotecore */
+        if (msgValue == IPC_NOTIFY_RP_MBOX_SHUTDOWN) /* Shutdown request from the remoteproc */
         {
             gbShutdownRemotecoreID = remoteCoreId;
             trigger_shutdown();
         }
-        else if (msgValue == IPC_NOTIFY_RP_MBOX_SUSPEND_SYSTEM) /* Suspend request from Linux. This is send when suspending to MCU only LPM */
+        else if (msgValue == IPC_NOTIFY_RP_MBOX_SUSPEND_SYSTEM) /* Suspend request received from linux during LPM suspend */
         {
             gbSuspendRemotecoreID = remoteCoreId;
             SemaphoreP_post(&gLpmSuspendSem);
@@ -445,6 +446,8 @@ void ipc_rp_mbox_callback(uint16_t remoteCoreId, uint16_t clientId, uint32_t msg
         }
     }
 }
+
+#if defined(REMOTE_CORE)
 
 #if defined(ENABLE_MCU_ONLY_LPM)
 static void lpm_mcu_wait_for_uart()
@@ -489,14 +492,25 @@ static void lpm_mcu_wait_for_uart()
     DebugP_memLogWriterResume();
 }
 
+void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
+{
+    if (UART_TRANSFER_STATUS_SUCCESS == trans->status)
+    {
+        gNumBytesRead = trans->count;
+    }
+}
+#endif
+
 void lpm_mcu_suspend_task(void* args)
 {
     int32_t status;
 
     status = SemaphoreP_constructBinary(&gLpmSuspendSem, 0);
     DebugP_assert(SystemP_SUCCESS == status);
+#if defined(ENABLE_MCU_ONLY_LPM)
     status = SemaphoreP_constructBinary(&gLpmResumeSem, 0);
     DebugP_assert(SystemP_SUCCESS == status);
+#endif
 
     while (1)
     {
@@ -520,19 +534,19 @@ void lpm_mcu_suspend_task(void* args)
             case TISCI_MSG_VALUE_HOST_STATE_OFF:
                 IpcNotify_sendMsg(gbSuspendRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SUSPEND_ACK, 1u);
                 break;
-
+#if defined(ENABLE_MCU_ONLY_LPM)
             case TISCI_MSG_VALUE_HOST_STATE_ON:
                 gbSuspended = 1u;
 
                 /* Print before sending ACK, otherwise IO isolation is enabled while printing */
                 DebugP_log("[IPC RPMSG ECHO] Suspend request to MCU-only mode received \r\n");
-                DebugP_log("[IPC RPMSG ECHO] Press a sinlge key on this terminal to resume the kernel from MCU only mode \r\n");
+                DebugP_log("[IPC RPMSG ECHO] Press a single key on this terminal to resume the kernel from MCU only mode \r\n");
 
                 IpcNotify_sendMsg(gbSuspendRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SUSPEND_AUTO, 1u);
                 lpm_mcu_wait_for_uart();
                 gbSuspended = 0u;
                 break;
-
+#endif
             case TISCI_MSG_VALUE_HOST_STATE_INVALID:
             default:
                 IpcNotify_sendMsg(gbSuspendRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SUSPEND_CANCEL, 1u);
@@ -545,20 +559,13 @@ void lpm_mcu_suspend_task(void* args)
         }
     }
     SemaphoreP_destruct(&gLpmSuspendSem);
+#if defined(ENABLE_MCU_ONLY_LPM)
     SemaphoreP_destruct(&gLpmResumeSem);
+#endif
     vTaskDelete(NULL);
 }
 
-void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
-{
-    if (UART_TRANSFER_STATUS_SUCCESS == trans->status)
-    {
-        gNumBytesRead = trans->count;
-    }
-}
-
-
-void lpm_create_wakeup_task()
+void lpm_create_suspend_task()
 {
     int32_t status;
     TaskP_Params taskParams;
@@ -571,7 +578,7 @@ void lpm_create_wakeup_task()
     taskParams.priority = LPM_MCU_SUSPEND_TASK_PRI;
     taskParams.taskMain = lpm_mcu_suspend_task;
 
-    status = TaskP_construct(&gLpmUartWakeupTask, &taskParams);
+    status = TaskP_construct(&gLpmSuspendTask, &taskParams);
     DebugP_assert(status == SystemP_SUCCESS);
 }
 #endif
@@ -589,12 +596,9 @@ void ipc_rpmsg_echo_main(void *args)
     /* Register a callback for the RP_MBOX messages from the Linux remoteproc driver*/
     IpcNotify_registerClient(IPC_NOTIFY_CLIENT_ID_RP_MBOX, &ipc_rp_mbox_callback, NULL);
 
-#if defined(ENABLE_MCU_ONLY_LPM)
-    if( IpcNotify_getSelfCoreId() == gMcuCoreID )
-    {
-        /* create task to monitor MCU uart to wakeup main domain.  */
-        lpm_create_wakeup_task();
-    }
+#if defined(REMOTE_CORE)
+    /* Create task to enable graceful lpm suspend support for remotecore   */
+    lpm_create_suspend_task();
 #endif
 
     /* create message receive tasks, these tasks always run and never exit */
