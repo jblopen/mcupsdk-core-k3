@@ -69,7 +69,7 @@ void Utils_memcpyWord(uint8_t *source, uint8_t *destination, uint32_t length)
 
         /* Do pointer copy for aligned bytes */
         uint32_t unalignedBytes = remainingBytes % PTR_COPY_SRC_ALIGNMENT;
-        i = (remainingBytes - unalignedBytes) / PTR_COPY_SRC_ALIGNMENT ;
+        i = (remainingBytes - unalignedBytes) / sizeof(uintptr_t) ;
 
         while(i != 0)
         {
