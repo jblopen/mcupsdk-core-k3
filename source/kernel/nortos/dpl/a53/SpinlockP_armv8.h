@@ -30,62 +30,28 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "CacheP_armv8.h"
+#ifndef SPINLOCKP_ARMV8_H
+#define SPINLOCKP_ARMV8_H
 
-void CacheP_disable(uint32_t type)
+#ifdef __cplusplus
+extern "C"
 {
-    uint32_t enabled;
-    uintptr_t key;
+#endif
 
-    enabled = CacheP_getEnabled();
+#define SW_SPINLOCK_FREE        (0)
+#define SW_SPINLOCK_IN_USE      (1)
 
-    if (enabled & (type & (CacheP_TYPE_L1D | CacheP_TYPE_L2)))
-    {
-        /* Disable Interurpts */
-        key = HwiP_disable();
-        /* Disable L1D and L2 Cache */
-        CacheP_disableL1D();
-        /* Ensure data cache written back and disabled */
-        CacheP_wait();
-        /* Re-enable interrupts */
-        HwiP_restore(key);
+#define SW_SPIN_LOCK_1          (0)
+#define SW_SPIN_LOCK_2          (1)
+#define NO_OF_SW_SPIN_LOCKS     (2)
 
-    }
 
-    if (enabled & (type & CacheP_TYPE_L1P)) {
-        CacheP_disableL1P();             /* Disable ICache */
-    }
+extern uint32_t gSwSpinLockBuff[NO_OF_SW_SPIN_LOCKS] ;
+
+int32_t SpinlockP_swLock(uint32_t* gSwLockBuff);
+void    SpinlockP_swUnlock(uint32_t* gSwLockBuff);
+#ifdef __cplusplus
 }
+#endif
 
-
-void CacheP_enable(uint32_t type)
-{
-    uint32_t disabled;
-
-    /* Set SMPEN flag when running SMP FreeRTOS */
-    CacheP_enableSMP();
-
-    /* only enable caches that are currently disabled */
-    disabled = ~(CacheP_getEnabled());
-
-    if (disabled & (type & (CacheP_TYPE_L1D | CacheP_TYPE_L2))) {
-        CacheP_enableL1D();              /* Enable L1D and L2 Cache */
-    }
-
-    if (disabled & (type & CacheP_TYPE_L1P)) {
-        CacheP_enableL1P();              /* Enable ICache */
-    }
-}
-
-void CacheP_inv(void *blockPtr, uint32_t byteCnt, uint32_t type)
-{
-    if (type & (CacheP_TYPE_L1P | CacheP_TYPE_L2P))
-    {
-        CacheP_invL1p((uintptr_t)blockPtr, byteCnt);
-    }
-
-    if (type & (CacheP_TYPE_L1D | CacheP_TYPE_L2D))
-    {
-        CacheP_invL1d((uintptr_t)blockPtr, byteCnt);
-    }
-}
+#endif /* SPINLOCKP_ARMV8_H */

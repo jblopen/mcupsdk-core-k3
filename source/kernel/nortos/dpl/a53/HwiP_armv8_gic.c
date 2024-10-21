@@ -723,4 +723,3 @@ static int32_t HwiP_setEdgeSpiIntrType(uint16_t intrNum)
 
 	return SystemP_SUCCESS;
 }
-

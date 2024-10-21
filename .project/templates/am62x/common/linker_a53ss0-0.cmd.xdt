@@ -76,7 +76,6 @@ MEMORY {
 	DDR_DMA : ORIGIN =  0x`(codeDataAddrDdr+codeDataSizeDdr).toString(16).toUpperCase()`, LENGTH = 0x`(options.dmaHeapSize).toString(16).toUpperCase()`
 	% }
 	% }
-
     % if(args.project.isLogSHM === true){
     LOG_SHM_MEM : ORIGIN = 0xA1000000, LENGTH = 0x40000
     %}
@@ -87,11 +86,16 @@ MEMORY {
     /* global scratch buffer region in DDR (32 MB) */
     GLOBAL_SCRATCH_BUFF  (RWIX): ORIGIN = 0x8A000080 LENGTH = 0x02000000
     % }
+    % if(args.project.isAmpSHM === true){
+    AMP_SHM : ORIGIN = 0x99000000, LENGTH = 0x4000
+    %}
 }
 
 SECTIONS {
 
-	.vecs : {} > DDR
+    /* Keeping the .text.boot:_c_int00 section of the code at the ATF Jump address to ensure the code entry point is from this address. */
+    .text.boot:_c_int00 : AT (0x`(addrAtfJump).toString(16).toUpperCase()`) {} > DDR
+    .vecs : {} > DDR
 		.text : {} > DDR
 		.rodata : {} > DDR
 
@@ -119,6 +123,9 @@ SECTIONS {
     /* global scratch buffer region */
     .globalScratchBuffer (NOLOAD) : {} > GLOBAL_SCRATCH_BUFF
     % }
+    % if(args.project.isAmpSHM === true){
+    .bss.amp_shared_mem  (NOLOAD) : { KEEP(*(.bss.amp_shared_mem))} > AMP_SHM
+    %}
     .bss : {
         __bss_start__ = .;
         *(.bss)
