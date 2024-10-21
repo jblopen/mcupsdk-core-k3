@@ -1,12 +1,14 @@
 %%{
     let common = system.getScript("/common");
-    let module = system.modules['/eclipse_threadx/filex/filex'];
+    let filex_module = system.modules['/fs/filex/filex'];
 %%}
 /*
  * FileX
  */
 
-extern FX_MEDIA gt_media[];
+#include <fx_api.h>
 
-void EclipseThreadx_FilexOpen(void);
+extern FX_MEDIA gMedia[];
+
+int32_t EclipseThreadx_FilexOpen(void);
 void EclipseThreadx_FilexClose(void);

@@ -42,8 +42,10 @@
 
 static int32_t Flash_nandOspiOpen(Flash_Config *config, Flash_Params *params);
 static int32_t Flash_nandOspiRead(Flash_Config *config, uint32_t offset, uint8_t *buf, uint32_t len);
+static int32_t Flash_nandOspiReadPage(Flash_Config *config, uint32_t pageNum, uint32_t pageOffset, uint8_t *buf, uint32_t len);
 static int32_t Flash_nandOspiErase(Flash_Config *config, uint32_t blkNum);
 static int32_t Flash_nandOspiWrite(Flash_Config *config, uint32_t offset, uint8_t *buf, uint32_t len);
+static int32_t Flash_nandOspiWritePage(Flash_Config *config, uint32_t pageNum, uint8_t *buf, uint32_t len);
 static int32_t Flash_nandOspiReset(Flash_Config *config);
 static void Flash_nandOspiClose(Flash_Config *config);
 static int32_t Flash_nandOspiCmdWrite(Flash_Config *config, uint8_t cmd, uint32_t cmdAddr,
@@ -79,7 +81,9 @@ Flash_Fxns gFlashNandOspiFxns = {
     .openFxn = Flash_nandOspiOpen,
     .closeFxn = Flash_nandOspiClose,
     .readFxn = Flash_nandOspiRead,
+    .readPageFxn = Flash_nandOspiReadPage,
     .writeFxn = Flash_nandOspiWrite,
+    .writePageFxn = Flash_nandOspiWritePage,
     .eraseFxn = Flash_nandOspiErase,
     .eraseSectorFxn = NULL,
     .resetFxn = Flash_nandOspiReset,
@@ -367,6 +371,75 @@ static int32_t Flash_nandOspiPageProgram(Flash_Config *config, uint32_t pageNum)
     return status;
 }
 
+
+static int32_t Flash_nandOspiReadPage(Flash_Config *config, uint32_t pageNum, uint32_t pageOffset, uint8_t *buf, uint32_t len)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_NandOspiObject *obj = NULL;
+    OSPI_Transaction transaction;
+    Flash_Attrs *attrs = NULL;
+    uint32_t pageSize;
+
+
+    if(config == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+    else
+    {
+        obj = (Flash_NandOspiObject *)(config->object);
+        attrs = config->attrs;
+    }
+
+    /* Bad block check not supported. */
+    if (obj->badBlockCheck)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
+        if(pageNum > attrs->blockCount * attrs->pageCount)
+        {
+            status = SystemP_FAILURE;
+        }
+        if (pageOffset + len > attrs->pageSize + attrs->spareAreaSize) {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
+        pageSize = attrs->pageSize;
+
+        status = Flash_nandOspiPageLoad(config, pageNum * pageSize);
+
+        /* Read data if not Bad block */
+        if(status == SystemP_SUCCESS)
+        {
+            if(obj->phyEnable)
+            {
+                OSPI_enablePhy(obj->ospiHandle);
+            }
+
+            OSPI_Transaction_init(&transaction);
+            transaction.buf = (void *)buf;
+            transaction.dmaCopyLowerLimit = OSPI_NAND_DMA_COPY_LOWER_LIMIT;
+            transaction.addrOffset = pageOffset;
+            transaction.count = len;
+
+            status = OSPI_readDirect(obj->ospiHandle, &transaction);
+
+            if(obj->phyEnable)
+            {
+                OSPI_disablePhy(obj->ospiHandle);
+            }
+        }
+    }
+
+    return status;
+}
+
 static int32_t Flash_nandOspiRead(Flash_Config *config, uint32_t offset, uint8_t *buf, uint32_t len)
 {
     int32_t status = SystemP_SUCCESS;
@@ -502,6 +575,78 @@ static int32_t Flash_nandOspiRead(Flash_Config *config, uint32_t offset, uint8_t
 
     return status;
 }
+
+
+static int32_t Flash_nandOspiWritePage(Flash_Config *config, uint32_t pageNum, uint8_t *buf, uint32_t len)
+{
+    int32_t status = SystemP_SUCCESS;
+    Flash_Attrs *attrs = NULL;
+    Flash_DevConfig *devCfg = NULL;
+    Flash_NandOspiObject *obj = NULL;
+
+    if(config != NULL)
+    {
+        obj = (Flash_NandOspiObject *)(config->object);
+        attrs = config->attrs;
+        devCfg = config->devConfig;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    /* Bad block check not supported. */
+    if (obj->badBlockCheck)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    /* Validate address input */
+    if(pageNum > attrs->blockCount * attrs->pageCount)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    /* Check that the write access does not span muliple pages. */
+    if (len > attrs->pageSize + attrs->spareAreaSize) {
+        status = SystemP_FAILURE;
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
+        OSPI_Transaction transaction;
+
+        status = Flash_nandOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
+
+        if(status == SystemP_SUCCESS)
+        {
+            status = Flash_nandOspiWaitReady(config, 1000U);
+        }
+
+        if(status == SystemP_SUCCESS)
+        {
+            OSPI_Transaction_init(&transaction);
+            transaction.addrOffset = 0u;
+            transaction.buf = (void *)buf;
+            transaction.count = len;
+
+            status = OSPI_writeDirect(obj->ospiHandle, &transaction);
+        }
+
+        if(status == SystemP_SUCCESS)
+        {
+            status = Flash_nandOspiWaitReady(config, 10000U);
+        }
+
+        if(status == SystemP_SUCCESS)
+        {
+            status = Flash_nandOspiPageProgram(config, pageNum);
+        }
+    }
+
+    return status;
+}
+
 
 static int32_t Flash_nandOspiWrite(Flash_Config *config, uint32_t offset, uint8_t *buf, uint32_t len)
 {

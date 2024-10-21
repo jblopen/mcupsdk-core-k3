@@ -195,6 +195,21 @@ typedef int32_t (*Flash_ReadFxn)(Flash_Config *config, uint32_t offset,
                                    uint8_t *buf, uint32_t len) ;
 
 /**
+ * \brief Driver implementation to read from flash (including spare area on NAND flash) using a specific flash driver
+ *
+ * Typically this callback is hidden from the end application and is implemented
+ * when a new type of flash device needs to be implemented.
+ *
+ * \param config [in] Flash configuration for the specific flash device
+ * \param offset [in] Offset in the flash from where to start the read
+ * \param buf  [out] Buffer into which to read the data into
+ * \param len [in] Length of the data to read, in bytes
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+typedef int32_t (*Flash_ReadPageFxn)(Flash_Config *config, uint32_t pageNum, uint32_t pageOffset, uint8_t *buf, uint32_t len) ;
+
+/**
  * \brief Driver implementation to write to flash using specific flash driver
  *
  * Typically this callback is hidden from the end application and is implemented
@@ -209,6 +224,22 @@ typedef int32_t (*Flash_ReadFxn)(Flash_Config *config, uint32_t offset,
  */
 typedef int32_t (*Flash_WriteFxn)(Flash_Config *config, uint32_t offset,
                                    uint8_t *buf, uint32_t len) ;
+
+/**
+ * \brief Driver implementation to write to flash using (including spare area on NAND flash) specific flash driver
+ *
+ * Typically this callback is hidden from the end application and is implemented
+ * when a new type of flash device needs to be implemented.
+ *
+ * \param config [in] Flash configuration for the specific flash device
+ * \param offset [in] Offset in the flash from where to start the write.
+ * \param buf [in] Buffer which has the data to write.
+ * \param len [in] Length of the data to write, in bytes
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+typedef int32_t (*Flash_WritePageFxn)(Flash_Config *config, uint32_t pageNum, uint8_t *buf, uint32_t len) ;
+
 
 /**
  * \brief Driver implementation to erase a block using a specific flash driver
@@ -315,7 +346,9 @@ typedef struct Flash_Fxns_s
     Flash_OpenFxn  openFxn;  /**< Flash driver implementation specific callback */
     Flash_CloseFxn closeFxn; /**< Flash driver implementation specific callback */
     Flash_ReadFxn  readFxn;  /**< Flash driver implementation specific callback */
+    Flash_ReadPageFxn readPageFxn; /**< Flash driver implementation specific callback */
     Flash_WriteFxn writeFxn; /**< Flash driver implementation specific callback */
+    Flash_WritePageFxn writePageFxn; /**< Flash driver implementation specific callback */
     Flash_EraseFxn eraseFxn; /**< Flash driver implementation specific callback */
     Flash_EraseSectorFxn eraseSectorFxn; /**< Flash driver implementation specific callback */
     Flash_ResetFxn resetFxn; /**< Flash driver implementation specific callback */
@@ -433,6 +466,21 @@ Flash_Handle Flash_getHandle(uint32_t instanceId);
 int32_t Flash_read(Flash_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
 
 /**
+ * \brief Read data from flash (including spare area on NAND flash)
+ *
+ * Internally it will use DMA and do the needed cache sync operations as needed.
+ *
+ * \param handle [in] Flash driver handle from \ref Flash_open
+ * \param pageNum [in] Number of the page to read from.
+ * \param pageOffset  [in] Offset in the page to start reading from.
+ * \param buf [out] Buffer into which to read the the data into
+ * \param len [in] Length of the data to read, in bytes
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Flash_readPage(Flash_Handle handle, uint32_t pageNum, uint32_t pageOffset, uint8_t *buf, uint32_t buf_len);
+
+/**
  * \brief Write to flash
  *
  * Make sure the block is erased before writing
@@ -445,6 +493,20 @@ int32_t Flash_read(Flash_Handle handle, uint32_t offset, uint8_t *buf, uint32_t 
  * \return SystemP_SUCCESS on success, else failure
  */
 int32_t Flash_write(Flash_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
+
+/**
+ * \brief Write to flash (including spare area on NAND flash)
+ *
+ * Make sure the block is erased before writing
+ *
+ * \param handle [in] Flash driver handle from \ref Flash_open
+ * \param pageNum [in] Number of the page to write to.
+ * \param buf   [in] Buffer which has the spare area data to write.
+ * \param len [in] Length of the spare area data to write, in bytes
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Flash_writePage(Flash_Handle handle, uint32_t pageNum, uint8_t *buf, uint32_t len);
 
 /**
  * \brief Utility API to convert (Block Num, Page Num) to offset in bytes

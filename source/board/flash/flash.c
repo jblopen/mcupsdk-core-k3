@@ -196,6 +196,24 @@ int32_t Flash_read(Flash_Handle handle, uint32_t offset, uint8_t *buf, uint32_t 
     return status;
 }
 
+int32_t Flash_readPage(Flash_Handle handle, uint32_t pageNum, uint32_t pageOffset, uint8_t *buf, uint32_t len)
+{
+    Flash_Config *config = (Flash_Config*)handle;
+    int32_t status = SystemP_FAILURE;
+
+    if(config && config->fxns && config->fxns->readPageFxn)
+    {
+        /* Take the instance semaphore */
+        status = SemaphoreP_pend(&config->lockSem, SystemP_WAIT_FOREVER);
+
+        status += config->fxns->readPageFxn(config, pageNum, pageOffset, buf, len);
+
+        /* Post the instance Semaphore. */
+        SemaphoreP_post(&config->lockSem);
+    }
+    return status;
+}
+
 int32_t Flash_write(Flash_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
 {
     Flash_Config *config = (Flash_Config*)handle;
@@ -207,6 +225,24 @@ int32_t Flash_write(Flash_Handle handle, uint32_t offset, uint8_t *buf, uint32_t
         status = SemaphoreP_pend(&config->lockSem, SystemP_WAIT_FOREVER);
 
         status += config->fxns->writeFxn(config, offset, buf, len);
+
+        /* Post the instance Semaphore. */
+        SemaphoreP_post(&config->lockSem);
+    }
+    return status;
+}
+
+int32_t Flash_writePage(Flash_Handle handle, uint32_t pageNum, uint8_t *buf, uint32_t len)
+{
+    Flash_Config *config = (Flash_Config*)handle;
+    int32_t status = SystemP_FAILURE;
+
+    if(config && config->fxns && config->fxns->writePageFxn)
+    {
+        /* Take the instance semaphore */
+        status = SemaphoreP_pend(&config->lockSem, SystemP_WAIT_FOREVER);
+
+        status += config->fxns->writePageFxn(config, pageNum, buf, len);
 
         /* Post the instance Semaphore. */
         SemaphoreP_post(&config->lockSem);

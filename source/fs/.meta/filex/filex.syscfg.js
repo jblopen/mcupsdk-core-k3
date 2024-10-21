@@ -6,15 +6,15 @@ let filex_module = {
 	displayName: "FileX",
     templates: {
         "/board/board/board_config.h.xdt": {
-            board_config: "/filex/templates/filex.h.xdt",
+            stack_config: "/fs/filex/templates/filex.h.xdt",
         },
         "/board/board/board_open_close.c.xdt": {
-            board_open_close_config: "/fs/filex/templates/filex_open_close_config.c.xdt",
-            board_open: "/fs/filex/templates/filex_open.c.xdt",
-            board_close: "/fs/filex/templates/filex_close.c.xdt",
+            stack_open_close_config: "/fs/filex/templates/filex_open_close_config.c.xdt",
+            stack_open: "/fs/filex/templates/filex_open.c.xdt",
+            stack_close: "/fs/filex/templates/filex_close.c.xdt",
         },
         "/board/board/board_open_close.h.xdt": {
-            board_open_close_config: "/fs/filex/templates/filex_open_close.h.xdt",
+            stack_open_close_config: "/fs/filex/templates/filex_open_close.h.xdt",
         },
     },
 	defaultInstanceName: "FILEX",
@@ -28,6 +28,7 @@ let filex_module = {
                 { name: "RAMDISK"},
 				{ name: "SD" },
                 { name: "EMMC" },
+                { name: "SERIAL_FLASH"}
 			],
             onChange: function (inst, ui) {
                 if(inst.media == "RAMDISK") {
@@ -37,6 +38,11 @@ let filex_module = {
                     inst.auto_format = false;
                     ui.ramdisk_size.hidden = true;
                 }
+                if(inst.media == "SERIAL_FLASH") {
+                    inst.fs_offset = 0x200000;
+                } else {
+                    inst.fs_offset = 0;
+                }
             }
 		},
         {
@@ -45,6 +51,18 @@ let filex_module = {
             displayName: "RAM Disk Size",
             description: "Size of the RAM disk in bytes.",
             default: 32768,
+        },
+        {
+            name: "fs_size",
+            displayName: "File System Size",
+            description: "File system size in bytes. -1 to use all available space.",
+            default: -1
+        },
+        {
+            name: "fs_offset",
+            displayName: "File System Offset",
+            description: "File system offset from the start of the media in bytes.",
+            default: 0x200000
         },
         {
             name: "auto_format",
@@ -113,28 +131,38 @@ function moduleInstances(inst) {
             // No driver needed.
             break;
     	case "SD":
+            moduleSelectName = "MMC1";
     		modInstances.push({
     		    name: "peripheralDriver",
     		    displayName: "MMCSD Configuration",
     		    moduleName: '/drivers/mmcsd/mmcsd',
     		    useArray: false,
     		    requiredArgs: {
-    		        moduleSelect: "MMC1",
+    		        moduleSelect: moduleSelectName,
                     cardType : "SD",
     		    },
     		});
     		break;
     	case "EMMC":
+            moduleSelectName = "MMC0";
     		modInstances.push({
     		    name: "peripheralDriver",
     		    displayName: "MMCSD Configuration",
     		    moduleName: '/drivers/mmcsd/mmcsd',
     		    useArray: false,
     		    requiredArgs: {
-    		        moduleSelect: "MMC0",
+    		        moduleSelect: moduleSelectName,
                     cardType : "EMMC",
     		    },
     		});
+            break;
+        case "SERIAL_FLASH":
+            modInstances.push({
+                name: "peripheralDriver",
+                displayName: "Flash Configuration",
+                moduleName: '/board/flash/flash',
+                useArray: false,
+            });
             break;
     }
 
