@@ -136,6 +136,7 @@ const example_file_list = [
     "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
     "examples/kernel/threadx/hello_world/.project/project.js",
     "examples/kernel/threadx/task_switch/.project/project.js",
+    "examples/fs/filex/hello_world/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",
     "examples/hello_world/.project/project.js",
