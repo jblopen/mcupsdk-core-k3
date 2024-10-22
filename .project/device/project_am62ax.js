@@ -159,6 +159,7 @@ const example_file_list = [
     "examples/otp/ext_otp/.project/project.js",
     "examples/otp/otp_revision/.project/project.js",
     "examples/safety/safety_app/.project/project.js",
+    "examples/security/bootloader_test/.project/project.js",
     "examples/security/fwl_exception_log/.project/project.js",
     "examples/security/fwl_exception_trigger/.project/project.js",
     "examples/security/crypto/sa3ul_aes/crypto_aes_cbc_128/.project/project.js",
@@ -329,7 +330,7 @@ function getSysCfgPart(board) {
 }
 
 function getDevToolTirex(board) {
-    return [ 
+    return [
         "SK-AM62A-LP",
     ];
 }

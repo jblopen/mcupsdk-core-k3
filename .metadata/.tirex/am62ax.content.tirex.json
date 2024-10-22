@@ -5493,6 +5493,38 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Bootloader Test Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "bootloader_test",
+        "location": "../../examples/security/bootloader_test/am62ax-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "SK-AM62A-LP"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "bootloader_test",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "An example to demonstrate extraction of firewall exception description.  CPU is R5FSS0-0 running FREERTOS.",

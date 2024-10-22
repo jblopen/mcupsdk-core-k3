@@ -8,10 +8,13 @@
         "../source/networking/enet/core/sysconfig",
     ],
     "components": [
+
+
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
         "/fs/fs",
+        "/security/security",
         "/networking/networking",
     ],
     "devices": [
