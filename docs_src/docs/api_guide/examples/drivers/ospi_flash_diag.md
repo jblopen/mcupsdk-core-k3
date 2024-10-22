@@ -72,7 +72,7 @@ in 1s1s1s mode.
 [OSPI Flash Diagnostic Test] Done !!!
 [OSPI Flash Diagnostic Test] Performing Write-Read Test...
 [OSPI Flash Diagnostic Test] Write-Read Test Passed!
-[QSPI Flash Diagnostic Test] SFDP Information :
+[OSPI Flash Diagnostic Test] SFDP Information :
 ================================================
                       SFDP
 ================================================

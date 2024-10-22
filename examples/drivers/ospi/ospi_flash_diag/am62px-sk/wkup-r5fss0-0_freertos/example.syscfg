@@ -25,7 +25,8 @@ const mpu_armv78 = mpu_armv7.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-ospi1.$name = "CONFIG_OSPI0";
+ospi1.$name        = "CONFIG_OSPI0";
+ospi1.inputClkFreq = 200000000;
 
 debug_log.enableUartLog = true;
 debug_log.uartTrace     = true;

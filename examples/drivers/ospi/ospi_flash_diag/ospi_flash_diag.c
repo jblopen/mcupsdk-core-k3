@@ -219,7 +219,7 @@ static int32_t ospi_flashDiagPrintSfdp(OSPI_Handle handle)
     else
     {
         /* Print SFDP basic information */
-        DebugP_log("[QSPI Flash Diagnostic Test] SFDP Information : \r\n");
+        DebugP_log("[OSPI Flash Diagnostic Test] SFDP Information : \r\n");
         DebugP_log("================================================\r\n");
         DebugP_log("                      SFDP                      \r\n");
         DebugP_log("================================================\r\n");
