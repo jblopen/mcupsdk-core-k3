@@ -8,8 +8,6 @@
         "../source/networking/enet/core/sysconfig",
     ],
     "components": [
-
-
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",

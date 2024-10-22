@@ -174,6 +174,7 @@ const example_file_list = [
     "examples/security/crypto/sa3ul_hmac_sha/crypto_hmac_sha512/.project/project.js",
     "examples/security/crypto/sa3ul_rng/.project/project.js",
     "examples/security/crypto/sa3ul_sha/.project/project.js",
+    "examples/security/mcu_core_test_app/.project/project.js",
     "examples/security/runtime_debug_unlock/.project/project.js",
     "examples/security/tisci_msg/.project/project.js",
     // Drivers and kernel tests
