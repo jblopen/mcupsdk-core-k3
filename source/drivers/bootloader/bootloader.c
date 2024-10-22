@@ -450,7 +450,7 @@ uint32_t Bootloader_getMsgLen(uint8_t *x509_cert_ptr, uint32_t x509_cert_size)
     uint8_t *boot_seq_ptr;
     uint32_t msg_len = 0, boot_seq_len;
     uint8_t *msg_len_ptr = (uint8_t *)&msg_len;
-    /* oid encoding of image_integrity extension - 1.3.6.1.4.1.294.1.22 */
+    /* oid encoding of image_integrity extension - 1.3.6.1.4.1.294.1.34 */
     uint8_t boot_seq_oid[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x22};
 
     boot_seq_ptr = Bootloader_findSeq(x509_cert_ptr, x509_cert_size, boot_seq_oid, sizeof(boot_seq_oid));

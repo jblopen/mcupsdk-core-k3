@@ -300,10 +300,10 @@ ROM Checksum |MCU-R5F         | No
     <th> Applicable Releases
 </tr>
 <tr>
-    <td> TBD
-    <td> TBD
-    <td> TBD
-    <td> TBD
+    <td> SITSW-5575
+    <td> The SYSFW_IMAGE_INTEGRITY OID is incorrectly mentioned in the comment
+    <td> Bootloader
+    <td> 10.01.00
 </tr>
 </table>
 

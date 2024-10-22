@@ -309,6 +309,12 @@ ROM Checksum | R5F            | No
     <td> OSPI
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-5575
+    <td> The SYSFW_IMAGE_INTEGRITY OID is incorrectly mentioned in the comment
+    <td> Bootloader
+    <td> 10.01.00
+</tr>
 </table>
 
 
