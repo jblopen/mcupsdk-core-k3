@@ -112,6 +112,9 @@ FILES_`prop` := \
     ti_enet_soc.c \
     ti_enet_lwipif.c \
              % }
+            % if (val.startsWith("netx")) {
+    ti_enet_netxduo.c \
+             % }
         % }
 
 	% }
@@ -422,6 +425,9 @@ SYSCFG_GEN_FILES+=generated/ti_enet_open_close.c generated/ti_enet_open_close.h
 SYSCFG_GEN_FILES+=generated/ti_enet_soc.c
 SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
          % }
+    % if (val.startsWith("netx")) {
+SYSCFG_GEN_FILES+=generated/ti_enet_netxduo.c generated/ti_enet_netxduo.h
+        % }
     % }
 % }
 
