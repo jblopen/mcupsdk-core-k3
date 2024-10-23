@@ -816,7 +816,7 @@ static int32_t Sciclient_waitForMessage(uint32_t rxThread, uint32_t timeout, uin
         /* Check the seqId of response*/
         status = SystemP_TIMEOUT;
         timeToWait =  timeout;
-        while(true)
+        while((bool) true)
         {
             uint32_t numCurrentMsgs = (CSL_REG32_RD(Sciclient_secProxyThreadStatusReg(rxThread)) &
                     CSL_SEC_PROXY_RT_THREAD_STATUS_CUR_CNT_MASK) - initialCount;
