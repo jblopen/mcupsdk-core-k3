@@ -1095,12 +1095,13 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
     int32_t status = SystemP_FAILURE;
 
     struct tisci_msg_proc_auth_boot_req authReq;
+    struct tisci_msg_proc_auth_boot_resp authResp = {0};
 
     /* Request TIFS (SYSFW) to authenticate (and decrypt if mentioned in the x509 cert) the image */
     authReq.certificate_address_hi = 0U;
     authReq.certificate_address_lo = certLoadAddr;
 
-    status = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+    status = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
 
     return status;
 }

@@ -246,11 +246,10 @@ int32_t Sciclient_procBootSetSequenceCtrl(uint8_t  processorId,
 
 int32_t Sciclient_procBootAuthAndStart(
             const struct tisci_msg_proc_auth_boot_req * authBootCfg,
+            struct tisci_msg_proc_auth_boot_resp * response,
             uint32_t timeout)
 {
     int32_t retVal = SystemP_SUCCESS;
-
-    struct tisci_msg_proc_auth_boot_resp response = {0};
 
     Sciclient_ReqPrm_t reqParam = {0};
     reqParam.messageType    = (uint16_t) TISCI_MSG_PROC_AUTH_BOOT;
@@ -261,8 +260,8 @@ int32_t Sciclient_procBootAuthAndStart(
 
     Sciclient_RespPrm_t respParam = {0};
     respParam.flags           = (uint32_t) 0;   /* Populated by the API */
-    respParam.pRespPayload    = (uint8_t *) &response;
-    respParam.respPayloadSize = (uint32_t) sizeof (response);
+    respParam.pRespPayload    = (uint8_t *) response;
+    respParam.respPayloadSize = (uint32_t) sizeof (struct tisci_msg_proc_auth_boot_resp);
 
     retVal = Sciclient_service(&reqParam, &respParam);
     if((retVal != SystemP_SUCCESS) ||

@@ -290,7 +290,7 @@ static int32_t Bootloader_socOpenFirewallRegion(uint16_t fwl, uint16_t region, u
 
 uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId)
 {
-    uint32_t cslCoreId = CSL_CORE_ID_MAX; 
+    uint32_t cslCoreId = CSL_CORE_ID_MAX;
     uint32_t i;
 
     uint32_t rprcCoreIds[CSL_CORE_ID_MAX] =
@@ -1051,12 +1051,13 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
     int32_t status = SystemP_FAILURE;
 
     struct tisci_msg_proc_auth_boot_req authReq;
+    struct tisci_msg_proc_auth_boot_resp authResp = {0};
 
     /* Request TIFS (SYSFW) to authenticate (and decrypt if mentioned in the x509 cert) the image */
     authReq.certificate_address_hi = 0U;
     authReq.certificate_address_lo = certLoadAddr;
 
-    status = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+    status = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
 
     return status;
 }

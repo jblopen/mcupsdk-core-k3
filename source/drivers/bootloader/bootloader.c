@@ -891,3 +891,69 @@ static Bootloader_Config* Bootloader_getMemBootloaderConfig(Bootloader_Handle ha
 
     return &gMemBootloaderConfig;
 }
+
+int32_t Bootloader_parseAppImage(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo)
+{
+    int32_t status = SystemP_FAILURE;
+
+    Bootloader_Config *config = NULL;
+    Bootloader_MetaHeaderStart mHdrStr;
+    Bootloader_MetaHeaderCore  mHdrCore[BOOTLOADER_MAX_INPUT_FILES];
+
+    /* Now the Image is in DDR, use mem functions */
+    config = Bootloader_getMemBootloaderConfig(handle);
+    config->coresPresentMap = 0;
+    gMemBootloaderConfig.fxns->imgSeekFxn(0, gMemBootloaderConfig.args);
+
+    memset(&mHdrCore[0], 0xFF, BOOTLOADER_MAX_INPUT_FILES*sizeof(Bootloader_MetaHeaderCore));
+
+    if(config)
+    {
+        status = config->fxns->imgReadFxn(&mHdrStr, sizeof(Bootloader_MetaHeaderStart), config->args);
+
+        if(status == SystemP_SUCCESS)
+        {
+            if(mHdrStr.magicStr != (uint32_t)BOOTLOADER_META_HDR_MAGIC_STR)
+            {
+                status = SystemP_FAILURE;
+            }
+            else
+            {
+                /* Read all the core offset addresses */
+                uint32_t i;
+
+                for(i=0U; i<mHdrStr.numFiles; i++)
+                {
+                    status = config->fxns->imgReadFxn(&mHdrCore[i], sizeof(Bootloader_MetaHeaderCore), config->args);
+                }
+
+                /* Parse individual rprc files */
+                for(i=0U; i<mHdrStr.numFiles; i++)
+                {
+
+                    if(mHdrCore[i].coreId != (0xFFFFFFFFU))
+                    {
+                        uint32_t cslCoreId = Bootloader_socRprcToCslCoreId(mHdrCore[i].coreId);
+                        Bootloader_CpuInfo *cpuInfo = (&bootImageInfo -> cpuInfo[cslCoreId]);
+                        cpuInfo->rprcOffset = mHdrCore[i].imageOffset;
+                        cpuInfo->entryPoint = 0;
+                        cpuInfo->cpuId      = cslCoreId;
+                        config->coresPresentMap |= ((uint32_t)1 << cslCoreId);
+                    }
+
+                }
+
+            }
+        }
+        else
+        {
+            DebugP_logError("Failed to read image header!!! \r\n");
+        }
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}

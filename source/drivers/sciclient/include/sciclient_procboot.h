@@ -202,12 +202,14 @@ int32_t Sciclient_procBootSetSequenceCtrl(uint8_t  processorId,
  *  \n<b>Response</b>:   #tisci_msg_proc_auth_boot_resp
  *
  *  \param  authBootCfg     Configuration Structure for the Authentication and boot
+ *  \param  response        Image hdr, image addr, image size are returned as a response
  *  \param  timeout         Gives a sense of how long to wait for the operation.
  *                          Refer \ref SystemP_Timeout.
  *  \return SystemP_SUCCESS on success, else failure
  */
 int32_t Sciclient_procBootAuthAndStart(
             const struct tisci_msg_proc_auth_boot_req * authBootCfg,
+            struct tisci_msg_proc_auth_boot_resp * response,
             uint32_t timeout);
 
 /**

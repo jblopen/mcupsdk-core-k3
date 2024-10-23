@@ -510,6 +510,20 @@ void Bootloader_ReservedMemInit(uint32_t startAddress, uint32_t regionlength);
  *                     by the \ref Bootloader_parseMultiCoreAppImage API
  */
 void Bootloader_powerOffCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo);
+
+/**
+ * \brief API to Parse Multicore Appimage
+ *
+ *  This API helps in parsing the multicore appimage and filling the metadata in the
+ *  bootImageInfo structure passed. This API should be called only after
+ *  authentication and decryption is done.
+ *
+ * \param handle        [in] Bootloader driver handle from \ref Bootloader_open
+ * \param bootImageInfo [in] Data structure of type Bootloader_BootImageInfo which will be filled
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_parseAppImage(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
 /** @} */
 
 #ifdef __cplusplus
