@@ -267,28 +267,28 @@ static uint16_t Sciclient_rmPsGetMaxPsp(void);
  *        index.  NULL will be returned for the pointer if the index value is
  *        greater than or equal to the current path stack pointer value.
  *
- * \param index
+ * \param indexVal
  * Path stack index
  *
  * \return
  * Pointer to IRQ tree node at the provided index
  */
 static const struct Sciclient_rmIrqNode *Sciclient_rmPsGetIrqNode(
-                uint16_t    index);
+                uint16_t    indexVal);
 
 /**
  * \brief Returns the interface index at the provided path stack index.  An
  *        error will be returned for the interface index if the index value
  *        is greater than or equal to the current path stack pointer value.
  *
- * \param index
+ * \param indexVal
  * Path stack index
  *
  * \return
  * >= 0 - Interface index at the provided index
  * CSL_EBADARGS - Specified index is invalid
  */
-static int32_t Sciclient_rmPsGetIfIdx(uint16_t  index);
+static int32_t Sciclient_rmPsGetIfIdx(uint16_t  indexVal);
 
 /**
  * \brief The inp value is updated for an existing path stack node.  Setting of
@@ -297,7 +297,7 @@ static int32_t Sciclient_rmPsGetIfIdx(uint16_t  index);
  *        validated.  An error is returned if the index is greater than or
  *        equal to the current path stack index.
  *
- * \param index
+ * \param indexVal
  * Path stack index
  *
  * \param inp
@@ -307,7 +307,7 @@ static int32_t Sciclient_rmPsGetIfIdx(uint16_t  index);
  * SystemP_SUCCESS - Set successful
  * CSL_EBADARGS - Specified index is invalid
  */
-static int32_t Sciclient_rmPsSetInp(uint16_t    index,
+static int32_t Sciclient_rmPsSetInp(uint16_t    indexVal,
                                     uint16_t    inp);
 
 /**
@@ -315,14 +315,14 @@ static int32_t Sciclient_rmPsSetInp(uint16_t    index,
  *        will be returned if the index is greater than or equal to the current
  *        path stack index.
  *
- * \param index
+ * \param indexVal
  * Path stack index
  *
  * \return
  * >= 0 - Path stack node's inp value
  * CSL_EBADARGS - Specified index is invalid
  */
-static int32_t Sciclient_rmPsGetInp(uint16_t index);
+static int32_t Sciclient_rmPsGetInp(uint16_t indexVal);
 
 /**
  * \brief The outp value is updated for an existing path stack node.  Setting of
@@ -331,7 +331,7 @@ static int32_t Sciclient_rmPsGetInp(uint16_t index);
  *        validated.  An error will be returned if the index is greater than or
  *        equal to the current path stack index.
  *
- * \param index
+ * \param indexVal
  * Path stack index
  *
  * \param outp
@@ -341,7 +341,7 @@ static int32_t Sciclient_rmPsGetInp(uint16_t index);
  * SystemP_SUCCESS - Set successful
  * CSL_EBADARGS - Specified index is invalid
  */
-static int32_t Sciclient_rmPsSetOutp(uint16_t   index,
+static int32_t Sciclient_rmPsSetOutp(uint16_t   indexVal,
                                      uint16_t   outp);
 
 /**
@@ -349,14 +349,14 @@ static int32_t Sciclient_rmPsSetOutp(uint16_t   index,
  *        will be returned if the index is greater than or equal to the current
  *        path stack index.
  *
- * \param index
+ * \param indexVal
  * Path stack index
  *
  * \return
  * >= 0 - Path stack node's outp value
  * CSL_EBADARGS - Specified index is invalid
  */
-static int32_t Sciclient_rmPsGetOutp(uint16_t   index);
+static int32_t Sciclient_rmPsGetOutp(uint16_t   indexVal);
 
 /**
  * \brief Get IRQ tree node
@@ -1215,29 +1215,29 @@ static uint16_t Sciclient_rmPsGetMaxPsp(void)
 }
 
 static const struct Sciclient_rmIrqNode *Sciclient_rmPsGetIrqNode(
-                uint16_t    index)
+                uint16_t    indexVal)
 {
-    return gPstack.ps[index].p_n;
+    return gPstack.ps[indexVal].p_n;
 }
 
-static int32_t Sciclient_rmPsGetIfIdx(uint16_t  index)
+static int32_t Sciclient_rmPsGetIfIdx(uint16_t  indexVal)
 {
     int32_t r = CSL_EBADARGS;
 
-    if (index < gPstack.psp) {
-        r = (int32_t)gPstack.ps[index].if_idx;
+    if (indexVal < gPstack.psp) {
+        r = (int32_t)gPstack.ps[indexVal].if_idx;
     }
 
     return r;
 }
 
-static int32_t Sciclient_rmPsSetInp(uint16_t    index,
+static int32_t Sciclient_rmPsSetInp(uint16_t    indexVal,
                                     uint16_t    inp)
 {
     int32_t r = SystemP_SUCCESS;
 
-    if (index < gPstack.psp) {
-        gPstack.ps[index].inp = inp;
+    if (indexVal < gPstack.psp) {
+        gPstack.ps[indexVal].inp = inp;
     } else {
         r = CSL_EBADARGS;
     }
@@ -1245,24 +1245,24 @@ static int32_t Sciclient_rmPsSetInp(uint16_t    index,
     return r;
 }
 
-static int32_t Sciclient_rmPsGetInp(uint16_t    index)
+static int32_t Sciclient_rmPsGetInp(uint16_t    indexVal)
 {
     int32_t r = CSL_EBADARGS;
 
-    if (index < gPstack.psp) {
-        r = (int32_t)gPstack.ps[index].inp;
+    if (indexVal < gPstack.psp) {
+        r = (int32_t)gPstack.ps[indexVal].inp;
     }
 
     return r;
 }
 
-static int32_t Sciclient_rmPsSetOutp(uint16_t   index,
+static int32_t Sciclient_rmPsSetOutp(uint16_t   indexVal,
                                      uint16_t   outp)
 {
     int32_t r = SystemP_SUCCESS;
 
-    if (index < gPstack.psp) {
-        gPstack.ps[index].outp = outp;
+    if (indexVal < gPstack.psp) {
+        gPstack.ps[indexVal].outp = outp;
     } else {
         r = CSL_EBADARGS;
     }
@@ -1270,12 +1270,12 @@ static int32_t Sciclient_rmPsSetOutp(uint16_t   index,
     return r;
 }
 
-static int32_t Sciclient_rmPsGetOutp(uint16_t   index)
+static int32_t Sciclient_rmPsGetOutp(uint16_t   indexVal)
 {
     int32_t r = CSL_EBADARGS;
 
-    if (index < gPstack.psp) {
-        r = (int32_t)gPstack.ps[index].outp;
+    if (indexVal < gPstack.psp) {
+        r = (int32_t)gPstack.ps[indexVal].outp;
     }
 
     return r;
