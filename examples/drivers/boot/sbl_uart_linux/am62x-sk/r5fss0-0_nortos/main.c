@@ -42,6 +42,7 @@
 #include <drivers/gtc.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/bootloader/bootloader_buf_io.h>
+#include <drivers/rtc.h>
 
 #define BOOTLOADER_UART_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_UART_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
@@ -219,6 +220,8 @@ int main()
     int32_t status;
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Board_init();

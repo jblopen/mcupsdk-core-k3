@@ -37,6 +37,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/device_manager/sciclient.h>
 #include <drivers/bootloader.h>
+#include <drivers/rtc.h>
 
 /*  In this sample bootloader, we load appimages for RTOS/Baremetal and Linux at different offset
     i.e the appimage for Linux (for A53) and RTOS/Baremetal (for R5, M4) is flashed at different offset in eMMC
@@ -159,6 +160,8 @@ int main()
     Bootloader_profileReset();
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");

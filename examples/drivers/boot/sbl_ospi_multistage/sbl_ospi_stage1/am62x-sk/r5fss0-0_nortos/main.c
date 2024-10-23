@@ -38,6 +38,7 @@
 #include <drivers/bootloader.h>
 #include <drivers/pinmux.h>
 #include <drivers/gtc.h>
+#include <drivers/rtc.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/dpl/sdl_dpl.h>
 #include <sdl/sdl_pbist.h>
@@ -234,6 +235,8 @@ int main()
     Bootloader_profileReset();
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");

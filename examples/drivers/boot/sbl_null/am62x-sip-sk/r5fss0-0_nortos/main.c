@@ -38,6 +38,7 @@
 #include <drivers/bootloader.h>
 #include <drivers/pinmux.h>
 #include <drivers/gtc.h>
+#include <drivers/rtc.h>
 
 /*   In this sample bootloader, we load appimages for RTO/Baremetal and Linux at different offset
  *   i.e the appimage for Linux (for A53) and RTOS/Baremetal (for M4) is flashed at different offset in flash
@@ -98,6 +99,8 @@ int main()
 
     Bootloader_socWaitForFWBoot();
     Bootloader_profileAddProfilePoint("TIFS init");
+
+    RTC_erratumi2327Init();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");

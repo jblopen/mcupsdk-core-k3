@@ -36,6 +36,7 @@
 #include "ti_board_open_close.h"
 #include "ti_board_config.h"
 #include <drivers/bootloader.h>
+#include <drivers/rtc.h>
 
 
 /*  In this sample bootloader, we load appimages for RTOS/Baremetal and Linux at different offset
@@ -163,6 +164,8 @@ int main()
     Bootloader_profileReset();
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");

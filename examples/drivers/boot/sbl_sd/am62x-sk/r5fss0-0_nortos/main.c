@@ -37,6 +37,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/device_manager/sciclient.h>
 #include <drivers/bootloader.h>
+#include <drivers/rtc.h>
 
 #define BOOTLOADER_SD_MULTICORE_APPIMAGE_FILENAME       ("/sd0/app")
 #define BOOTLOADER_SD_DM_APPIMAGE_FILENAME              ("/sd0/dm")
@@ -178,6 +179,8 @@ int main()
     Bootloader_profileReset();
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");

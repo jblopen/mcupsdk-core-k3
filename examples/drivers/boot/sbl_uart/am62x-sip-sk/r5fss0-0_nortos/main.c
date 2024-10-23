@@ -40,6 +40,7 @@
 #include <drivers/bootloader.h>
 #include <drivers/pinmux.h>
 #include <drivers/gtc.h>
+#include <drivers/rtc.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/bootloader/bootloader_buf_io.h>
 #include <stdbool.h>
@@ -154,6 +155,8 @@ int main()
     bool    bEndOfTransfer = false;
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Board_init();

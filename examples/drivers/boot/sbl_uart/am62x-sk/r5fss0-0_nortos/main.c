@@ -42,6 +42,7 @@
 #include <drivers/gtc.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/bootloader/bootloader_buf_io.h>
+#include <drivers/rtc.h>
 #include <stdbool.h>
 
 #define BOOTLOADER_UART_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
@@ -154,6 +155,8 @@ int main()
     bool    bEndOfTransfer = false;
 
     Bootloader_socWaitForFWBoot();
+
+    RTC_erratumi2327Init();
 
     System_init();
     Board_init();
