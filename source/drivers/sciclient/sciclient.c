@@ -480,7 +480,7 @@ int32_t Sciclient_service(const Sciclient_ReqPrm_t *pReqPrm,
         /* This is done in such a fashion for CPUs which do not honor a non word aligned
          * write.
          */
-        for (numBytes = 0; numBytes < sizeof(pReqPrm->flags); numBytes++)
+        for (numBytes = 0; numBytes < (sizeof(pReqPrm->flags) / sizeof(uint8_t)); numBytes++)
         {
             uint8_t *pDestFlags = ((uint8_t*)&header->flags) + numBytes;
             *pDestFlags = *pFlags;
