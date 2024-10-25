@@ -79,6 +79,7 @@ SDK features and tools.
 \cond SOC_AM62X || SOC_AM62AX
 - \subpage SYSFW_PLL_UPDATE_GUIDE
 - \subpage GRACEFUL_REMOTECORE_SHUTDOWN
+- \subpage LOW_POWER_MODE_AWARE_REMOTECORE
 \endcond
 \cond SOC_AM62DX
 - \subpage BOOT_BENCHMARK
@@ -93,6 +94,7 @@ SDK features and tools.
 - \subpage BOOTFLOW_GUIDE
 - \subpage CCS_PROJECTS_PAGE
 - \subpage GRACEFUL_REMOTECORE_SHUTDOWN
+- \subpage LOW_POWER_MODE_AWARE_REMOTECORE
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE
 - \subpage SYSCONFIG_INTRO_PAGE

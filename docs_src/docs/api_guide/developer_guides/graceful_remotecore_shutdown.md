@@ -5,17 +5,17 @@
 ## Introduction
 
 \cond SOC_AM62X
-Linux running on A53 core can load the fimrware to the remote cores. MCU M4F core incase of AM62X. Refer \htmllink{https://dev.ti.com/tirex/explore/node?node=A__AISILbMWZ4d84U2oSmXcdA__linux_academy_am62x__XaWts8R__LATEST, Linux Academy for AM62X} for more details on how to boot the remotecores. This section explains how to add support for graceful shutdown on the remotecore.
+Linux running on A53 core can load the firmware to the remote cores. MCU M4F core incase of AM62X. Refer \htmllink{https://dev.ti.com/tirex/explore/node?node=A__AISILbMWZ4d84U2oSmXcdA__linux_academy_am62x__XaWts8R__LATEST, Linux Academy for AM62X} for more details on how to boot the remotecores. This section explains how to add support for graceful shutdown on the remotecore.
 \endcond
 
 
 \cond SOC_AM62AX
-Linux running on A53 core can load the fimrware to the remote cores. MCU R5F/ C7X core incase of AM62AX. Refer \htmllink{https://dev.ti.com/tirex/explore/node?node=A__AS4TbXvv.-OIrnxuMySmZg__AM62A-ACADEMY__WeZ9SsL__LATEST, AM62Ax Academy} for more details on how to boot the remotecores. This section explains how to add support for graceful shutdown on the remotecore.
+Linux running on A53 core can load the firmware to the remote cores. MCU R5F/ C7X core incase of AM62AX. Refer \htmllink{https://dev.ti.com/tirex/explore/node?node=A__AS4TbXvv.-OIrnxuMySmZg__AM62A-ACADEMY__WeZ9SsL__LATEST, AM62Ax Academy} for more details on how to boot the remotecores. This section explains how to add support for graceful shutdown on the remotecore.
 \endcond
 
 
 \cond SOC_AM62PX
-Linux running on A53 core can load the fimrware to the remote cores. MCU R5F core incase of AM62PX. This section explains how to add support for graceful shutdown on the remotecore.
+Linux running on A53 core can load the firmware to the remote cores. MCU R5F core incase of AM62PX. This section explains how to add support for graceful shutdown on the remotecore.
 \endcond
 
 ## Implementing graceful shutdown on remotecore
@@ -51,6 +51,7 @@ void ipc_rp_mbox_callback(uint16_t remoteCoreId, uint16_t clientId, uint32_t msg
     }
 }
 ````
+ - On the suspend thread which is waiting for next lpm suspend message, break all the loops when gbShutdown == 1
  - On the main thread where the IPC is happening, break all the loops when gbShutdown == 1
 
 ````C
@@ -83,23 +84,33 @@ void ipc_rp_mbox_callback(uint16_t remoteCoreId, uint16_t clientId, uint32_t msg
 ````
 
 - Then follow the below sequence to go to WFI
-   - Close all the dirvers used
-   - Send acknowledgement to Linux core that the core is ready for shutdown
+   - Close all the drivers used
    - Deinit system (It will disable the interrupts and stops the tick timer)
+   - Send acknowledgement to Linux core that the core is ready for shutdown
    - Go to WFI / IDLE
 
 ````C
+    /* Follow the sequence for graceful shutdown for the last recv task */
+    DebugP_log("[IPC RPMSG ECHO] Closing all drivers and going to WFI ... !!!\r\n");
+
     /* Close the drivers */
     Drivers_close();
-
-    /* ACK the suspend message */
-    IpcNotify_sendMsg(gbShutdownRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SHUTDOWN_ACK, 1u);
 
     /* Deinit System */
     System_deinit();
 
-    /* For ARM R and M cores*/
-    __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
+    if (gbShutdownRemotecoreID)
+    {
+        /* ACK the shutdown message */
+        IpcNotify_sendMsg(gbShutdownRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SHUTDOWN_ACK, 1u);
+    }
 
+    #if (__ARM_ARCH_PROFILE == 'R') ||  (__ARM_ARCH_PROFILE == 'M')
+        /* For ARM R and M cores*/
+        __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
+    #endif
+    #if defined(BUILD_C7X)
+        asm("    IDLE");
+    #endif
 ````
 This is implemented on \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO

@@ -14,6 +14,7 @@ In this example,
 - All cores on startup after driver initialization first wait for Linux to be ready
 - Then they `announce` the end points on which they are waiting for messages to Linux.
 - This is needed to be done else Linux cannot initiate message exchange with RTOS/NORTOS CPUs.
+- In case of remotecores, suspend task is created to enable graceful suspend in low power mode.
 - Two tasks are then created which listen for incoming messages and echo it back to the sender.
   The sender can be Linux CPU or other RTOS/NORTOS CPUs.
 - Meanwhile Linux kernel and user space test applications initiate message exchange with RTOS/NORTOS CPUs
@@ -23,15 +24,21 @@ In this example,
 - This shows that all CPUs can exchange messages with each other, no matter which OS or RTOS or NORTOS
   is running on the sender or receiver CPUs.
 \cond SOC_AM62X
-- This example provides support for gracceful shutdown of the remote core (MCU M4F). Refer \ref GRACEFUL_REMOTECORE_SHUTDOWN
+- This example provides support for graceful shutdown of the remote core (MCU M4F). Refer \ref GRACEFUL_REMOTECORE_SHUTDOWN
 - This example provides support for MCU only low power mode support on the MCU core (MCU M4F)
+- This example provides support for Deep Sleep low power mode (MCU M4F)
 \endcond
 \cond SOC_AM62AX || SOC_AM62DX
-- This example provides support for gracceful shutdown of the remote core (MCU MR5F/ C7X). Refer \ref GRACEFUL_REMOTECORE_SHUTDOWN
+- This example provides support for graceful shutdown of the remote core (MCU R5F/ C7X). Refer \ref GRACEFUL_REMOTECORE_SHUTDOWN
 - This example provides support for MCU only low power mode support on the MCU core (MCU R5F)
+- This example provides support for Deep Sleep and IO Only plus DDR low power mode (MCU R5F/ C7X).
 \endcond
 \cond SOC_AM62PX
-The example integrates bootloading funtionality with SBL on OSPI bootmedia. It
+- This example provides support for graceful shutdown of the remote core (MCU R5F). Refer \ref GRACEFUL_REMOTECORE_SHUTDOWN
+- This example provides support for MCU only low power mode support on the MCU core (MCU R5F)
+- This example provides support for other low power modes on the remote core (MCU R5F)
+
+The example integrates bootloading functionality with SBL on OSPI bootmedia. It
 also integrates Device manager functionality. The SBL stage 2 thread boots all
 the cores along with HLOS like Linux. Refer \ref SBL_BOOTING_LINUX_OSPI for boot
 flow sequence.
@@ -105,25 +112,17 @@ flow sequence.
 - Refer \ref GETTING_STARTED_FLASH for flashing the application.
 \endcond
 
-\cond SOC_AM62X || SOC_AM62AX || SOC_AM62DX
+\cond SOC_AM62X || SOC_AM62AX || SOC_AM62DX || SOC_AM62PX
 ## MCU only LPM {#EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO_MCU_ONLY_LPM}
 \attention Low power mode is supported only on the Linux SPL boot flow. SBL bootflow does not support low power mode (LPM)
 
 The following steps shows how to run MCU-only low power mode.
 
-- Set the @VAR_SOC_MCU_CORE as the wake-up source on the linux kernel by running the following command. When the MCU core is set as the wake-up source, suspending the kernel will go to `MCU only sleep mode`.
+- Set the wake up resume latency as 100ms for CPU0 on the linux kernel by running the following command. When the resume latency value is less, suspending the kernel will go to `MCU only sleep mode`.
 
-\cond SOC_AM62X
 \code
-$ echo enabled > /sys/bus/platform/devices/5000000.m4fss/power/wakeup
+$ echo 100 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
 \endcode
-\endcond
-
-\cond SOC_AM62AX || SOC_AM62DX
-\code
-$ echo enabled > /sys/bus/platform/devices/79000000.r5f/power/wakeup
-\endcode
-\endcond
 
  - Go to MCU only low power mode by running the following command on the linux.
 
@@ -134,17 +133,19 @@ $ echo mem > /sys/power/state
  - After this the following message will appear on the MCU UART.
 
 \code
+[IPC RPMSG ECHO] Next MCU mode is 1
 [IPC RPMSG ECHO] Suspend request to MCU-only mode received
-[IPC RPMSG ECHO] Press a sinlge key on this terminal to resume the kernel from MCU only mode
+[IPC RPMSG ECHO] Press a single key on this terminal to resume the kernel from MCU only mode
 \endcode
 
  - Then type any key on the MCU UART to resume the kernel from LPM.
 
  \code
-[IPC RPMSG ECHO] Key pressed. Notifying DM to wakeup main domain.
-[IPC RPMSG ECHO] Main domain resumed.
+[IPC RPMSG ECHO] Key pressed. Notifying DM to wakeup main domain
+[IPC RPMSG ECHO] Main domain resumed due to MCU UART
 \endcode
 
+- For detailed implementation of low power modes, refer \ref LOW_POWER_MODE_AWARE_REMOTECORE
 
 \endcond
 
