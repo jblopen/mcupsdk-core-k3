@@ -142,6 +142,7 @@ function enet_cpsw_getPhyaddress(platform, port)
     const cpswPhyAddrInfoMap = new Map(
                                            [
                                              ['am62ax-sk',{phyAddr1: 0, phyAddr2: 1}],
+                                             ['am62x-sk-sip',  {phyAddr1: 0, phyAddr2: 1}],
                                              ['am62x-sk',{phyAddr1: 0, phyAddr2: 1}],
                                              ['am62px-sk',{phyAddr1: 0, phyAddr2: 1}],
                                            ],
