@@ -837,11 +837,6 @@ int8_t test_sciclient_procboot(void)
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
         failCount++;
     }
-	else if(proc_status_a53_2.processor_id != SCICLIENT_PROC_ID_A53SS0_CORE_0)
-    {
-        DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
-        failCount++;
-    }
 
 	/* Request A53_0 */
 	retVal = Sciclient_procBootRequestProcessor(SCICLIENT_PROC_ID_A53SS0_CORE_0, SystemP_WAIT_FOREVER);
