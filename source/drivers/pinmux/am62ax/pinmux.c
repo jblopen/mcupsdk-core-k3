@@ -90,8 +90,9 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId)
 {
     uint32_t            baseAddr;
     volatile uint32_t  *regAddr;
+    const Pinmux_PerCfg_t *ptrPinMuxCfg = pinmuxCfg;
 
-    if(NULL != pinmuxCfg)
+    if(NULL != ptrPinMuxCfg)
     {
         if(PINMUX_DOMAIN_ID_MAIN == domainId)
         {
@@ -104,11 +105,11 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId)
         baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(baseAddr);
 
         Pinmux_unlockMMR(domainId);
-        while( pinmuxCfg->offset != PINMUX_END )
+        while( ptrPinMuxCfg->offset != PINMUX_END )
         {
-            regAddr = (volatile uint32_t *)(baseAddr + pinmuxCfg->offset);
-            CSL_REG32_WR(regAddr, pinmuxCfg->settings);
-            pinmuxCfg++;
+            regAddr = (volatile uint32_t *)(baseAddr + ptrPinMuxCfg->offset);
+            CSL_REG32_WR(regAddr, ptrPinMuxCfg->settings);
+            ptrPinMuxCfg++;
         }
         Pinmux_lockMMR(domainId);
     }
