@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -69,7 +69,7 @@ void Utils_memcpyWord(uint8_t *source, uint8_t *destination, uint32_t length)
 
         /* Do pointer copy for aligned bytes */
         uint32_t unalignedBytes = remainingBytes % PTR_COPY_SRC_ALIGNMENT;
-        i = (remainingBytes - unalignedBytes) / 4 ;
+        i = (remainingBytes - unalignedBytes) / PTR_COPY_SRC_ALIGNMENT ;
 
         while(i != 0)
         {
