@@ -289,6 +289,12 @@ const buildOptionCombos = [
     { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: false},
     { device: device, cpu: "a53ss1-0", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: false},
     { device: device, cpu: "a53ss1-1", cgt: "gcc-aarch64",  board: "am62x-sk", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64",  board: "am62x-sk-lp", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss1-0", cgt: "gcc-aarch64",  board: "am62x-sk-lp", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss1-1", cgt: "gcc-aarch64",  board: "am62x-sk-lp", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss0-1", cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss1-0", cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "a53ss1-1", cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos", isPartOfSystemProject: false},
 ];
 
 const buildOptionCombos_dm_r5 = [
