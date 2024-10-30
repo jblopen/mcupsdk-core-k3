@@ -25,6 +25,11 @@ This page lists all the examples related to Security.
 -# \subpage EXAMPLES_FWL_EXCPT_TRIGGER
 \endcond
 
+\cond SOC_AM62AX
+-# \subpage EXAMPLES_BOOTLOADER_TEST
+-# \subpage EXAMPLES_MCU_CORE_TEST
+\endcond
+
 \cond SOC_AM62AX || SOC_AM62DX
 -# \subpage EXAMPLES_DRIVERS_SA3UL_AES_CBC_128
 -# \subpage EXAMPLES_DRIVERS_SA3UL_AES_CBC_256
