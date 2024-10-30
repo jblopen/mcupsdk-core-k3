@@ -167,14 +167,20 @@ tests-libs-scrub:
 	$(MAKE) -C test -f makefile.$(DEVICE) libs-scrub PROFILE=$(PROFILE)
 
 syscfg-tests:
-ifeq ($(DEVICE),$(filter $(DEVICE), am64x))
+ifeq ($(DEVICE),$(filter $(DEVICE), am64x am62x am62ax am62dx))
 	-$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/tests/sanityTests.js -s $(SYSCFG_SDKPRODUCT) -d $(SYSCFG_DEVICE) -c a53ss0-0
 endif
 ifeq ($(DEVICE),$(filter $(DEVICE), am64x am243x am62x))
 	-$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/tests/sanityTests.js -s $(SYSCFG_SDKPRODUCT) -d $(SYSCFG_DEVICE) -c m4fss0-0
 endif
-ifeq ($(DEVICE),$(filter $(DEVICE), am62ax am62px))
+ifeq ($(DEVICE),$(filter $(DEVICE), am62ax am62dx am62px))
 	-$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/tests/sanityTests.js -s $(SYSCFG_SDKPRODUCT) -d $(SYSCFG_DEVICE) -c mcu-r5fss0-0
+endif
+ifeq ($(DEVICE),$(filter $(DEVICE), am62px))
+	-$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/tests/sanityTests.js -s $(SYSCFG_SDKPRODUCT) -d $(SYSCFG_DEVICE) -c wkup-r5fss0-0
+endif
+ifeq ($(DEVICE),$(filter $(DEVICE), am62ax am62dx))
+	-$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/tests/sanityTests.js -s $(SYSCFG_SDKPRODUCT) -d $(SYSCFG_DEVICE) -c c75ss0-0
 endif
 	-$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/tests/sanityTests.js -s $(SYSCFG_SDKPRODUCT) -d $(SYSCFG_DEVICE) -c r5fss0-0
 ifeq ($(DEVICE),$(filter $(DEVICE), am273x awr294x))
