@@ -231,7 +231,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ospi_diag_io";
+    property.name = "ospi_flash_diag";
     property.isInternal = false;
     property.isLinuxFwGen = true;
     property.buildOptionCombos = buildOptionCombos;

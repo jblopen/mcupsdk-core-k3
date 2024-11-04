@@ -8165,8 +8165,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Diag Io Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "ospi_diag_io",
+        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ospi_flash_diag",
         "location": "../../examples/drivers/ospi/ospi_flash_diag/am62x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62B",
@@ -8199,8 +8199,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Diag Io Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "ospi_diag_io",
+        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ospi_flash_diag",
         "location": "../../examples/drivers/ospi/ospi_flash_diag/am62x-sip-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "SK-AM62B",

@@ -21,17 +21,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ospi_diag_io.$(PROFILE).out
+OUTNAME:=ospi_flash_diag.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=ospi_diag_io.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=ospi_diag_io.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=ospi_diag_io.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=ospi_diag_io.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ospi_diag_io.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ospi_diag_io.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ospi_diag_io.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ospi_diag_io.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=ospi_flash_diag.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ospi_flash_diag.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=ospi_flash_diag.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=ospi_flash_diag.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ospi_flash_diag.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ospi_flash_diag.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=ospi_flash_diag.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=ospi_flash_diag.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -199,8 +199,8 @@ $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
 	@echo  Linking: am62x:r5fss0-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PREBUILD_PATH) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS_PREBUILD) $(LIBS) $(LNK_FILES)
-	$(RM) ospi_diag_io.wkup-r5f0_0.${ConfigName}.strip.out
-	$(STRIP) -p $@ -o=ospi_diag_io.wkup-r5f0_0.${ConfigName}.strip.out
+	$(RM) ospi_flash_diag.wkup-r5f0_0.${ConfigName}.strip.out
+	$(STRIP) -p $@ -o=ospi_flash_diag.wkup-r5f0_0.${ConfigName}.strip.out
 	@echo  Linking: am62x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
@@ -208,7 +208,7 @@ clean:
 	@echo  Cleaning: am62x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
-	$(RM) ospi_diag_io.wkup-r5f0_0.${ConfigName}.strip.out
+	$(RM) ospi_flash_diag.wkup-r5f0_0.${ConfigName}.strip.out
 	$(RM) $(BOOTIMAGE_NAME)
 	$(RM) $(BOOTIMAGE_NAME_XIP)
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
@@ -219,7 +219,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am62x:r5fss0-0:freertos:ti-arm-clang ospi_diag_io ...
+	@echo  Scrubing: am62x:r5fss0-0:freertos:ti-arm-clang ospi_flash_diag ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
