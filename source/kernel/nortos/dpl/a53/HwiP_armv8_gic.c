@@ -87,11 +87,13 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
     /* Set interrupt priority */
     HwiP_intrPrioritySet(params->intNum, (uint32_t)params->priority, coreId);
 
+    #if defined(AMP_A53)
     /* Route the spi interrupt */
     if(params->intNum >= HWIP_GICD_SGI_PPI_INTR_ID_MAX)
     {
         HwIP_routeGICSharedPeripheralInterrupt(params->intNum, coreId);
     }
+    #endif
 
     if (params->isPulse == 0)
     {
