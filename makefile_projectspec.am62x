@@ -382,6 +382,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk_a53ss1-1_nortos_g
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sip-sk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am62x-sk-lp_r5fss0-0_freertos_ti-arm-clang_build
@@ -403,6 +409,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk-lp_a53ss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk_a53ss0-1_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk_a53ss1-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk_a53ss1-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_build
@@ -1639,6 +1651,24 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec all
 
+ dpl_demo_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dpl_demo_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dpl_demo_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dpl_demo_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dpl_demo_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dpl_demo_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
  dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
@@ -1701,6 +1731,24 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  task_switch_am62x-sk_a53ss1-1_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ task_switch_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ task_switch_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ task_switch_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ task_switch_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ task_switch_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ task_switch_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec all
 
  dhrystone_benchmark_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/kernel/freertos/dhrystone_benchmark/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
@@ -2360,6 +2408,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-1_nortos_g
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sip-sk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am62x-sk-lp_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2381,6 +2435,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk-lp_a53ss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk_a53ss0-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk_a53ss1-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk_a53ss1-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean
@@ -3617,6 +3677,24 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec clean
 
+ dpl_demo_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dpl_demo_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dpl_demo_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dpl_demo_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dpl_demo_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dpl_demo_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
  dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3679,6 +3757,24 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  task_switch_am62x-sk_a53ss1-1_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ task_switch_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ task_switch_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ task_switch_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ task_switch_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ task_switch_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ task_switch_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec clean
 
  dhrystone_benchmark_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/kernel/freertos/dhrystone_benchmark/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
@@ -4338,6 +4434,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk_a53ss1-1_nortos_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk_a53ss0-1_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk_a53ss1-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sip-sk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am62x-sk-lp_r5fss0-0_freertos_ti-arm-clang_export
@@ -4359,6 +4461,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk-lp_a53ss0-0_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk_a53ss0-1_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk_a53ss1-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk_a53ss1-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_export
@@ -5595,6 +5703,24 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  dpl_demo_am62x-sk_a53ss1-1_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec export
 
+ dpl_demo_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dpl_demo_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dpl_demo_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dpl_demo_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dpl_demo_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dpl_demo_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
  dpl_demo_am62x-sk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
@@ -5657,6 +5783,24 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  task_switch_am62x-sk_a53ss1-1_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ task_switch_am62x-sk-lp_a53ss0-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ task_switch_am62x-sk-lp_a53ss1-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ task_switch_am62x-sk-lp_a53ss1-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ task_switch_am62x-sip-sk_a53ss0-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ task_switch_am62x-sip-sk_a53ss1-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ task_switch_am62x-sip-sk_a53ss1-1_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec export
 
  dhrystone_benchmark_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/kernel/freertos/dhrystone_benchmark/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
@@ -6332,6 +6476,12 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sip-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am62x-sk-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -6353,6 +6503,12 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/dhrystone_benchmark/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/dhrystone_benchmark/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/dhrystone_benchmark/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
