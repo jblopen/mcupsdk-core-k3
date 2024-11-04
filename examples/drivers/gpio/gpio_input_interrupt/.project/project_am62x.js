@@ -325,6 +325,12 @@ const buildOptionCombos = [
     { device: "am62x", cpu: "a53ss0-1",  cgt: "gcc-aarch64", board: "am62x-sk", os: "freertos"},
     { device: "am62x", cpu: "a53ss1-1",  cgt: "gcc-aarch64", board: "am62x-sk", os: "freertos"},
     { device: "am62x", cpu: "a53ss1-0",  cgt: "gcc-aarch64", board: "am62x-sk", os: "freertos"},
+    { device: "am62x", cpu: "a53ss0-1",  cgt: "gcc-aarch64", board: "am62x-sk-lp", os: "freertos"},
+    { device: "am62x", cpu: "a53ss1-1",  cgt: "gcc-aarch64", board: "am62x-sk-lp", os: "freertos"},
+    { device: "am62x", cpu: "a53ss1-0",  cgt: "gcc-aarch64", board: "am62x-sk-lp", os: "freertos"},
+    { device: "am62x", cpu: "a53ss0-1",  cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos"},
+    { device: "am62x", cpu: "a53ss1-0",  cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos"},
+    { device: "am62x", cpu: "a53ss1-1",  cgt: "gcc-aarch64",  board: "am62x-sip-sk", os: "freertos"},
 ];
 
 const buildOptionCombos_dm_r5 = [

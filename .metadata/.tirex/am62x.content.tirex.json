@@ -3473,6 +3473,210 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Gpio Input Interrupt Example. CPU is A53SS0-1 running FREERTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpio Input Interrupt Example. CPU is A53SS1-1 running FREERTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "a53ss1-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpio Input Interrupt Example. CPU is A53SS1-0 running FREERTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "a53ss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpio Input Interrupt Example. CPU is A53SS0-1 running FREERTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpio Input Interrupt Example. CPU is A53SS1-0 running FREERTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "a53ss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpio Input Interrupt Example. CPU is A53SS1-1 running FREERTOS.",
+        "name": "gpio_input_interrupt",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpio",
+            "gpio_input_interrupt",
+            "a53ss1-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Gpmc Flash Io Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "gpmc_flash_io",
         "location": "../../examples/drivers/gpmc/gpmc_flash_io/am62x-sk-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -9154,6 +9358,210 @@
         "description": "A Sciclient Get Version Example. CPU is A53SS1-1 running FREERTOS.",
         "name": "sciclient_get_version",
         "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sk/a53ss1-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "sciclient",
+            "sciclient_get_version",
+            "a53ss1-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sciclient Get Version Example. CPU is A53SS0-1 running FREERTOS.",
+        "name": "sciclient_get_version",
+        "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sk-lp/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "sciclient",
+            "sciclient_get_version",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sciclient Get Version Example. CPU is A53SS1-0 running FREERTOS.",
+        "name": "sciclient_get_version",
+        "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sk-lp/a53ss1-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "sciclient",
+            "sciclient_get_version",
+            "a53ss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sciclient Get Version Example. CPU is A53SS1-1 running FREERTOS.",
+        "name": "sciclient_get_version",
+        "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sk-lp/a53ss1-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "sciclient",
+            "sciclient_get_version",
+            "a53ss1-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sciclient Get Version Example. CPU is A53SS0-1 running FREERTOS.",
+        "name": "sciclient_get_version",
+        "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sip-sk/a53ss0-1_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "sciclient",
+            "sciclient_get_version",
+            "a53ss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sciclient Get Version Example. CPU is A53SS1-0 running FREERTOS.",
+        "name": "sciclient_get_version",
+        "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sip-sk/a53ss1-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "SK-AM62B",
+            "SK-AM62B-P1"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "sciclient",
+            "sciclient_get_version",
+            "a53ss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sciclient Get Version Example. CPU is A53SS1-1 running FREERTOS.",
+        "name": "sciclient_get_version",
+        "location": "../../examples/drivers/sciclient/sciclient_get_version/am62x-sip-sk/a53ss1-1_freertos/gcc-aarch64/example.projectspec",
         "devtools": [
             "SK-AM62B",
             "SK-AM62B-P1"
