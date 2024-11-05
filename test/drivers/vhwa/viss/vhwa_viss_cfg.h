@@ -1000,6 +1000,17 @@ Fcp_CcmConfig   gCcmCfg[] =
         }
     },
 #endif
+/* 6 V3; 2 V1 */
+    {
+        {
+            {453, -166, -31, 0},
+            {-149,  420, -15, 0},
+            {17,  -327, 566, 0}
+        },
+        {
+            500, 1000, 1500
+        }
+    },
 };
 
 uint32_t gGammaTable[][FCP_GAMMA_LUT_SIZE] =
@@ -4417,7 +4428,50 @@ AppViss_Cfg gVissCfg[] =
         NULL,        /* H3A */
         NULL,               /* EE */
         NULL,               /* Hist Cfg*/
-    }
+    },
+    /* 32 Copy of 31 14bit decompanding with CCM Offsets Modified*/
+    {
+        &gPwlCfg[6],        /* PWL VS */
+        &gPwlCfg[0],        /* PWL S */
+        &gPwlCfg[0],        /* PWL L */
+        &gLutCfg[9],        /* PWL LUT VS */
+        NULL,               /* PWL LUT S */
+        NULL,               /* PWL LUT L */
+        &gWdrCfg[0],        /* WDR1 */
+        &gWdrCfg[1],        /* WDR1 */
+        &gLutCfg[0],        /* 20 to 16 LUT config */
+        &gDpcOtfCfg[0],     /* DPC OTF */                           /* Modified */
+        NULL,               /* DPC LUT */
+        &gLscCfg[0],        /* LSC */                               /* Modified */
+        &gWbCfg[0],         /* WB */
+        &gRfeH3aInCfg[0],   /* RFE H3A Config */
+        &gRfeH3aLutCfg[0],  /* H3a LUT */
+
+        &gLutCfg[0],        /* 16 to 12 LUT */
+
+        &gCfaCfg[1],        /* CFA */
+        #if defined (VHWA_VPAC_IP_REV_VPAC3) || defined (VHWA_VPAC_IP_REV_VPAC3L)
+        &gCcmCfg[6],        /* CCM */
+        #else
+        &gCcmCfg[2],        /* CCM */
+        #endif
+
+        &gGammaCfg[1],      /* Gamma */
+
+        &gRgb2HsvCfg[0],    /* RGB2HSV */
+
+        &gRgb2YuvCfg[1],    /* RGB2YUV */
+
+        &gRgbLutCfg[0],     /* RGB Lut */
+
+        NULL,        /* NSF4 */
+        NULL,       /* GLBCE */
+        NULL,    /* Glbce_fwdPercept */
+        NULL,    /* Glbce_revPercept */
+        NULL,        /* H3A */
+        NULL,               /* EE */
+        NULL,               /* Hist Cfg*/
+    },
 };
 #if defined (VHWA_VPAC_IP_REV_VPAC3L)
 Pcid_IRremapLut pIRRemapLut[]= {
@@ -6883,7 +6937,82 @@ AppViss_TestConfig gAppVissTestConfig[] =
         },
         /* VISS config */
         &gVissCfg[0]
-    }
+    },
+/* 27,(Copy of 25) Single Frame input with 14bit companded with CCM Offsets Modified  */
+    {
+        /* VISS Parameters */
+        {
+            /* Input Mode */
+            VHWA_M2M_VISS_MODE_SINGLE_FRAME_INPUT,
+            /* In Format */
+            {
+                0, 1920, 1080, {1920*2, 1920*2, 1920*2}, {FALSE},
+                FVID2_DF_RAW, FVID2_SF_PROGRESSIVE,
+                FVID2_CCSF_BITS14_UNPACKED16
+            },
+            /* Output Parameters */
+            {
+                {
+                    /* Output Enabled */
+                    TRUE,
+                    /* Output Format */
+                    {
+                        0, 1920, 1080, {1920*2, 1920*2, 1920*2}, {FALSE},
+                        FVID2_DF_YUV420SP_UV, FVID2_SF_PROGRESSIVE,//FVID2_DF_RAW08
+                        FVID2_CCSF_BITS12_UNPACKED16
+                    },
+                    VHWA_VISS_PIPE_HV,
+                    VHWA_VISS_IROUT_DISABLED,
+                },
+                {
+                    FALSE,
+                    {
+                    },
+                    VHWA_VISS_PIPE_HV,
+                    VHWA_VISS_IROUT_DISABLED,
+                },
+                {
+                    /* Output Enabled */
+                    FALSE,
+                    /* Output Format */
+                    {
+                    },
+                    VHWA_VISS_PIPE_HV,
+                    VHWA_VISS_IROUT_ENABLED,
+                },
+                {
+                    FALSE,
+                    {
+                    },
+                    VHWA_VISS_PIPE_HV,
+                    VHWA_VISS_IROUT_DISABLED,
+                },
+                {
+                    FALSE,
+                    {
+                    },
+                    VHWA_VISS_PIPE_HV,
+                    VHWA_VISS_IROUT_DISABLED,
+                },
+                /* H3A Output */
+                {
+                    FALSE,
+                    {
+                    },
+                    VHWA_VISS_PIPE_HV,
+                    VHWA_VISS_IROUT_DISABLED,
+                },
+            },
+            .enableGlbce = FALSE,                           /* enable GLBCE */
+            .enableNsf4 = FALSE,                           /* Enable NSF4 */
+            .edgeEnhancerMode = VHWA_M2M_VISS_EE_DISABLE,       /* EE Mode */
+            .enableDpc = TRUE,                           /* Enable DPC */
+            .enableCac = FALSE,                          /* enableCac */
+            .chromaMode = FALSE,                          /* chromaMode */
+        },
+        /* VISS config */
+        &gVissCfg[32U],
+    },
 };
 
 AppViss_TestParams gAppVissTestPrms[] =
@@ -7144,7 +7273,7 @@ AppViss_TestParams gAppVissTestPrms[] =
         3,                          /* Repeate Count */
         TRUE,                       /* Is Performance */
         {&gAppVissTestConfig[25]},   /* Test Config */
-        FALSE,
+        TRUE,
         FALSE,
         FALSE
     },
@@ -7157,7 +7286,17 @@ AppViss_TestParams gAppVissTestPrms[] =
         TRUE,
         FALSE,
         FALSE
-    }
+    },
+    {
+        "TC_028",                   /* Test Name */
+        1,                          /* Num Handles */
+        3,                          /* Repeate Count */
+        TRUE,                       /* Is Performance */
+        {&gAppVissTestConfig[27]},   /* Test Config */
+        TRUE,
+        FALSE,
+        FALSE
+    },
 };
 
 
