@@ -214,11 +214,12 @@ int8_t test_sciclient_procboot(void)
     }
 
     struct tisci_msg_proc_auth_boot_req authReq;
+    struct tisci_msg_proc_auth_boot_resp authResp = {0};
     /* Request TIFS (SYSFW) to authenticate (and decrypt if mentioned in the x509 cert) the image */
     authReq.certificate_address_hi = (uint32_t)(((uint64_t)&r5_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq.certificate_address_lo = (uint32_t)((uint64_t)&r5_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
 
-    retVal = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
     if(retVal != SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -228,7 +229,7 @@ int8_t test_sciclient_procboot(void)
 	authReq.certificate_address_hi = (uint32_t)(((uint64_t)&a53_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq.certificate_address_lo = (uint32_t)((uint64_t)&a53_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
 
-    retVal = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -242,7 +243,7 @@ int8_t test_sciclient_procboot(void)
         failCount++;
     }
 
-	retVal = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+	retVal = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
     if(retVal != SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -375,7 +376,7 @@ int8_t test_sciclient_procboot(void)
 	/* Authorize and start R5_0_0 */
 	authReq.certificate_address_hi = (uint32_t)(((uint64_t)&r5_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq.certificate_address_lo = (uint32_t)((uint64_t)&r5_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
-    retVal = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -423,7 +424,7 @@ int8_t test_sciclient_procboot(void)
 	/* Authorize and start A53_0 */
 	authReq.certificate_address_hi = (uint32_t)(((uint64_t)&a53_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq.certificate_address_lo = (uint32_t)((uint64_t)&a53_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
-    retVal = Sciclient_procBootAuthAndStart(&authReq, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq, &authResp, SystemP_WAIT_FOREVER);
     if(retVal != SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -459,7 +460,7 @@ int8_t test_sciclient_procboot(void)
         failCount++;
     }
 
-    retVal = Sciclient_procBootAuthAndStart(NULL, (-1));
+    retVal = Sciclient_procBootAuthAndStart(NULL, NULL, (-1));
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -645,11 +646,12 @@ int8_t test_sciclient_procboot(void)
     }
 
     struct tisci_msg_proc_auth_boot_req authReq2;
+    struct tisci_msg_proc_auth_boot_resp authResp2 = {0};
     /* Request TIFS (SYSFW) to authenticate (and decrypt if mentioned in the x509 cert) the image */
     authReq2.certificate_address_hi = (uint32_t)(((uint64_t)&r5_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq2.certificate_address_lo = (uint32_t)((uint64_t)&r5_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
 
-    retVal = Sciclient_procBootAuthAndStart(&authReq2, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq2, &authResp2, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -659,7 +661,7 @@ int8_t test_sciclient_procboot(void)
 	authReq2.certificate_address_hi = (uint32_t)(((uint64_t)&a53_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq2.certificate_address_lo = (uint32_t)((uint64_t)&a53_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
 
-    retVal = Sciclient_procBootAuthAndStart(&authReq2, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq2, &authResp2, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -673,7 +675,7 @@ int8_t test_sciclient_procboot(void)
         failCount++;
     }
 
-	retVal = Sciclient_procBootAuthAndStart(&authReq2, SystemP_WAIT_FOREVER);
+	retVal = Sciclient_procBootAuthAndStart(&authReq2, &authResp2, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -806,7 +808,7 @@ int8_t test_sciclient_procboot(void)
 	/* Authorize and start R5_0_0 */
 	authReq2.certificate_address_hi = (uint32_t)(((uint64_t)&r5_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq2.certificate_address_lo = (uint32_t)((uint64_t)&r5_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
-    retVal = Sciclient_procBootAuthAndStart(&authReq2, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq2, &authResp2, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
@@ -849,7 +851,7 @@ int8_t test_sciclient_procboot(void)
 	/* Authorize and start A53_0 */
 	authReq2.certificate_address_hi = (uint32_t)(((uint64_t)&a53_cl0_c0_binary_hs[0] >> 32U) & 0xFFFFFFFFU);
     authReq2.certificate_address_lo = (uint32_t)((uint64_t)&a53_cl0_c0_binary_hs[0] & 0xFFFFFFFFU);
-    retVal = Sciclient_procBootAuthAndStart(&authReq2, SystemP_WAIT_FOREVER);
+    retVal = Sciclient_procBootAuthAndStart(&authReq2, &authResp2, SystemP_WAIT_FOREVER);
     if(retVal == SystemP_SUCCESS)
     {
         DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
