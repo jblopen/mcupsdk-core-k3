@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "common_armv8.h"
-
+#include "CacheP_armv8.h"
 #ifdef SMP_FREERTOS
 #include <kernel/dpl/CacheP.h>
 #endif
@@ -123,7 +123,8 @@ int __system_start(void)
         }
     }
 #endif
-
+    /* Set SMPEN flag */
+    CacheP_enableSMP();
     /* initialize mmu and cache */
 #if defined (SMP_FREERTOS)
 

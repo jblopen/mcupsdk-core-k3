@@ -486,9 +486,6 @@ void MmuP_init()
 
     if (gMmuConfig.enableMmu == 1)
     {
-
-    /* Set SMPEN flag when running SMP FreeRTOS */
-    CacheP_enableSMP();
         /* Enable MMU */
         MmuP_enableI();
     }
