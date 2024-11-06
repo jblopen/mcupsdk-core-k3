@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -53,7 +53,7 @@ extern "C" {
  * is the theortical max limit on outstanding recv messages.
  */
 
-#if defined (SOC_AM62AX)
+#if defined (SOC_AM62AX) || defined (SOC_AM64X) || defined (SOC_AM62X) || defined (SOC_AM62PX) || defined (SOC_AM62DX)
 #define RPMESSAGE_MAX_LOCAL_MSG_OBJ     (256U)
 #else
 #define RPMESSAGE_MAX_LOCAL_MSG_OBJ     (16U)

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +32,11 @@
 
 #include <drivers/ipc_rpmsg/ipc_rpmsg_priv.h>
 
+#if ((__ARM_ARCH == 7) && (__ARM_ARCH_PROFILE == 'M')) /* M4F */
+IpcRpmsg_Ctrl gIpcRpmsgCtrl __attribute__ ((section (".bss.ipcctrl"), aligned (8)));
+#else
 IpcRpmsg_Ctrl gIpcRpmsgCtrl;
+#endif
 
 RPMessage_LocalMsg *RPMessage_allocEndPtMsg(uint32_t remoteCoreId)
 {
@@ -260,7 +264,7 @@ int32_t RPMessage_send( void*    data,
 
             if(dataLength > (vringBufLen - sizeof(RPMessage_Header)) )
             {
-                /* Message length is defined as uint16 in RPMessage_Header. So 
+                /* Message length is defined as uint16 in RPMessage_Header. So
                  * there will be no precision loss here.
                  */
                 dataLength = (uint16_t)(vringBufLen - sizeof(RPMessage_Header));
@@ -629,7 +633,7 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
     int32_t status = SystemP_SUCCESS;
     uint16_t coreId, localEndPtId;
 
-    /* As the core id is limited and the structure is not a shared with linux 
+    /* As the core id is limited and the structure is not a shared with linux
      * so it is safe to change the type of selfCoreId to u16 . */
     gIpcRpmsgCtrl.selfCoreId = (uint16_t)IpcNotify_getSelfCoreId();
     gIpcRpmsgCtrl.controlEndPtCallback = NULL;
