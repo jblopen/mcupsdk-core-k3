@@ -30,10 +30,6 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * Auto generated file - DO NOT MODIFY
- */
-
 #include <stdlib.h>
 #include <string.h>
 #include "ti_drivers_config.h"
@@ -240,9 +236,6 @@ int main()
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     status = Sciclient_getVersionCheck(1);
-
-
-    Bootloader_profileAddProfilePoint("File read from SD card");
 
     if(SystemP_SUCCESS == status)
     {

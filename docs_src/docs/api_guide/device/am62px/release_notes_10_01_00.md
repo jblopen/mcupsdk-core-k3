@@ -255,6 +255,12 @@ ROM_CHECKSUM     |MCU-R5F         | No
     <td> Bootloader
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-5056
+    <td> Misleading "File read from SD card" bootloader profile point in the SBL_SD bootloader
+    <td> Bootloader
+    <td> 10.01.00
+</tr>
 </table>
 
 ## Known Issues

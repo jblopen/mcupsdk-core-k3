@@ -278,9 +278,6 @@ int main()
 
     status = Sciclient_getVersionCheck(1);
 
-
-    Bootloader_profileAddProfilePoint("File read from SD card");
-
     if(SystemP_SUCCESS == status)
     {
         Bootloader_BootImageInfo bootImageInfo;

@@ -161,9 +161,14 @@ int32_t App_runCpus(Bootloader_Handle bootHandle)
 
     for(cpuId = 0; cpuId < CSL_CORE_ID_MAX; cpuId++)
     {
-        if(socCpuCores[cpuId] == BOOTLOADER_SD_APP_IMAGE_LOADED)
+        if(socCpuCores[cpuId] == BOOTLOADER_SD_APP_IMAGE_LOADED )
         {
             status = Bootloader_runCpu(bootHandle, &bootCpuInfo[cpuId]);
+
+            if(status == SystemP_FAILURE)
+            {
+                Bootloader_powerOffCpu(bootHandle, &bootCpuInfo[cpuId]);
+            }
         }
     }
 
@@ -197,9 +202,6 @@ int main()
 
     status = Sciclient_getVersionCheck(1);
 
-
-    Bootloader_profileAddProfilePoint("File read from SD card");
-
     if(SystemP_SUCCESS == status)
     {
         Bootloader_BootImageInfo bootImageInfo;
@@ -229,11 +231,7 @@ int main()
                 break;
             }
         }
-        if(SystemP_SUCCESS == status)
-		{
-			status = App_runCpus(bootHandle);
-            Bootloader_close(bootHandle);
-		}
+
         Bootloader_profileUpdateAppimageSize(appImageSize);
         Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_SD, 0);
         if(status == SystemP_SUCCESS)
@@ -245,6 +243,8 @@ int main()
             UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
         }
 
+        status = App_runCpus(bootHandle);
+        Bootloader_close(bootHandle);
     }
 
     if(status != SystemP_SUCCESS)
