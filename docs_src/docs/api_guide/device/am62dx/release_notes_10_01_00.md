@@ -77,6 +77,23 @@ OSPI NOR  | WKUP-R5F       | Yes               | No          |   Yes       | NOR
 EMMC      | WKUP-R5F       | Yes               | NA          |   NA        | NORTOS
 UART      | WKUP-R5F       | Yes               | NA          |   No        | NORTOS
 
+### SDL
+
+SDL Module       | Supported CPUs | SysConfig Support
+-----------------|----------------|-------------------
+MCRC             |MCU-R5F         | No
+ESM              |MCU-R5F         | No
+VTM              |MCU-R5F         | No
+DCC              |MCU-R5F         | No
+ECC              |MCU-R5F         | No
+RTI              |MCU-R5F         | No
+POK              |MCU-R5F         | No
+STOG             |MCU-R5F         | No
+MTOG             |MCU-R5F         | No
+PBIST            |MCU-R5F         | No
+LBIST            |MCU-R5F         | No
+ROM_CHECKSUM     |MCU-R5F         | No
+
 
 ### SOC Device Drivers
 
