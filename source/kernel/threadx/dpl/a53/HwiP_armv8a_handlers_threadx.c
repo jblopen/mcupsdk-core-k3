@@ -36,10 +36,14 @@
 #include <kernel/nortos/dpl/a53/HwiP_armv8_gic.h>
 #include <kernel/nortos/dpl/a53/common_armv8.h>
 
+void HwiP_intrHandler(void);
+
+void HwiP_defaultHandler(void *dummy);
+
 
 uint32_t gHwiInIsrFlag = 0;
 
-void HwiP_intrHandler()
+void HwiP_intrHandler(void)
 {
     uint64_t     intNum;
 
