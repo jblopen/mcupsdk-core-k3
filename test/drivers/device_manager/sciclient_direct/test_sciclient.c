@@ -1808,6 +1808,13 @@ int8_t test_sciclient_directWrapper(void)
         failCount++;
     }
 
+    retVal = Sciclient_copyLPMFSStubToLocalMem();
+    if(retVal == SystemP_FAILURE)
+    {
+        DebugP_log("\r\n Testcase failed in %d and retVal is %d", __LINE__, retVal);
+        failCount++;
+    }
+
     return failCount;
 }
 
