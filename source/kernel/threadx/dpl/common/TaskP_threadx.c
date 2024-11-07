@@ -123,7 +123,7 @@ static uint32_t TaskP_calcCpuLoad(uint64_t taskTime, uint64_t totalTime)
 {
     uint32_t cpuLoad;
 
-    cpuLoad = (taskTime * TaskP_LOAD_CPU_LOAD_SCALE) / totalTime;
+    cpuLoad = (uint32_t)((taskTime * TaskP_LOAD_CPU_LOAD_SCALE) / totalTime);
     if( cpuLoad > TaskP_LOAD_CPU_LOAD_SCALE)
     {
         cpuLoad = TaskP_LOAD_CPU_LOAD_SCALE;
@@ -236,7 +236,9 @@ uint32_t TaskP_disable(void)
     TX_INTERRUPT_SAVE_AREA
 
     TX_DISABLE
+
     _tx_thread_preempt_disable++;
+
     TX_RESTORE
 
     return (uint32_t)0;
@@ -247,7 +249,9 @@ void TaskP_restore(uint32_t key)
     TX_INTERRUPT_SAVE_AREA
 
     TX_DISABLE
+
     _tx_thread_preempt_disable--;
+
     TX_RESTORE
 
     return;
@@ -258,7 +262,7 @@ void TaskP_exit(void)
 
 }
 
-void TaskP_endScheduler()
+void TaskP_endScheduler(void)
 {
 
 }
