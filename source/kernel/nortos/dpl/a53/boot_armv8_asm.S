@@ -85,21 +85,7 @@
 _c_int00:
     mrs     x0, currentel
     cmp     x0, #0xC
-    bne     2f
-#if defined(ATF_INTEGRATED_BOOT)
-
-    /*
-     * ----------------------
-     * Fatal: We don't expect ATF to jump to EL3 mode.
-     * ATF is expected to jump to non-secure EL2 (Hypervisor mode).
-     *
-     * We'll keep the MCU+ appimage in WFI.
-     * ----------------------
-     */
-
-    wfi
-    b .
-#else
+    bne     _c_int00_atf          /* Current EL is not EL3, hence application booted with ATF. */
     ldr     x0, =CacheP_wbInvAll
     blr     x0
     ldr     x0, =CacheP_disableEL3
@@ -152,7 +138,6 @@ _c_int00:
     msr     actlr_el3, x0       /* Enable CPUECTLR_EL1 access from EL2 */
     isb
     bl      switch_to_el2
-#endif
 
 2:
     mrs     x0, currentel       /* Read again as currentEL may have changed */
@@ -164,10 +149,6 @@ _c_int00:
      * Switch from EL2 to EL1
      * ----------------------
      */
-#if defined(ATF_INTEGRATED_BOOT)
-    ldr     x0, =CacheP_wbInvAll /* Cache invalidation since it is not done in EL3 by ATF */
-    blr     x0
-#endif
     mrs     x0, cnthctl_el2
     orr     x0, x0, #0x3        /* Enable EL1/EL0 access to timers */
     msr     cnthctl_el2, x0
@@ -189,12 +170,6 @@ _c_int00:
     mov     x0, #0xF
     msr     s3_4_c12_c9_5, x0     /* Enable GIC system register interface
                                    and disable IRQ/FIQ bypass (icc_sre_el2) */
-#if defined(ATF_INTEGRATED_BOOT)
-    isb
-    mov     x0, #0x1
-    msr     s3_0_c12_c12_7, x0    /* Enable Non-secure group 1 interrupts */
-    isb
-#endif
 
     bl      switch_to_el1
 3:
@@ -212,6 +187,54 @@ switch_to_el2:
     msr     spsr_el3, x0
     msr     elr_el3, x30
     eret
+
+    .endfunc
+
+
+    .section .text.boot, "ax"
+    .func _c_int00_atf
+_c_int00_atf:
+    mrs     x0, currentel       /* Read again as currentEL may have changed */
+    cmp     x0, #0x8
+    bne     2f
+
+    /*
+     * ----------------------
+     * Switch from EL2 to EL1
+     * ----------------------
+     */
+    ldr     x0, =CacheP_wbInvAll /* Cache invalidation since it is not done in EL3 by ATF */
+    blr     x0
+    mrs     x0, cnthctl_el2
+    orr     x0, x0, #0x3        /* Enable EL1/EL0 access to timers */
+    msr     cnthctl_el2, x0
+    msr     cntvoff_el2, xzr
+    mov     x0, #0x33ff
+    msr     cptr_el2, x0        /* Disable all trap bits */
+    msr     hstr_el2, xzr       /* Disable all coprocessor trap bits */
+    mov     x0, #0x0002         /* 64bit EL1, Disable hypervisor call (HVC)
+                                   instruction, Set/Way Invalidation Override */
+    movk    x0, #0xA000, lsl #16
+    msr     hcr_el2, x0
+    mov     x0, #0x0838
+    movk    x0, #0x30d0, lsl #16
+    msr     sctlr_el1, x0
+    mrs     x0, actlr_el2
+    orr     x0, x0, #2
+    msr     actlr_el2, x0
+    isb
+    mov     x0, #0xF
+    msr     s3_4_c12_c9_5, x0     /* Enable GIC system register interface
+                                   and disable IRQ/FIQ bypass (icc_sre_el2) */
+    isb
+    mov     x0, #0x1
+    msr     s3_0_c12_c12_7, x0    /* Enable Non-secure group 1 interrupts */
+    isb
+
+    bl      switch_to_el1
+2:
+    ldr     x0, =gnu_targets_arm_rtsv8A_startupAsm
+    br      x0
 
     .endfunc
 
