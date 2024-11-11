@@ -1,0 +1,23 @@
+export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+DEVICE:=am62x
+PROFILE?=release
+ATF_LIB_DIR:=lib/soc/$(DEVICE)
+
+all: $(ATF_LIB_DIR)
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x80080000 ATF_IMAGE_A53_CORE=bl31_a53ss0-0.$(PROFILE).bin
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x82100000 ATF_IMAGE_A53_CORE=bl31_a53ss0-1.$(PROFILE).bin
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x86080000 ATF_IMAGE_A53_CORE=bl31_a53ss1-0.$(PROFILE).bin
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x88100000 ATF_IMAGE_A53_CORE=bl31_a53ss1-1.$(PROFILE).bin
+clean:
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_IMAGE_A53_CORE=bl31_a53ss0-0.$(PROFILE).bin clean
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_IMAGE_A53_CORE=bl31_a53ss0-1.$(PROFILE).bin clean
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_IMAGE_A53_CORE=bl31_a53ss1-0.$(PROFILE).bin clean
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_IMAGE_A53_CORE=bl31_a53ss1-1.$(PROFILE).bin clean
+scrub:
+	$(RM) -r $(ATF_LIB_DIR)
+	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 scrub
+
+$(ATF_LIB_DIR) :
+	$(MKDIR) $@

@@ -1,8 +1,10 @@
-
 let path = require("path");
 
+let device = "am62x";
+
 const buildOptionCombos = [
-    { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64"}
+    { device: device, cpu: "a53", cgt: "gcc-aarch64"},
+
 ];
 
 function getComponentProperty() {

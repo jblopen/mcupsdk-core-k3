@@ -1,0 +1,49 @@
+export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_GCC_AARCH64_PATH)
+
+CROSS_COMPILE:=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-
+
+TARGET_BOARD:=lite
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+ATF_SOURCE_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/trusted-firmware-a
+
+DEBUG=0
+DEVICE:=am62x
+ATF_JUMP_ADDR?=0x80080000
+ATF_SRC_DIR:=$(ATF_SOURCE_PATH)/build/k3/lite/$(PROFILE)
+ATF_DST_DIR:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/$(DEVICE)
+ATF_IMAGE:=bl31.bin
+ATF_IMAGE_A53_CORE?:=bl31_a53ss0-0.$(PROFILE).bin
+ATF_LOG_LEVEL:=0
+
+ifeq ($(PROFILE),debug)
+	DEBUG=1
+endif
+
+all:
+	@echo Cleaning previous $(ATF_IMAGE)
+	$(MAKE) -C $(ATF_SOURCE_PATH) clean BUILD_PLAT=build/k3/$(TARGET_BOARD)/$(PROFILE)
+	@echo Building ATF in $(PROFILE) mode
+ifeq ($(ATF_IMAGE_A53_CORE),bl31_a53ss0-0.$(PROFILE).bin)
+	$(MAKE) -C $(ATF_SOURCE_PATH) CROSS_COMPILE=$(CROSS_COMPILE) ARCH=aarch64 PLAT=k3 TARGET_BOARD=$(TARGET_BOARD) DEBUG=$(DEBUG) PRELOADED_BL33_BASE=$(ATF_JUMP_ADDR)
+else
+	$(MAKE) -C $(ATF_SOURCE_PATH) CROSS_COMPILE=$(CROSS_COMPILE) ARCH=aarch64 PLAT=k3 TARGET_BOARD=$(TARGET_BOARD) DEBUG=$(DEBUG) PRELOADED_BL33_BASE=$(ATF_JUMP_ADDR) LOG_LEVEL=$(ATF_LOG_LEVEL)
+endif
+	@echo Copying ATF to $(ATF_DST_DIR)
+	$(COPY) -f $(ATF_SRC_DIR)/$(ATF_IMAGE) $(ATF_DST_DIR)
+	@echo Renaming to $(ATF_IMAGE_A53_CORE)
+	$(COPY) $(ATF_DST_DIR)/$(ATF_IMAGE) $(ATF_DST_DIR)/$(ATF_IMAGE_A53_CORE)
+	$(RM)  $(ATF_DST_DIR)/$(ATF_IMAGE)
+clean:
+	@echo Cleaning ATF build
+	$(MAKE) -C $(ATF_SOURCE_PATH) clean BUILD_PLAT=build/k3/$(TARGET_BOARD)/$(PROFILE)
+	$(RM)  $(ATF_DST_DIR)/$(ATF_IMAGE_A53_CORE)
+
+scrub:
+	@echo Scrubbing ATF build
+	$(MAKE) -C $(ATF_SOURCE_PATH) clean BUILD_PLAT=build
