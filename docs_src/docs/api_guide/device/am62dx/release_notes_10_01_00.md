@@ -344,6 +344,12 @@ LED        | MCU-R5F, A53, C75   | Yes
     <td> Bootloader
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-4527
+    <td> SBL_UART_UNIFLASH_STAGE2 build fails on removing OSPI and FLASH module in Sysconfig
+    <td> Uniflash
+    <td> 10.01.00
+</tr>
 </table>
 
 ## Known Issues

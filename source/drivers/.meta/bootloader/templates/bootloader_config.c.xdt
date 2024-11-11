@@ -28,6 +28,33 @@
 /*
  * BOOTLOADER
  */
+%if( !isFlashBoot && !isMMCSDBoot && !isBufIoBoot){
+#include "ti_board_config.h"
+
+/* Define flash instances and array if no flash instance is added in the sysconfig. */
+
+#ifndef CONFIG_FLASH_NUM_INSTANCES
+
+#include <board/flash.h>
+
+#define CONFIG_FLASH_NUM_INSTANCES (0U)
+
+uint32_t gFlashConfigNum = CONFIG_FLASH_NUM_INSTANCES;
+Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES] = {};
+#endif
+
+/* Define mmcsd instances and array if no mmcsd instance is added in the sysconfig. */
+
+#ifndef CONFIG_MMCSD_NUM_INSTANCES
+
+#include <drivers/mmcsd.h>
+
+#define CONFIG_MMCSD_NUM_INSTANCES (0U)
+
+uint32_t gMmcsdConfigNum = CONFIG_MMCSD_NUM_INSTANCES;
+MMCSD_Config gMmcsdConfig[CONFIG_MMCSD_NUM_INSTANCES] = {};
+#endif
+%}
 % if(isFlashBoot){
 /* Include ti_board_config.h for flash config macros */
 #include "ti_board_config.h"

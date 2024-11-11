@@ -35,6 +35,7 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include <board/flash.h>
 #include <drivers/soc.h>
 #include <drivers/pinmux.h>
 #include <drivers/device_manager/sciclient.h>
