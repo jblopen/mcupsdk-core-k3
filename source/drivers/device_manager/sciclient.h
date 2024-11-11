@@ -556,6 +556,12 @@ typedef struct
     /**< LPM data reserved section */
 } DM_LPMData_t;
 
+/**
+ *  \brief Function pointers for LPM suspend and resume
+ */
+typedef void (*LPMSuspendHook) (void);
+typedef void (*LPMResumeHook) (void);
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -816,6 +822,26 @@ int32_t Sciclient_getLPMCtxtSaveAddr(uint64_t *pCtxtAddr);
  */
 int32_t Sciclient_copyLPMFSStubToLocalMem(void);
 
+/**
+ * \brief Register lpm suspend and resume hooks for DM R5 apllication
+ *
+ * \return None
+ */
+void Sciclient_initLPMSusResHook(LPMSuspendHook suspend_hook, LPMResumeHook resume_hook);
+
+/**
+ * \brief API to suspend the application that is running along with DM
+ *
+ * \return None
+ */
+void Sciclient_ApplicationLPMSuspend(void);
+
+/**
+ * \brief API to resume the application that is running along with DM
+ *
+ * \return None
+ */
+void Sciclient_ApplicationLPMResume(void);
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

@@ -96,6 +96,12 @@ static uint64_t *gpLPMFSStub = NULL;
 
 /** \brief Variable to get the entry point of device manager for use in LPM */
 extern uint64_t _self_reset_start;
+
+/**
+ * Variables to save the application's LPM suspend and resume hooks
+ */
+LPMSuspendHook gLPMSuspendHook;
+LPMResumeHook gLPMResumeHook;
 #endif
 
 /* ========================================================================== */
@@ -312,6 +318,29 @@ int32_t Sciclient_copyLPMFSStubToLocalMem(void)
 
     return ret;
 }
+
+void Sciclient_initLPMSusResHook(LPMSuspendHook suspendHook, LPMResumeHook resumeHook)
+{
+    gLPMSuspendHook = suspendHook;
+    gLPMResumeHook = resumeHook;
+}
+
+void Sciclient_ApplicationLPMSuspend(void)
+{
+    if(gLPMSuspendHook != NULL)
+    {
+        gLPMSuspendHook();
+    }
+}
+
+void Sciclient_ApplicationLPMResume(void)
+{
+    if(gLPMResumeHook != NULL)
+    {
+        gLPMResumeHook();
+    }
+}
+
 #else
 void Sciclient_initDeviceManagerLPMData(DM_LPMData_t *pLPMData __attribute__((unused)))
 {
@@ -328,6 +357,13 @@ int32_t Sciclient_copyLPMFSStubToLocalMem(void)
     return SystemP_SUCCESS;
 }
 
+void Sciclient_ApplicationLPMSuspend(void)
+{
+}
+
+void Sciclient_ApplicationLPMResume(void)
+{
+}
 #endif
 
 /* -------------------------------------------------------------------------- */

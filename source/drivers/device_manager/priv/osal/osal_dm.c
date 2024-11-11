@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (c) 2021-2024, Texas Instruments Incorporated
+ * All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -79,6 +80,7 @@ void osal_suspend_dm(void)
 {
         TaskP_disable();
         OS_StopTickTimer();
+        Sciclient_ApplicationLPMSuspend();
         #if defined MCU_PLUS_SDK
             HwiP_disableVIC();
         #else
@@ -105,6 +107,7 @@ u32 osal_resume_dm(void)
         #else
             CSL_armR5StartupIntrEnableVic(1);      /* Enable VIC mode */
         #endif
+        Sciclient_ApplicationLPMResume();
         OS_StartTickTimer();
         TaskP_restore(0);
         return 0;
