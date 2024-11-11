@@ -14,6 +14,7 @@ const mmu_armv81 = mmu_armv8.addInstance();
 const mmu_armv82 = mmu_armv8.addInstance();
 const mmu_armv83 = mmu_armv8.addInstance();
 const mmu_armv84 = mmu_armv8.addInstance();
+const mmu_armv85 = mmu_armv8.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -26,8 +27,8 @@ mmu_armv81.$name = "SOC_MEM_REGION";
 mmu_armv82.attribute = "MAIR7";
 mmu_armv82.$name     = "DDR_REGION";
 mmu_armv82.size      = 0x2000000;
-mmu_armv82.vAddr     = 0x86000000;
-mmu_armv82.pAddr     = 0x86000000;
+mmu_armv82.vAddr     = 0x86080000;
+mmu_armv82.pAddr     = 0x86080000;
 
 mmu_armv83.$name     = "LOG_SHM_MEM";
 mmu_armv83.vAddr     = 0xA1000000;
@@ -40,3 +41,10 @@ mmu_armv84.pAddr     = 0x99000000;
 mmu_armv84.size      = 0x4000;
 mmu_armv84.attribute = "MAIR7";
 mmu_armv84.$name     = "AMP_SHM";
+
+mmu_armv85.vAddr             = 0x86000000;
+mmu_armv85.pAddr             = 0x86000000;
+mmu_armv85.size              = 0x80000;
+mmu_armv85.$name             = "ATF_REGION";
+mmu_armv85.accessPermissions = "Privilege RO, User None";
+mmu_armv85.shareable         = "Non Shareable";
