@@ -269,6 +269,12 @@ ROM_CHECKSUM     |MCU-R5F         | No
     <td> IPC
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-5653
+    <td> Closing drivers two times in IPC example
+    <td> IPC
+    <td> 10.01.00
+</tr>
 </table>
 
 ## Known Issues
