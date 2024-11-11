@@ -326,6 +326,12 @@ LED        | MCU-R5F, A53, C75   | Yes
     <td> Bootloader
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-5091
+    <td> Remote core getting hangs when doing IPC with HLOS
+    <td> IPC
+    <td> 10.01.00
+</tr>
 </table>
 
 ## Known Issues
