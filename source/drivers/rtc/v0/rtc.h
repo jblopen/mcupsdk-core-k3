@@ -164,7 +164,7 @@ typedef struct RTC_Config_s     *RTC_Handle;
  *
  *  \param  handle              RTC_Handle
  */
-typedef void (*RTC_ON_OFF_CallbackFxn) (RTC_Handle handle);
+typedef void (*RTC_OnOffCallbackFxn) (RTC_Handle handle);
 
 /**
  *  \brief  The definition of a OFF_ON callback function used by
@@ -174,7 +174,7 @@ typedef void (*RTC_ON_OFF_CallbackFxn) (RTC_Handle handle);
  *
  *  \param  handle              RTC_Handle
  */
-typedef void (*RTC_OFF_ON_CallbackFxn) (RTC_Handle handle);
+typedef void (*RTC_OffOnCallbackFxn) (RTC_Handle handle);
 
 /* ========================================================================== */
 /*                          Structure Declarations                            */
@@ -212,10 +212,10 @@ typedef struct  RTC_Params_s
 
 /** RTC freeze Mode Enabled/Disabled */
     uint32_t                        isfreezemode;
-/** RTC OneShotMode/AutoReload Mode */
-    bool                            on_offcallback;
-/** RTC Counter Reload val for Auto Reload mode */
-    bool                            off_oncallback;
+/** RTC On Off Callback */
+    bool                            onOffCallback;
+/** RTC Off On Callback */
+    bool                            offOnCallback;
 
 }  RTC_Params;
 
@@ -238,9 +238,9 @@ typedef struct  RTC_Object_s
  */
 
 /** Callback Function Pointer for ON_OFF Interrupt */
-    RTC_ON_OFF_CallbackFxn         On_OffCallbackFunction;
+    RTC_OnOffCallbackFxn         On_OffCallbackFunction;
 /** Callback Function Pointer for OFF_ON Interrupt */
-    RTC_OFF_ON_CallbackFxn         Off_OnCallbackFunction;
+    RTC_OffOnCallbackFxn         Off_OnCallbackFunction;
 
 }  RTC_Object;
 

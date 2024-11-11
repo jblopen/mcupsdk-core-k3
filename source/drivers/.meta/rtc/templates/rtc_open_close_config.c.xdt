@@ -25,8 +25,8 @@ RTC_Params gRTCParams[RTC_NUM_INSTANCES] =
     % let config = module.getInstanceConfig(instance);
     {
         .isfreezemode = `config.isFreezeMode`,
-        .on_offcallback = `config.on_offCallback`,
-        .off_oncallback = `config.off_onCallback`,
+        .onOffCallback = `config.on_offCallback`,
+        .offOnCallback = `config.off_onCallback`,
     },
 % }
 };

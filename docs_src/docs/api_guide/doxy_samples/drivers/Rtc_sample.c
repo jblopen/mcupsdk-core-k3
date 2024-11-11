@@ -14,8 +14,8 @@ void open(void)
     RTC_Params_init(&params);
 
     params.isfreezemode = true,
-    params.on_offcallback = false,
-    params.off_oncallback = false,
+    params.onOffCallback = false,
+    params.offOnCallback = false,
 
     /* Update object Parameters mode settings */
     gRTCObjects[CONFIG_RTC0].On_OffCallbackFunction = NULL,

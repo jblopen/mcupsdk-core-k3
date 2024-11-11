@@ -80,8 +80,8 @@ typedef struct
 const RTC_Params RTC_defaultParams =
 {
     1U,                     /* Enable Freeze Mode */
-    false,                  /* on_offcallback */
-    false,                  /* off_oncallback */
+    false,                  /* onOffCallback */
+    false,                  /* offOnCallback */
 };
 
 /* ========================================================================== */
