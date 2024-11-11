@@ -78,8 +78,6 @@ void main_thread(void *args)
 
     /* Close board and flash drivers */
     Board_driversClose();
-    /* Close drivers */
-    Drivers_close();
 
     vTaskDelete(NULL);
 }

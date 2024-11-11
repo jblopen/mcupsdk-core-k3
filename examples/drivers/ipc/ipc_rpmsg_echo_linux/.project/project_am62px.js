@@ -122,6 +122,7 @@ const templates_freertos_mcu_r5f =
         output: "../main.c",
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
+            skipDriversClose: "true",
         },
     }
 ];
@@ -141,6 +142,7 @@ const templates_freertos_wkup_r5f =
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
             dmWithBootloader: "true",
+            skipDriversClose: "true",
         }
     },
 ];

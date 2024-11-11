@@ -3,6 +3,7 @@
     let stackSize = 16*1024;
     let taskPri = "configMAX_PRIORITIES-1"
     let entryFunction = "example_main";
+    let skipDriversClose = "false";
 
     if(options && options.entryFunction)
          entryFunction = options.entryFunction;
@@ -10,6 +11,8 @@
         stackSize = options.stackSize;
     if(options && options.taskPri)
         taskPri = options.taskPri;
+    if(options && options.skipDriversClose)
+        skipDriversClose = options.skipDriversClose;
 
 %%}
 /*
@@ -77,8 +80,10 @@ void freertos_main(void *args)
 
     /* Close board and flash drivers */
     Board_driversClose();
+    % if(skipDriversClose == "false") {
     /* Close drivers */
     Drivers_close();
+    % }
 
     vTaskDelete(NULL);
 }

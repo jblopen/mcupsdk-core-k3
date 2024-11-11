@@ -63,8 +63,6 @@ void freertos_main(void *args)
 
     /* Close board and flash drivers */
     Board_driversClose();
-    /* Close drivers */
-    Drivers_close();
 
     vTaskDelete(NULL);
 }

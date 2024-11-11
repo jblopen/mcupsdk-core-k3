@@ -115,6 +115,7 @@ const templates_freertos_m4f =
         output: "../main.c",
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
+            skipDriversClose: "true",
         },
     }
 ];
@@ -130,6 +131,7 @@ const templates_freertos_r5f =
         output: "../main.c",
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
+            skipDriversClose: "true",
         },
     }
 ];

@@ -173,6 +173,7 @@ const templates_freertos_mcu_r5f =
         output: "../main.c",
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
+            skipDriversClose: "true",
         },
     }
 ];
@@ -223,6 +224,7 @@ const templates_freertos_dm_r5f =
         output: "../main.c",
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
+            skipDriversClose: "true",
         },
     }
 ];
@@ -239,6 +241,7 @@ const templates_freertos_c75 =
         options: {
             entryFunction: "ipc_rpmsg_echo_main",
             stackSize: 64*1024,
+            skipDriversClose: "true",
         },
     }
 ];
