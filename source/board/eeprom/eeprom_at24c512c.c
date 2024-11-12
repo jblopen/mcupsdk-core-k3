@@ -260,8 +260,8 @@ int32_t EEPROM_AT24C512C_write(EEPROM_Config *config,
             }
 
             /* After write operation flash will not respond for write cycle time.
-             * This is approximately 4ms (min). */
-            ClockP_usleep(4000);
+             * This is approximately 5ms (min). */
+            ClockP_usleep(5000);
 
             /* Wait for write to finish */
             I2C_Transaction_init(&i2cTransaction);
