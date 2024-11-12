@@ -287,7 +287,20 @@ int8_t test_sciserver_secproxyTransfer(void)
 
     return failCount;
 }
+static void dummy_handler(void)
+{
+}
 
+int8_t test_lpm_apis(void)
+{
+    Sciclient_initLPMSusResHook(NULL, NULL);
+    Sciclient_ApplicationLPMSuspend();
+    Sciclient_ApplicationLPMResume();
+    Sciclient_initLPMSusResHook(&dummy_handler, &dummy_handler);
+    Sciclient_ApplicationLPMSuspend();
+    Sciclient_ApplicationLPMResume();
+    return 0;
+}
 int8_t test_sciserver(void)
 {
     int32_t retVal = SystemP_SUCCESS;

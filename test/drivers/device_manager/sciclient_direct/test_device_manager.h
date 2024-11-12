@@ -85,6 +85,7 @@ extern "C" {
 
 int8_t test_sciclient(void);
 int8_t test_sciserver(void);
+int8_t test_lpm_apis(void);
 int8_t test_sciclient_rm(void);
 int8_t test_sciclient_pm(void);
 int8_t test_sciclient_dkek(void);
