@@ -268,6 +268,24 @@ void AppMsc_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
     }
 }
 
+void AppMsc_wdtimerErrorCb(Fvid2_Handle handle, uint32_t wdTimerErrEvents, void *appData)
+{
+    App_MscTestObj *tObj = (App_MscTestObj *)appData;
+
+    if (NULL != tObj)
+    {
+        tObj->wdTimerErrStatus |= wdTimerErrEvents;
+
+        if(wdTimerErrEvents & VHWA_MSC0_WDTIMER_ERR)
+        {
+            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_MSC0_WDTIMER_ERR));
+        }
+        else if(wdTimerErrEvents & VHWA_MSC1_WDTIMER_ERR)
+        {
+            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_MSC1_WDTIMER_ERR));
+        }
+    }
+}
 int32_t AppMsc_Create(App_MscTestParams *tObj, uint32_t hndlIdx)
 {
     int32_t             status;
@@ -339,6 +357,7 @@ int32_t AppMsc_SetParams(App_MscTestParams *tObj, uint32_t hndlIdx)
     Vhwa_M2mMscParams *mscPrms;
     Msc_ScConfig *scCfg;
     Msc_ErrEventParams  errPrms;
+    Msc_WdTimerErrEventParams  wdTimererrEvtPrms;
 
     mscPrms = &appObj->mscPrms[hndlIdx];
 
@@ -413,6 +432,18 @@ int32_t AppMsc_SetParams(App_MscTestParams *tObj, uint32_t hndlIdx)
             VHWA_M2M_IOCTL_MSC_REGISTER_ERR_CB, &errPrms, NULL);
     }
 
+    if (FVID2_SOK == status)
+    {
+        wdTimererrEvtPrms.WdTimererrEvents =
+            VHWA_MSC0_WDTIMER_ERR | VHWA_MSC1_WDTIMER_ERR;
+
+        wdTimererrEvtPrms.cbFxn = AppMsc_wdtimerErrorCb;
+
+        wdTimererrEvtPrms.appData = appObj;
+
+        status = Fvid2_control(appObj->handle,
+            VHWA_M2M_IOCTL_MSC_REGISTER_WDTIMER_ERR_CB, &wdTimererrEvtPrms, NULL);
+    }
     return (status);
 }
 

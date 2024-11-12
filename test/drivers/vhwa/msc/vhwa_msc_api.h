@@ -161,6 +161,8 @@ typedef struct
     /**< Semaphore to wait for completion */
     uint32_t                    errStat;
     /**<Stores error status value */
+    uint32_t                wdTimerErrStatus;
+    /**< Store watchdog timer error interrupt status */
 
 } App_MscTestObj;
 

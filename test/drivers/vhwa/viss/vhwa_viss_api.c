@@ -312,6 +312,20 @@ void AppViss_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
         #endif
     }
 }
+
+void AppViss_wdtimerErrorCb(Fvid2_Handle handle, uint32_t wdTimerErrEvents, void *appData)
+{
+    AppViss_TestObject *tObj = (AppViss_TestObject *)appData;
+    if (NULL != tObj)
+    {
+        tObj->wdTimerErrStatus |= wdTimerErrEvents;
+
+        if(wdTimerErrEvents & VHWA_VISS_WDTIMER_ERR)
+        {
+            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_VISS_WDTIMER_ERR));
+        }
+    }
+}
 int32_t AppViss_Create(AppViss_TestParams *tPrms, uint32_t hidx)
 {
     int32_t              status;
@@ -369,6 +383,7 @@ int32_t AppViss_SetParams(AppViss_TestParams *tPrms, uint32_t hidx)
     AppViss_TestObject *tObj = &gAppVissTestObject[hidx];
     AppViss_TestConfig *tCfg = NULL;
     Viss_ErrEventParams  errPrms;
+    Viss_WdTimerErrEventParams  wdTimererrEvtPrms;
 
     tCfg = tPrms->testCfg[hidx];
 
@@ -403,6 +418,14 @@ int32_t AppViss_SetParams(AppViss_TestParams *tPrms, uint32_t hidx)
             IOCTL_VHWA_M2M_VISS_REGISTER_ERR_CB, &errPrms, NULL);
     }
 
+    if (FVID2_SOK == status)
+    {
+        wdTimererrEvtPrms.WdTimererrEvents = VHWA_VISS_WDTIMER_ERR;
+        wdTimererrEvtPrms.cbFxn = AppViss_wdtimerErrorCb;
+        wdTimererrEvtPrms.appData = tObj;
+        status = Fvid2_control(tObj->handle,
+            IOCTL_VHWA_M2M_VISS_REGISTER_WDTIMER_ERR_CB, &wdTimererrEvtPrms, NULL);
+    }
     return (status);
 }
 

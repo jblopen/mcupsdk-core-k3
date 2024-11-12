@@ -236,6 +236,19 @@ void AppLdc_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
     }
 }
 
+void AppLdc_wdtimerErrorCb(Fvid2_Handle handle, uint32_t wdTimerErrEvents, void *appData)
+{
+    AppLdc_TestObject *tObj = (AppLdc_TestObject *)appData;
+    if (NULL != tObj)
+    {
+        tObj->wdTimerErrStatus |= wdTimerErrEvents;
+
+        if(wdTimerErrEvents & VHWA_LDC_WDTIMER_ERR)
+        {
+            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_LDC_WDTIMER_ERR));
+        }
+    }
+}
 int32_t AppLdc_Create(LdcApp_TestParams *tObj, uint32_t hidx)
 {
     int32_t             status;
@@ -301,6 +314,7 @@ int32_t AppLdc_SetParams(LdcApp_TestParams *tObj, uint32_t hidx)
     AppLdc_TestObject  *appObj = &gAppLdcTestObj[hidx];
     Ldc_ErrEventParams  errPrms;
     Ldc_RemapLutCfg     lutCfg;
+    Ldc_WdTimerErrEventParams  wdTimererrEvtPrms;
 
     cfg = tObj->testCfg[hidx];
     ldcCfg = &appObj->ldcCfg;
@@ -407,6 +421,15 @@ int32_t AppLdc_SetParams(LdcApp_TestParams *tObj, uint32_t hidx)
 
         status = Fvid2_control(appObj->handle,
             IOCTL_VHWA_M2M_LDC_REGISTER_ERR_CB, &errPrms, NULL);
+    }
+
+    if (FVID2_SOK == status)
+    {
+        wdTimererrEvtPrms.WdTimererrEvents = VHWA_LDC_WDTIMER_ERR;
+        wdTimererrEvtPrms.cbFxn = AppLdc_wdtimerErrorCb;
+        wdTimererrEvtPrms.appData = appObj;
+        status = Fvid2_control(appObj->handle,
+            VHWA_M2M_IOCTL_LDC_REGISTER_WDTIMER_ERR_CB, &wdTimererrEvtPrms, NULL);
     }
 
     if (TRUE == cfg->isLutEnable)
