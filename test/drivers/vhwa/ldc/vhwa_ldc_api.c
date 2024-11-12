@@ -186,7 +186,7 @@ int32_t AppLdc_Init(Udma_DrvHandle udmaDrvHndl)
     return (status);
 }
 
-int32_t AppLdcFrameComplCb(Fvid2_Handle handle, void *appData)
+int32_t AppLdc_frameComplCb(Fvid2_Handle handle, void *appData)
 {
     AppLdc_TestObject *tObj = (AppLdc_TestObject *)appData;
 
@@ -198,13 +198,14 @@ int32_t AppLdcFrameComplCb(Fvid2_Handle handle, void *appData)
     return FVID2_SOK;
 }
 
-void AppLdcErrorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
+void AppLdc_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
 {
     uint32_t errId;
     AppLdc_TestObject *tObj = (AppLdc_TestObject *)appData;
 
     if (NULL != tObj)
     {
+        tObj->errStat |= errEvents;
         errId = 0x1U;
         while (errId <= VHWA_LDC_VBUSM_RD_ERR)
         {
@@ -254,7 +255,7 @@ int32_t AppLdc_Create(LdcApp_TestParams *tObj, uint32_t hidx)
             appObj->createArgs.enablePsa = FALSE;
         }
 
-        appObj->cbPrms.cbFxn   = AppLdcFrameComplCb;
+        appObj->cbPrms.cbFxn   = AppLdc_frameComplCb;
         appObj->cbPrms.appData = appObj;
 
         appObj->handle = Fvid2_create(FVID2_VHWA_M2M_LDC_DRV_ID,
@@ -400,7 +401,7 @@ int32_t AppLdc_SetParams(LdcApp_TestParams *tObj, uint32_t hidx)
             VHWA_LDC_IFR_OUTOFBOUND | VHWA_LDC_INT_SZOVF |
             VHWA_LDC_SL2_WR_ERR | VHWA_LDC_VBUSM_RD_ERR;
 
-        errPrms.cbFxn = AppLdcErrorCb;
+        errPrms.cbFxn = AppLdc_errorCb;
 
         errPrms.appData = appObj;
 

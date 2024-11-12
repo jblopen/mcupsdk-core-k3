@@ -159,6 +159,8 @@ typedef struct
     /**< MSC Parameters */
     SemaphoreP_Object       waitForProcessCmpl;
     /**< Semaphore to wait for completion */
+    uint32_t                    errStat;
+    /**<Stores error status value */
 
 } App_MscTestObj;
 

@@ -206,7 +206,7 @@ void AppViss_deInit(Udma_DrvHandle udmaDrvHndl)
 }
 
 
-int32_t AppVissFrameComplCb(Fvid2_Handle handle, void *appData)
+int32_t AppViss_frameComplCb(Fvid2_Handle handle, void *appData)
 {
     AppViss_TestObject *tObj = (AppViss_TestObject *)appData;
 
@@ -218,6 +218,100 @@ int32_t AppVissFrameComplCb(Fvid2_Handle handle, void *appData)
     return FVID2_SOK;
 }
 
+void AppViss_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
+{
+    AppViss_TestObject *tObj = (AppViss_TestObject *)appData;
+
+    if (NULL != tObj)
+    {
+        tObj->errStat |= errEvents;
+
+        if(errEvents & VHWA_VISS_RAWFE_CFG_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_RAWFE_CFG_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_RAWFE_H3A_BUF_OVRFLOW_PULSE_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_RAWFE_H3A_BUF_OVRFLOW_PULSE_INTR));
+        }
+        if(errEvents & VHWA_VISS_NSF4V_LINEMEM_CFG_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_NSF4V_LINEMEM_CFG_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_NSF4V_HBLANK_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_NSF4V_HBLANK_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_NSF4V_VBLANK_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_NSF4V_VBLANK_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_GLBCE_CFG_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_GLBCE_CFG_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_GLBCE_HSYNC_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_GLBCE_HSYNC_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_GLBCE_VSYNC_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_GLBCE_VSYNC_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_FCFA_CFG_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_FCFA_CFG_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_GLBCE_VP_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_GLBCE_VP_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_FCC_CFG_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_FCC_CFG_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_FCC_OUTIF_OVF_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_FCC_OUTIF_OVF_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_FCC_HIST_READ_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_FCC_HIST_READ_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_LSE_SL2_RD_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_LSE_SL2_RD_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_LSE_SL2_WR_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_LSE_SL2_WR_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_LSE_CAL_VP_ERR_INTR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_LSE_CAL_VP_ERR_INTR));
+        }
+        if(errEvents & VHWA_VISS_EE_CFG_ERR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_EE_CFG_ERR));
+        }
+        if(errEvents & VHWA_VISS_EE_SYNCOVF_ERR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_EE_SYNCOVF_ERR));
+        }
+        #if defined VHWA_VPAC_IP_REV_VPAC3 || defined VHWA_VPAC_IP_REV_VPAC3L
+        if(errEvents & VHWA_VISS_CR_CFG_ERR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_CR_CFG_ERR));
+        }
+        #endif
+        #if defined VHWA_VPAC_IP_REV_VPAC3L 
+        if(errEvents & VHWA_VISS_RAWFE_DPC_STATS_READ_ERR)
+        {
+            errEvents = (errEvents & (~VHWA_VISS_RAWFE_DPC_STATS_READ_ERR));
+        }
+        #endif
+    }
+}
 int32_t AppViss_Create(AppViss_TestParams *tPrms, uint32_t hidx)
 {
     int32_t              status;
@@ -230,7 +324,7 @@ int32_t AppViss_Create(AppViss_TestParams *tPrms, uint32_t hidx)
     {
         tObj->createArgs.enablePsa = FALSE;
 
-        tObj->cbPrms.cbFxn   = AppVissFrameComplCb;
+        tObj->cbPrms.cbFxn   = AppViss_frameComplCb;
         tObj->cbPrms.appData = tObj;
 
         tObj->handle = Fvid2_create(FVID2_VHWA_M2M_VISS_DRV_ID,
@@ -274,11 +368,40 @@ int32_t AppViss_SetParams(AppViss_TestParams *tPrms, uint32_t hidx)
     int32_t             status;
     AppViss_TestObject *tObj = &gAppVissTestObject[hidx];
     AppViss_TestConfig *tCfg = NULL;
+    Viss_ErrEventParams  errPrms;
 
     tCfg = tPrms->testCfg[hidx];
 
     status = Fvid2_control(tObj->handle, IOCTL_VHWA_M2M_VISS_SET_PARAMS,
         (void *)&tCfg->vissPrms, NULL);
+    
+    if(FVID2_SOK == status)
+    {
+        errPrms.errEvents = 
+            VHWA_VISS_RAWFE_CFG_ERR_INTR | VHWA_VISS_RAWFE_H3A_BUF_OVRFLOW_PULSE_INTR |
+            VHWA_VISS_NSF4V_LINEMEM_CFG_ERR_INTR | VHWA_VISS_NSF4V_HBLANK_ERR_INTR |
+            VHWA_VISS_NSF4V_VBLANK_ERR_INTR | VHWA_VISS_GLBCE_CFG_ERR_INTR |
+            VHWA_VISS_GLBCE_HSYNC_ERR_INTR | VHWA_VISS_GLBCE_VSYNC_ERR_INTR |
+            VHWA_VISS_GLBCE_VP_ERR_INTR | VHWA_VISS_FCFA_CFG_ERR_INTR |
+            VHWA_VISS_FCC_CFG_ERR_INTR | VHWA_VISS_FCC_OUTIF_OVF_ERR_INTR |
+            VHWA_VISS_FCC_HIST_READ_ERR_INTR | VHWA_VISS_LSE_SL2_RD_ERR_INTR |
+            VHWA_VISS_LSE_SL2_WR_ERR_INTR | VHWA_VISS_LSE_CAL_VP_ERR_INTR | 
+            VHWA_VISS_EE_CFG_ERR | VHWA_VISS_EE_SYNCOVF_ERR
+            #if defined VHWA_VPAC_IP_REV_VPAC3 || defined VHWA_VPAC_IP_REV_VPAC3L
+            | VHWA_VISS_CR_CFG_ERR
+            #endif
+            #if defined VHWA_VPAC_IP_REV_VPAC3L 
+            | VHWA_VISS_RAWFE_DPC_STATS_READ_ERR
+            #endif
+            ;
+        
+        errPrms.cbFxn = AppViss_errorCb;
+
+        errPrms.appData = tObj;
+
+        status = Fvid2_control(tObj->handle,
+            IOCTL_VHWA_M2M_VISS_REGISTER_ERR_CB, &errPrms, NULL);
+    }
 
     return (status);
 }

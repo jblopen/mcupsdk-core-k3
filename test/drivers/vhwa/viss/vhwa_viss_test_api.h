@@ -140,6 +140,8 @@ typedef struct
     /**< Output Frame List */
     SemaphoreP_Object           waitForProcessCmpl;
     /**< Semaphore to wait for completion */
+    uint32_t                    errStat;
+    /**<Stores error status value */
 } AppViss_TestObject;
 
 typedef struct

@@ -224,7 +224,7 @@ int32_t AppMsc_DeInit(void)
     return (retVal);
 }
 
-int32_t AppMscFrameComplCb0(Fvid2_Handle handle, void *appData)
+int32_t AppMsc_frameComplCb0(Fvid2_Handle handle, void *appData)
 {
     App_MscTestObj *tObj = (App_MscTestObj *)appData;
 
@@ -236,7 +236,7 @@ int32_t AppMscFrameComplCb0(Fvid2_Handle handle, void *appData)
     return FVID2_SOK;
 }
 
-int32_t AppMscFrameComplCb1(Fvid2_Handle handle, void *appData)
+int32_t AppMsc_frameComplCb1(Fvid2_Handle handle, void *appData)
 {
     App_MscTestObj *tObj = (App_MscTestObj *)appData;
 
@@ -248,12 +248,13 @@ int32_t AppMscFrameComplCb1(Fvid2_Handle handle, void *appData)
     return FVID2_SOK;
 }
 
-void AppMscErrorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
+void AppMsc_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
 {
     App_MscTestObj *tObj = (App_MscTestObj *)appData;
 
     if (NULL != tObj)
     {
+        tObj->errStat |= errEvents;
         if(errEvents & VHWA_MSC_VBUSM_RD_ERR)
         {
             /* SL2 RD Error */
@@ -286,12 +287,12 @@ int32_t AppMsc_Create(App_MscTestParams *tObj, uint32_t hndlIdx)
 
         if(tObj->testCfg[hndlIdx]->mscThreadId == (uint32_t)VPAC_MSC_INST_ID_0)
         {
-            appObj->cbPrms.cbFxn   = AppMscFrameComplCb0;
+            appObj->cbPrms.cbFxn   = AppMsc_frameComplCb0;
             appObj->cbPrms.appData = appObj;
         }
         else
         {
-            appObj->cbPrms.cbFxn   = AppMscFrameComplCb1;
+            appObj->cbPrms.cbFxn   = AppMsc_frameComplCb1;
             appObj->cbPrms.appData = appObj;
         }
 
@@ -404,7 +405,7 @@ int32_t AppMsc_SetParams(App_MscTestParams *tObj, uint32_t hndlIdx)
         errPrms.errEvents =
             VHWA_MSC_VBUSM_RD_ERR | VHWA_MSC_SL2_WR_ERR;
 
-        errPrms.cbFxn = AppMscErrorCb;
+        errPrms.cbFxn = AppMsc_errorCb;
 
         errPrms.appData = appObj;
 
