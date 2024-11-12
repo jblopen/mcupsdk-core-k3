@@ -101,7 +101,7 @@
 #define SDL_MCU_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES 																	(1U)
 #define SDL_MCU_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES 																	(1U)
 #define SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES 																		(1U)
-#define SDL_ECC_Base_Address_TOTAL_ENTRIES 																									(49U)
+#define SDL_ECC_Base_Address_TOTAL_ENTRIES 																									(45U)
 
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_PSCSS0_SAM62A_MAIN_PSC_WRAP_ECC_AGGR
