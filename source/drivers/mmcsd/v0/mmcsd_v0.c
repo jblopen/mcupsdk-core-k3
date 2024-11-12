@@ -162,8 +162,6 @@ static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc
 static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode);
 static uint32_t MMCSD_getModeEmmc(MMCSD_Handle handle);
 static uint32_t MMCSD_getXferSpeedFromModeEmmc(uint32_t mode);
-static uint32_t MMCSD_getModeSd(MMCSD_Handle handle);
-static int32_t MMCSD_switchSdMode(MMCSD_Handle handle, uint32_t mode);
 static void MMCSD_initTransaction(MMCSD_Transaction *trans);
 static void MMCSD_cmdStatusPollingFxn(MMCSD_Handle handle);
 static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle);
@@ -1099,12 +1097,6 @@ static int32_t MMCSD_initSD(MMCSD_Handle handle)
             }
         }
     }
-
-    /* Find out the supported speeds */
-    uint32_t mode = MMCSD_getModeSd(handle);
-
-    /* TODO: Change mode to highest supported */
-    status = MMCSD_switchSdMode(handle, mode);
 
     return status;
 }
@@ -2155,72 +2147,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
             MMCSD_phyConfigure(attrs->ssBaseAddr, phyMode, MMCSD_REFERENCE_CLOCK_200M, phyDriverType, tunedItap);
         }
     }
-
-    return status;
-}
-
-static uint32_t MMCSD_getModeSd(MMCSD_Handle handle)
-{
-    int32_t status = SystemP_SUCCESS;
-    uint32_t mode = 0U;
-    MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
-    MMCSD_Attrs const *attrs = ((MMCSD_Config *)handle)->attrs;
-    const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
-    MMCSD_Transaction trans;
-
-    /* Send CMD6 to find out supported speeds of the card */
-    MMCSD_initTransaction(&trans);
-    trans.cmd = MMCSD_SD_CMD(6);
-    trans.dir = MMCSD_CMD_XFER_TYPE_READ;
-    trans.arg = 0x00FFFFF0; /* Bits 31 and 0-3 cleared to indicate 'check' function and access mode. [30:24] is reserved as 0 */
-    trans.blockCount = 1U;
-    trans.blockSize = 64U;
-    trans.dataBuf = obj->tempDataBuf;
-    status = MMCSD_transfer(handle, &trans);
-
-    /* Wait for DAT0 */
-    if(SystemP_SUCCESS == status)
-    {
-        while(CSL_REG32_FEXT(&pReg->PRESENTSTATE, MMC_CTLCFG_PRESENTSTATE_SDIF_DAT0IN) != 1U);
-    }
-    /* Supported mode bits in CMD6 response data :
-       BIT 0 - DEFAULT or SDR12
-       BIT 1 - SDR25
-       BIT 2 - SDR50
-       BIT 3 - SDR104
-       BIT 4 - DDR50
-
-       We need to find the common modes across the ones specified by user, ones supported in capability register
-       and the ones supported by the device.
-
-       For this we can arrange the cap modes and user modes as uint8_ts also with the same bit order and do a bitwise AND.
-       To find the highest mode, we just need to find the position of MSb.
-    */
-    uint8_t cardSupportedModes = obj->tempDataBuf[13];
-    uint8_t deviceSupportedModes = attrs->supportedModes;
-    uint8_t capabilityModes = 0x03U |
-                              (uint8_t)(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_SDR50_SUPPORT)  << 2U) |
-                              (uint8_t)(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_SDR104_SUPPORT) << 3U) |
-                              (uint8_t)(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_DDR50_SUPPORT)  << 4U);
-    uint8_t commonModes = (cardSupportedModes & deviceSupportedModes) & capabilityModes;
-
-    uint32_t i;
-    /* Check only from BIT 4 to BIT 0 */
-    for(i = 4; i >=0 ; i--)
-    {
-        if((commonModes >> i) & 0x01)
-        {
-            mode = (1 << i);
-            break;
-        }
-    }
-
-    return mode;
-}
-
-static int32_t MMCSD_switchSdMode(MMCSD_Handle handle, uint32_t mode)
-{
-    int32_t status = SystemP_SUCCESS;
 
     return status;
 }
