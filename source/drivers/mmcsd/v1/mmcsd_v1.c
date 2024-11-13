@@ -129,6 +129,7 @@
 /* Number of delay ratio elements (related to sw tuning) */
 #define MMCSD_ITAPDLY_LENGTH                      (uint8_t)(32U)
 #define MMCSD_ITAPDLY_LAST_INDEX                  (uint8_t)(31U)
+#define MMCSD_RETRY_TUNING_MAX                    (uint8_t)(10U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -171,6 +172,7 @@ static void MMCSD_xferStatusPollingFxnCMD19(MMCSD_Handle handle);
 static int32_t MMCSD_phyInit(uint32_t ssBaseAddr, uint32_t phyType);
 static inline void MMCSD_phyDisableDLL(uint32_t ssBaseAddr);
 static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_t phyClkFreq, uint32_t driverImpedance, uint8_t tunedItap);
+static int32_t MMCSD_phyTuneManual(MMCSD_Handle handle, uint8_t *tunedItap, uint8_t tuningCount);
 static int32_t MMCSD_phyTuneManualEMMC(MMCSD_Handle handle, uint8_t *tunedItap);
 static int32_t MMCSD_phyTuneAuto(MMCSD_Handle handle);
 
@@ -2032,7 +2034,7 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
         {
             if(obj->isManualTuning == TRUE)
             {
-                status = MMCSD_phyTuneManualEMMC(handle, &tunedItap);
+                status = MMCSD_phyTuneManual(handle, &tunedItap, 0U);
             }
             else
             {
@@ -2562,43 +2564,85 @@ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_
     return status;
 }
 
-static uint8_t MMCSD_calculateItap(MMCSD_TuningPassOrFailWindow *failWindow, uint8_t numFails)
+static int32_t MMCSD_calculateItap(MMCSD_TuningPassOrFailWindow *failWindow, uint8_t numFails, uint8_t *tunedItap)
 {
+    int32_t status = SystemP_SUCCESS;
     MMCSD_TuningPassOrFailWindow passWindow = {0U, 0U, 0U};
-    uint8_t itap = 0U, startFail = 0U, endFail = 0U, passLength = 0U, count;
-    int8_t prevFailEnd = -1;
+    uint8_t startFail = 0U, endFail = 0U, passLength = 0U, prevFailEnd = 0xFFU, count;
 
     if(!numFails)
     {
-        return (MMCSD_ITAPDLY_LAST_INDEX >> 1U);
+        status = SystemP_FAILURE;
+        return status;
     }
 
     if(failWindow->length == MMCSD_ITAPDLY_LENGTH)
     {
-        DebugP_logError("No passing  ITAPDLY \r\n");
-        return 0U;
+        status = SystemP_FAILURE;
+        return status;
     }
 
     for(count=0U; count < numFails; count++)
     {
         startFail = failWindow[count].start;
         endFail = failWindow[count].end;
-        passLength = startFail - (uint8_t)(prevFailEnd + 1U);
+        if(prevFailEnd == 0xFFU)
+        {
+            passLength = startFail;
+        }
+        else
+        {
+            passLength = startFail - (uint8_t)(prevFailEnd + 1U);
+        }
 
         if(passLength > passWindow.length)
         {
             passWindow.start = (uint8_t)(prevFailEnd + 1U);
             passWindow.length = passLength;
         }
-        prevFailEnd = (int8_t)endFail;
+        prevFailEnd = endFail;
     }
 
-    itap = passWindow.start + (passWindow.length >> 1);
+    *tunedItap = passWindow.start + (passWindow.length >> 1);
 
-    return (itap > MMCSD_ITAPDLY_LAST_INDEX ? 0U : itap);
+    return status;
 }
 
-static int32_t MMCSD_phyTuneManualEMMC(MMCSD_Handle handle, uint8_t *tuneditap)
+static int32_t MMCSD_phyTuneManual(MMCSD_Handle handle, uint8_t *tunedItap, uint8_t tuningCount)
+{
+    int32_t status = SystemP_SUCCESS;
+    const MMCSD_Attrs *attrs = ((MMCSD_Config *)handle)->attrs;
+    const CSL_mmc_sscfgRegs *ssReg = (const CSL_mmc_sscfgRegs *)(attrs->ssBaseAddr);
+
+    do
+    {
+        status = MMCSD_phyTuneManualEMMC(handle, tunedItap);
+        if(status == SystemP_SUCCESS)
+        {
+            break;
+        }
+
+        tuningCount++;
+    }
+    while(tuningCount < MMCSD_RETRY_TUNING_MAX);
+    
+    if(status == SystemP_SUCCESS)
+    {
+        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 1U);
+
+        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYENA, 1U);
+        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYSEL, *tunedItap);
+
+        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 0U);
+
+        MMCSD_halLinesResetCmd(attrs->ctrlBaseAddr);
+        MMCSD_halLinesResetDat(attrs->ctrlBaseAddr);
+    }
+
+    return status;
+}
+
+static int32_t MMCSD_phyTuneManualEMMC(MMCSD_Handle handle, uint8_t *tunedItap)
 {
     int32_t status = SystemP_SUCCESS;
     const MMCSD_Attrs *attrs = ((MMCSD_Config *)handle)->attrs;
@@ -2655,26 +2699,8 @@ static int32_t MMCSD_phyTuneManualEMMC(MMCSD_Handle handle, uint8_t *tuneditap)
         return status;
     }
 
-    itap = MMCSD_calculateItap(failWindow, failIndex);
-
-    if(itap == 0U)
-    {
-        status = SystemP_FAILURE;
-        return status;
-    }
-
-    *tuneditap = itap;
-
-    CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 1U);
-
-    CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYENA, 1U);
-    CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYSEL, itap);
-
-    CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 0U);
-
-    MMCSD_halLinesResetCmd(attrs->ctrlBaseAddr);
-    MMCSD_halLinesResetDat(attrs->ctrlBaseAddr);
-
+    status = MMCSD_calculateItap(failWindow, failIndex, tunedItap);    
+    
     return status;
 }
 
