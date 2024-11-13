@@ -109,6 +109,21 @@ void App_driversOpen()
     }
 }
 
+void App_boardDriversClose()
+{
+    Flash_close(gFlashHandle[CONFIG_FLASH_SBL]);
+    gFlashHandle[CONFIG_FLASH_SBL] = NULL;
+}
+
+void App_driversClose()
+{
+    OSPI_close(gOspiHandle[CONFIG_OSPI_SBL]);
+    gOspiHandle[CONFIG_OSPI_SBL] = NULL;
+
+    UART_close(gUartHandle[CONFIG_UART_SBL]);
+    gUartHandle[CONFIG_UART_SBL] = NULL;
+}
+
 int main()
 {
     int32_t status;
@@ -224,9 +239,10 @@ int main()
     }
 
     Board_driversClose();
-
     Drivers_close();
-
+    App_boardDriversClose();
+    App_driversClose();
+    
     /* Call DPL deinit to close the tick timer and disable interrupts before jumping to DM */
     Dpl_deinit();
 
