@@ -115,9 +115,11 @@ extern "C" {
 #define SCICLIENT_CONTEXT_A53_NONSEC_3                  (9U)
 /** C7x(Non Secure): C7x core*/
 #define SCICLIENT_CONTEXT_C7_NONSEC_0                   (10U)
+/** DM2TIFS(Non Secure): DM to TIFS Message forwarding */
+#define SCICLIENT_CONTEXT_DM2TIFS                       (11U)
 
 /** Total number of possible contexts for application. */
-#define SCICLIENT_CONTEXT_MAX_NUM                      (11U)
+#define SCICLIENT_CONTEXT_MAX_NUM                      (12U)
 /** @} */
 
 /**

@@ -107,9 +107,11 @@ extern "C" {
 #define SCICLIENT_CONTEXT_A53_NONSEC_3                  (8U)
 /** MCU R5 (Non Secure): Cortex R5 context 1 */
 #define SCICLIENT_CONTEXT_MCU_R5_0_NONSEC_0             (9U)
+/** DM2TIFS(Non Secure): DM to TIFS Message forwarding */
+#define SCICLIENT_CONTEXT_DM2TIFS                       (10U)
 
 /** Total number of possible contexts for application. */
-#define SCICLIENT_CONTEXT_MAX_NUM                      (10U)
+#define SCICLIENT_CONTEXT_MAX_NUM                      (11U)
 /** @} */
 
 /**
