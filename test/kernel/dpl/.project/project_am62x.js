@@ -510,6 +510,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_a53;
         build_property.isLogSHM = true;
         build_property.isAmpSHM = true;
+        build_property.isNoatfSupported = true;
         if(buildOption.os.match(/freertos*/) )
         {
             build_property.includes = includes_freertos_a53;

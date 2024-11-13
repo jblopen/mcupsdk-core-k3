@@ -295,6 +295,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.defines = defines_a53_amp;
         build_property.isAmpSHM = true;
         build_property.isLogSHM = true;
+        build_property.isNoatfSupported = true;
         if(buildOption.cpu.match(/a53ss0-0/))
         {
             build_property.templates = templates_freertos_a53ss00;
