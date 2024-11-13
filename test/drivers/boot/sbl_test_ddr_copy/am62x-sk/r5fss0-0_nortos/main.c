@@ -165,7 +165,7 @@ int main()
 		Bootloader_BootImageInfo_init(&bootImageInfo);
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER_FLASH_MCU, &bootParams);
-        loop_forever();
+
         if(bootHandle != NULL)
         {
             ((Bootloader_Config *)bootHandle)->scratchMemPtr = gAppimage;
