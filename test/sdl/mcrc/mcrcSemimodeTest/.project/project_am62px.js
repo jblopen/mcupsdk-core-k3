@@ -55,7 +55,7 @@ const libs_r5f = {
     common: [
         "nortos.am62px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am62px.wkup-r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.am62px.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib",
     ],

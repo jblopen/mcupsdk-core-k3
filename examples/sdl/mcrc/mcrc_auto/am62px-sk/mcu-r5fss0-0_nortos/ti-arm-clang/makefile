@@ -109,7 +109,7 @@ LIBS_PATH_common = \
 LIBS_common = \
 	-lnortos.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am62px.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -125,7 +125,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am62px.wkup-r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am62px.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am62px.mcu-r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
