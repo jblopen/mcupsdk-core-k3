@@ -15,6 +15,10 @@ else
 	PYTHON=python3
 endif
 % }
+% if (args.project.device == "am62x") {
+
+ATF_INTEGRATED_BOOT?=yes
+% }
 
 PROFILE?=release
 

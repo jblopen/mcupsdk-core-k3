@@ -37,6 +37,10 @@ ifeq ($(OS), Windows_NT)
 else
 	PYTHON=python3
 endif
+% if (atf_build == true) {
+
+ATF_INTEGRATED_BOOT?=yes
+% }
 
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})

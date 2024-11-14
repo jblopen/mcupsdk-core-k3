@@ -33,6 +33,10 @@ ifeq ($(OS), Windows_NT)
 else
 	PYTHON=python3
 endif
+% if (atf_build == true) {
+
+ATF_INTEGRATED_BOOT?=yes
+% }
 
 PROFILE?=release
 ConfigName:=$(PROFILE)
