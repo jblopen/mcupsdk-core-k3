@@ -31,6 +31,17 @@ SysConfig can be used to configure below parameters apart from common configurat
 
 - Slave mode is not supported in polling mode.
 
+## Failure Prevention Guidelines for Applications
+
+Application developer must take care of the following guidelines to avoid failures:
+- The application developer should verify the bit rate supported by the end connected device while configuring the bit rate in the application.
+- The application developer should verify the pinmux settings in the syscfg and make sure that the correct pins are configured.
+- The application developer should verify that the correct addressing mode as supported by the end device is configured.
+- The application developer should make sure that suffecient buffers are allocated before starting the transaction.
+- The application developer should have bus recovery mechanisms for different operation modes of I2C like interrupt callback mode.
+- The application developer should make sure that there is no resource/memory conflict when using i2c in a multi-core use case
+
+
 ## Important Usage Guidelines
 
 \cond !SOC_AM62DX
