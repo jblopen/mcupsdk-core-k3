@@ -978,16 +978,13 @@ int32_t Sciclient_serviceSecureProxy(const Sciclient_ReqPrm_t *pReqPrm,
         status = Sciclient_verifyThread(rxThread);
     }
     /* Wait for response: Polling based waiting */
-    /* We need to poll when the message is a forwarded message.
-     * this is because the forwarding threads do not have any interrupt
-     * associated with them.
+    /* Poll for response if the operating mode is polled and
+     * it is a message with TISCI_MSG_FLAG_AOP flag set in the header.
      */
-    if (((gSciclientHandle.opModeFlag ==
-         SCICLIENT_SERVICE_OPERATION_MODE_POLLED) &&
+    if ((gSciclientHandle.opModeFlag == SCICLIENT_SERVICE_OPERATION_MODE_POLLED) &&
         (status == CSL_PASS) &&
-        ((pReqPrm->flags & TISCI_MSG_FLAG_MASK) != 0U) &&
-        (pLocalRespHdr != NULL)) ||
-        (pReqPrm->forwardStatus == SCISERVER_FORWARD_MSG))
+        ((header->flags & TISCI_MSG_FLAG_MASK) != 0U) &&
+        (pLocalRespHdr != NULL))
     {
         /* Check if some message is received*/
         while (((HW_RD_REG32(Sciclient_threadStatusReg(rxThread)) &
@@ -1036,14 +1033,13 @@ int32_t Sciclient_serviceSecureProxy(const Sciclient_ReqPrm_t *pReqPrm,
     HwiP_restore(key);
 
     /* Wait for response: Interrupt based waiting */
-    /* We need to poll (hence no interrupt)  when the message is a forwarded message.
-     * this is because the forwarding threads do not have any interrupt
-     * associated with them.
+    /* Wait for interrupt if the operating mode is interrupt mode and
+     * it is a message with TISCI_MSG_FLAG_AOP flag set in the header.
      */
     if ((gSciclientHandle.opModeFlag ==
          SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT) &&
         (status == CSL_PASS) &&
-        ((pReqPrm->flags & TISCI_MSG_FLAG_MASK) != 0U) &&
+        ((header->flags & TISCI_MSG_FLAG_MASK) != 0U) &&
         (pReqPrm->forwardStatus != SCISERVER_FORWARD_MSG))
     {
         status = SemaphoreP_pend(gSciclientHandle.semHandles[localSeqId],timeToWait);
