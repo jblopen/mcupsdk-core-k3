@@ -41,7 +41,7 @@
 /*                                    Macros                                 */
 /*===========================================================================*/
 
-#define TEST_SCISERVER_TASK_STACK_SIZE         (2*1024U)
+#define TEST_SCISERVER_TASK_STACK_SIZE         (2U*1024U)
 #define TEST_SCISERVER_HW_QUEUE_SIZE           52U
 
 
@@ -502,35 +502,12 @@ Sciclient_RespPrm_t respParam2 =
     .respPayloadSize = (uint32_t) sizeof (response2),
 };
 
-const Sciserver_hwiData uhd1[] = {
-   /* user_mcu_nav_low_priority */
-    {
-        .irq_num = 67U,
-        .hw_msg_queue_id = 0x01U,
-        .hw_msg_buffer = 0,
-        .semaphore_id = 0,
-        .user_msg_data = 0,
-    },
-};
-
-const Sciserver_taskData utdTest1[] = {
-    /* user_hi_msg_task_data */
-    {
-        .task_id = 0,
-        .hw_msg_buffer_list = 0,
-        .hw_msg_buffer_count = 2,
-        .hw_msg_buffer_sz = 52U,
-        .semaphore_id = 0,
-        .state = 0,
-        .user_msg_data = 0,
-        .stack = 0,
-    },
-};
-
 static uint8_t __attribute__((aligned(32))) user_hi_task_stack[TEST_SCISERVER_TASK_STACK_SIZE];
 static uint8_t __attribute__((aligned(32))) user_lo_task_stack[TEST_SCISERVER_TASK_STACK_SIZE];
 static uint32_t user_hi_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE] = {2,2,2};
+static uint32_t uhd1_hi_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE] = {2,2,2};
 static uint32_t user_hi_main_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE] = {2,2,2};
+static uint32_t uhd1_hi_main_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE] = {2,2,2};
 static uint32_t user_lo_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE];
 static uint32_t user_lo_main_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE];
 
@@ -541,6 +518,14 @@ static Sciserver_msgData user_hi_msg_data = {
 static Sciserver_msgData user_hi_main_msg_data = {
     .host = 0xFF,
     .is_pending = true,
+};
+static Sciserver_msgData uhd1_hi_msg_data = {
+    .host = 0xFF,
+    .is_pending = false,
+};
+static Sciserver_msgData uhd1_hi_main_msg_data = {
+    .host = 0xFF,
+    .is_pending = false,
 };
 static Sciserver_msgData user_lo_msg_data = {
     .host = 0xFF,
@@ -560,6 +545,10 @@ static Sciserver_msgData *const user_hi_msg_data_list[0x2U] = {
     &user_hi_msg_data,
     &user_hi_main_msg_data,
 };
+static Sciserver_msgData *const uhd1_hi_msg_data_list[0x2U] = {
+    &uhd1_hi_msg_data,
+    &uhd1_hi_main_msg_data,
+};
 static uint32_t *const user_lo_msg_buffer_list[0x2U] = {
     user_lo_msg_buffer,
     user_lo_main_msg_buffer,
@@ -568,9 +557,38 @@ static uint32_t *const user_hi_msg_buffer_list[2] = {
     user_hi_msg_buffer,
     user_hi_main_msg_buffer,
 };
+static uint32_t *const uhd1_hi_msg_buffer_list[2] = {
+    uhd1_hi_msg_buffer,
+    uhd1_hi_main_msg_buffer,
+};
 static Sciserver_msgData *const user_lo_msg_data_list[0x2U] = {
     &user_lo_msg_data,
     &user_lo_main_msg_data,
+};
+
+const Sciserver_hwiData uhd1[] = {
+   /* user_mcu_nav_low_priority */
+    {
+        .irq_num = 67U,
+        .hw_msg_queue_id = 0x01U,
+        .hw_msg_buffer = uhd1_hi_msg_buffer,
+        .semaphore_id = 0,
+        .user_msg_data = 0,
+    },
+};
+
+const Sciserver_taskData utdTest1[] = {
+    /* user_hi_msg_task_data */
+    {
+        .task_id = 0,
+        .hw_msg_buffer_list = uhd1_hi_msg_buffer_list,
+        .hw_msg_buffer_count = 2U,
+        .hw_msg_buffer_sz = 52U,
+        .semaphore_id = 0,
+        .state = 0,
+        .user_msg_data = uhd1_hi_msg_data_list,
+        .stack = 0,
+    },
 };
 
 const Sciserver_taskData utdTest3[] = {

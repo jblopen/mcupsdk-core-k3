@@ -38,6 +38,13 @@
 #include "../test_device_manager.h"
 
 /*===========================================================================*/
+/*                                    Macros                                 */
+/*===========================================================================*/
+
+#define TEST_SCISERVER_HW_QUEUE_SIZE           52U
+
+
+/*===========================================================================*/
 /*                              Declarations                                 */
 /*===========================================================================*/
 
@@ -485,12 +492,31 @@ Sciclient_RespPrm_t respParam2 =
     .respPayloadSize = (uint32_t) sizeof (response2),
 };
 
+static uint32_t uhd1_hi_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE] = {2,2,2};
+static uint32_t uhd1_hi_main_msg_buffer[TEST_SCISERVER_HW_QUEUE_SIZE] = {2,2,2};
+static Sciserver_msgData uhd1_hi_msg_data = {
+    .host = 0xFF,
+    .is_pending = false,
+};
+static Sciserver_msgData uhd1_hi_main_msg_data = {
+    .host = 0xFF,
+    .is_pending = false,
+};
+static Sciserver_msgData *const uhd1_hi_msg_data_list[0x2U] = {
+    &uhd1_hi_msg_data,
+    &uhd1_hi_main_msg_data,
+};
+static uint32_t *const uhd1_hi_msg_buffer_list[2] = {
+    uhd1_hi_msg_buffer,
+    uhd1_hi_main_msg_buffer,
+};
+
 const Sciserver_hwiData uhd1[] = {
    /* user_mcu_nav_low_priority */
     {
         .irq_num = 67U,
         .hw_msg_queue_id = 0x01U,
-        .hw_msg_buffer = 0,
+        .hw_msg_buffer = uhd1_hi_msg_buffer,
         .semaphore_id = 0,
         .user_msg_data = 0,
     },
@@ -500,21 +526,16 @@ const Sciserver_taskData utdTest1[] = {
     /* user_hi_msg_task_data */
     {
         .task_id = 0,
-        .hw_msg_buffer_list = 0,
-        .hw_msg_buffer_count = 2,
+        .hw_msg_buffer_list = uhd1_hi_msg_buffer_list,
+        .hw_msg_buffer_count = 2U,
         .hw_msg_buffer_sz = 52U,
         .semaphore_id = 0,
         .state = 0,
-        .user_msg_data = 0,
+        .user_msg_data = uhd1_hi_msg_data_list,
         .stack = 0,
     },
 };
 
-/*===========================================================================*/
-/*                                    Macros                                 */
-/*===========================================================================*/
-
-/*None*/
 
 /*===========================================================================*/
 /*                         Internal function declarations                    */
