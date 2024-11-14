@@ -21,12 +21,18 @@ else
 	PYTHON=python3
 endif
 % }
+% let atf_build = false;
 % if (args.project.device == "am62x") {
-
-ATF_INTEGRATED_BOOT?=yes
+%   for (let project of args.project.projects) {
+%       if (project.cpu.match(/a53*/)) {
+%           atf_build = true;
+%       }
+%   }
 % }
 
-% if (args.project.device == "am62x") {
+% if (atf_build == true) {
+ATF_INTEGRATED_BOOT?=yes
+
 ATF_PROFILE?=release
 ifeq ($(PROFILE), Debug)
     ATF_PROFILE=debug
@@ -42,7 +48,7 @@ MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(PROFILE)/$(OUTNAME).appimage_xip
 % if (args.project.device == "awr294x") {
 MULTI_CORE_BOOTIMAGE_NAME_QSPI:=$(PROFILE)/$(OUTNAME).appimage_qspi
 % }
-% if (args.project.device == "am62x") {
+% if (atf_build == true) {
 ATF_LOAD_ADDR:=0x80000000
 ATF_OUTNAME:=bl31.$(PROFILE).out
 ATF_RPRC_NAME:=bl31.$(PROFILE).rprc
@@ -138,7 +144,7 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
 
-% if (args.project.device == "am62x") {
+% if (atf_build == true) {
 ifeq ($(ATF_INTEGRATED_BOOT), yes)
 MULTI_CORE_APP_PARAMS = \
 	$(ATF_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_a53ss0-0) \
@@ -179,7 +185,7 @@ all:
 ifeq ($(CCS_IDE_MODE),cloud)
 #	No post build steps
 else
-% if (args.project.device == "am62x") {
+% if (atf_build == true) {
 ifeq ($(ATF_INTEGRATED_BOOT), yes)
 	$(LD) -b binary -A aarch64 --oformat elf64-littleaarch64 --section-start=.data=$(ATF_LOAD_ADDR) -e $(ATF_LOAD_ADDR) $(ATF_BUILD_PATH)/$(ATF_BIN_NAME) -o $(ATF_OUTNAME)
 	$(OUTRPRC_CMD) $(ATF_OUTNAME) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
@@ -188,7 +194,7 @@ endif
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) ...
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-% if (args.project.device == "am62x") {
+% if (atf_build == true) {
 ifeq ($(ATF_INTEGRATED_BOOT), yes)
 	$(RM) $(ATF_OUTNAME)
 	$(RM) $(ATF_RPRC_NAME)
