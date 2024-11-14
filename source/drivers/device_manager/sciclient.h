@@ -631,6 +631,13 @@ int32_t Sciclient_init(const Sciclient_ConfigPrms_t *pCfgPrms);
 int32_t Sciclient_service(const Sciclient_ReqPrm_t *pReqPrm,
                           Sciclient_RespPrm_t      *pRespPrm);
 
+/**
+ *  \brief  This API allows to update the sciclient operating mode to interrupt
+ *          mode.
+ *  \return CSL_PASS on success, else failure
+ */
+int32_t Sciclient_updateOperModeToInterrupt(void);
+
 #ifdef QNX_OS
 /**
  *  \brief  This API allows communicating with the System firmware which can be

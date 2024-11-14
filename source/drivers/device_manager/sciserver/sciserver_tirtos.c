@@ -178,6 +178,13 @@ int32_t Sciserver_tirtosInit(Sciserver_TirtosCfgPrms_t *pAppPrms)
         }
     }
 
+#if defined(CONFIG_DM2TIFS_INTERRUPT_MODE)
+    /* Update the sciclient to interrupt mode */
+    if (ret == CSL_PASS) {
+        ret = Sciclient_updateOperModeToInterrupt();
+    }
+#endif
+
     return ret;
 }
 

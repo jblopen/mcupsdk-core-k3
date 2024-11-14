@@ -83,6 +83,15 @@ extern "C" {
 /* Current context is NON-SECURE */
 #define SCICLIENT_NON_SECURE_CONTEXT        (1U)
 
+/* Have 3 response interrupt handler for DM2TIFS, secure and non-secure context. */
+typedef enum
+{
+    SCICLIENT_NON_SEC_RESP_INTR_HANDLER,
+    SCICLIENT_SEC_RESP_INTR_HANDLER,
+    SCICLIENT_DM2TIFS_RESP_INTR_HANDLER,
+    SCICLIENT_MAX_RESP_INTR_HANDLER,
+} Sciclient_ContextRespIntrHandler;
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -142,8 +151,8 @@ typedef struct
     /**< Sequence ID of the current request **/
     HwiP_Object*           notificationIntr;
     /**<  Interrupt for notification **/
-    HwiP_Object*           respIntr[2];
-    /**<  Interrupt for response message. Have 2 for secure and non-secure context **/
+    HwiP_Object*           respIntr[SCICLIENT_MAX_RESP_INTR_HANDLER];
+    /**<  Interrupt for response message **/
     uint32_t              opModeFlag;
     /**< Operation mode for the Sciclient Service API. Refer to
      * \ref Sciclient_ServiceOperationMode for valid values.

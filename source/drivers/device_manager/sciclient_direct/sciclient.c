@@ -79,6 +79,19 @@
 static void Sciclient_ISR(uintptr_t arg);
 
 /**
+ *  \brief   This utility function is to be used to setup
+ *           response interrupts for various Sciclient contexts
+ *
+ *  \param   contextId                  Context ID to be used
+ *  \param   sciclientRespIntrHandler   Response Interrupt Handler for the
+ *                                      sciclient context to be used
+ *
+ *  \return  CSL_PASS on success, else failure
+ */
+static int32_t Sciclient_setupRespIntr(uint32_t contextId,
+                                       uint8_t sciclientRespIntrHandler);
+
+/**
  *  \brief   This utility function is to be used to take care of
  *           all non-aligned c66x accesses
  *
@@ -153,7 +166,7 @@ extern CSL_SecProxyCfg *pSciclient_secProxyCfg;
 static SemaphoreP_Object gSciclient_semObjects[SCICLIENT_MAX_QUEUE_SIZE];
 
 /**<  Interrupt for notification **/
-static HwiP_Object           gRespIntrObj[2];
+static HwiP_Object           gRespIntrObj[SCICLIENT_MAX_RESP_INTR_HANDLER];
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -265,13 +278,66 @@ int32_t Sciclient_configPrmsInit(Sciclient_ConfigPrms_t *pCfgPrms)
     return ret;
 }
 
+int32_t Sciclient_updateOperModeToInterrupt(void)
+{
+    int32_t  status = CSL_PASS;
+    uint32_t i = 0U;
+
+    if (gSciclientHandle.opModeFlag != SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT)
+    {
+        gSciclientHandle.opModeFlag = SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT;
+
+        /* Create Sciclient_ServiceHandle_t.semHandles */
+        for (i = 0; i < SCICLIENT_MAX_QUEUE_SIZE; i++)
+        {
+            gSciclientHandle.semStatus[i] = 0u;
+            gSciclientHandle.semHandles[i] = &gSciclient_semObjects[i];
+            if (SemaphoreP_constructCounting(gSciclientHandle.semHandles[i], 0u, 0xFF) != SystemP_SUCCESS)
+            {
+                gSciclientHandle.semHandles[i] = NULL;
+                status = CSL_EFAIL;
+                break;
+
+            }
+        }
+
+        /* Initialize currSeqId. Make sure currSeqId is never 0 */
+        gSciclientHandle.currSeqId = 1U;
+
+        if(CSL_PASS == status)
+        {
+            status = Sciclient_setupRespIntr(SCICLIENT_CONTEXT_SEC, SCICLIENT_SEC_RESP_INTR_HANDLER);
+        }
+        if(CSL_PASS == status)
+        {
+            status = Sciclient_setupRespIntr(SCICLIENT_CONTEXT_NONSEC, SCICLIENT_NON_SEC_RESP_INTR_HANDLER);
+        }
+        if(CSL_PASS == status)
+        {
+            status = Sciclient_setupRespIntr(SCICLIENT_CONTEXT_DM2TIFS, SCICLIENT_DM2TIFS_RESP_INTR_HANDLER);
+        }
+    }
+    else
+    {
+        /* If the response interrupts are not configured correctly for all sciclient contexts
+         * then set status as failure
+        */
+        if ((gSciclientHandle.respIntr[SCICLIENT_SEC_RESP_INTR_HANDLER] != &gRespIntrObj[SCICLIENT_SEC_RESP_INTR_HANDLER]) ||
+            (gSciclientHandle.respIntr[SCICLIENT_NON_SEC_RESP_INTR_HANDLER] != &gRespIntrObj[SCICLIENT_NON_SEC_RESP_INTR_HANDLER]) ||
+            (gSciclientHandle.respIntr[SCICLIENT_DM2TIFS_RESP_INTR_HANDLER] != &gRespIntrObj[SCICLIENT_DM2TIFS_RESP_INTR_HANDLER]))
+        {
+            status = CSL_EFAIL;
+        }
+    }
+
+    return status;
+}
 
 int32_t Sciclient_init(const Sciclient_ConfigPrms_t *pCfgPrms)
 {
     int32_t   status = CSL_PASS;
     uintptr_t key;
     uint32_t b_doInit = 0U;
-    uint32_t rxThread;
 
 #ifdef QNX_OS
 
@@ -317,12 +383,15 @@ int32_t Sciclient_init(const Sciclient_ConfigPrms_t *pCfgPrms)
         if (pCfgPrms != NULL)
         {
             /* Initialize Config params */
-            if((pCfgPrms->opModeFlag ==
-                SCICLIENT_SERVICE_OPERATION_MODE_POLLED) ||
-                (pCfgPrms->opModeFlag ==
-                SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT))
+            if(pCfgPrms->opModeFlag ==
+                SCICLIENT_SERVICE_OPERATION_MODE_POLLED)
             {
                 gSciclientHandle.opModeFlag = pCfgPrms->opModeFlag;
+            }
+            else if (pCfgPrms->opModeFlag ==
+                SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT)
+            {
+                status = Sciclient_updateOperModeToInterrupt();
             }
             else
             {
@@ -333,256 +402,6 @@ int32_t Sciclient_init(const Sciclient_ConfigPrms_t *pCfgPrms)
         {
             gSciclientHandle.opModeFlag =
                     SCICLIENT_SERVICE_OPERATION_MODE_POLLED;
-        }
-        if ((gSciclientHandle.opModeFlag ==
-                    SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT) &&
-                (status == CSL_PASS))
-        {
-#if !defined(MCU_PLUS_SDK)
-            SemaphoreP_Params semParams = {NULL,
-                                           SemaphoreP_Mode_BINARY,
-                                           1U};
-            uint32_t i = 0U;
-            /* Create Sciclient_ServiceHandle_t.semHandles */
-            for (i = 0; i < SCICLIENT_MAX_QUEUE_SIZE; i++)
-            {
-                gSciclientHandle.semStatus[i] = SemaphoreP_OK;
-                gSciclientHandle.semHandles[i] = SemaphoreP_create(0U,
-                                                        &semParams);
-                if (gSciclientHandle.semHandles[i] == NULL)
-                {
-                    status = CSL_EFAIL;
-                    break;
-                }
-            }
-#else
-            uint32_t i = 0U;
-            /* Create Sciclient_ServiceHandle_t.semHandles */
-            for (i = 0; i < SCICLIENT_MAX_QUEUE_SIZE; i++)
-            {
-                gSciclientHandle.semStatus[i] = 0u;
-                gSciclientHandle.semHandles[i] = &gSciclient_semObjects[i];
-                if (SemaphoreP_constructBinary(gSciclientHandle.semHandles[i], 0U) != SystemP_SUCCESS)
-                {
-                    gSciclientHandle.semHandles[i] = NULL;
-                    status = CSL_EFAIL;
-                    break;
-                }
-            }
-#endif
-
-            /* Initialize currSeqId. Make sure currSeqId is never 0 */
-            gSciclientHandle.currSeqId = 1U;
-
-            /* Register interrupts for secure and non-secure contexts of the CPU */
-            /* Non-Secure */
-            uint32_t contextId = SCICLIENT_CONTEXT_NONSEC;
-            if(contextId < SCICLIENT_CONTEXT_MAX_NUM)
-            {
-#if !defined(MCU_PLUS_SDK)
-                OsalRegisterIntrParams_t    intrPrms;
-                rxThread = gSciclientMap[contextId].respThreadId;
-                CSL_secProxyGetDataAddr(pSciclient_secProxyCfg, rxThread, 0U);
-                /* Get the Max Message Size */
-                gSciclient_maxMsgSizeBytes =
-                        CSL_secProxyGetMaxMsgSize(pSciclient_secProxyCfg) -
-                        CSL_SEC_PROXY_RSVD_MSG_BYTES;
-                Sciclient_flush(rxThread, gSciclient_maxMsgSizeBytes);
-                Osal_RegisterInterrupt_initParams(&intrPrms);
-                /* Populate the interrupt parameters */
-                intrPrms.corepacConfig.arg              = (uintptr_t) contextId;
-                intrPrms.corepacConfig.isrRoutine       = &Sciclient_ISR;
-                #if defined (_TMS320C6X)
-                /* On C66x, we use Event Combiner to map the interrupt to the CPU Intc.  To
-                 * do this, OSAL expects that event number holds the interrupt number and we
-                 * use the macro for interrupt number to specify we wish to use Event
-                 * Combiner.
-                 */
-                intrPrms.corepacConfig.corepacEventNum  = (int32_t) gSciclientMap[contextId].respIntrNum;
-                intrPrms.corepacConfig.intVecNum        = OSAL_REGINT_INTVEC_EVENT_COMBINER;
-                #else
-                /* Other (non-C66x) CPUs don't use event number and interrupt number is
-                 * passed in and programmed to CPU Intc directly.
-                 */
-                intrPrms.corepacConfig.corepacEventNum  = 0;
-                intrPrms.corepacConfig.intVecNum        = (int32_t) gSciclientMap[contextId].respIntrNum;
-                #endif
-                #if defined (BUILD_C7X)
-                {
-                    /* Clec interrupt number 1024 is connected to GIC interrupt number 32 in J721E.
-                     * Due to this for CLEC programming one needs to add an offset of 992 (1024 - 32)
-                     * to the event number which is shared between GIC and CLEC.
-                     */
-                    uint32_t evtNum = gSciclientMap[contextId].c7xEvtIn + 992;
-
-                    #if defined (SOC_J721S2) || defined (SOC_J784S4)
-                    CSL_CLEC_EVTRegs * regs = (CSL_CLEC_EVTRegs *) CSL_COMPUTE_CLUSTER0_CLEC_BASE;
-                    #elif defined(SOC_AM62A)
-                    CSL_CLEC_EVTRegs   *regs = (CSL_CLEC_EVTRegs*) CSL_C7X256V0_CLEC_BASE;
-                    #else
-                    CSL_CLEC_EVTRegs * regs = (CSL_CLEC_EVTRegs *) CSL_COMPUTE_CLUSTER0_CLEC_REGS_BASE;
-                    #endif
-                    CSL_ClecEventConfig evtCfg;
-                    evtCfg.secureClaimEnable = 0;
-                    evtCfg.evtSendEnable = 1;
-                    evtCfg.rtMap = 0x3C;
-                    evtCfg.extEvtNum = 0x0;
-                    evtCfg.c7xEvtNum = SCICLIENT_C7X_NON_SECURE_INTERRUPT_NUM;
-                    #if defined(SOC_J721E)
-                    CSL_clecConfigEvent(regs, evtNum, &evtCfg);
-                    #elif defined(SOC_AM62A)
-                    CSL_clecConfigEvent(regs,evtNum+ 256, &evtCfg);
-                    #endif
-                    intrPrms.corepacConfig.priority = 1U;
-                }
-                #endif
-#ifdef QNX_OS
-                intrPrms.corepacConfig.intAutoEnable  = 0;
-#endif
-                /* Clear Interrupt */
-                Osal_ClearInterrupt(intrPrms.corepacConfig.corepacEventNum, intrPrms.corepacConfig.intVecNum);
-                /* Register interrupts */
-                status = Osal_RegisterInterrupt(&intrPrms, &gSciclientHandle.respIntr[0]);
-                if(OSAL_INT_SUCCESS != status)
-                {
-                    gSciclientHandle.respIntr[0] = NULL_PTR;
-                }
-#else
-                HwiP_Params                hwiInputParams;
-
-                rxThread = gSciclientMap[contextId].respThreadId;
-                CSL_secProxyGetDataAddr(pSciclient_secProxyCfg, rxThread, 0U);
-                /* Get the Max Message Size */
-                gSciclient_maxMsgSizeBytes =
-                        CSL_secProxyGetMaxMsgSize(pSciclient_secProxyCfg) -
-                        CSL_SEC_PROXY_RSVD_MSG_BYTES;
-                Sciclient_flush(rxThread, gSciclient_maxMsgSizeBytes);
-
-                HwiP_Params_init(&hwiInputParams);
-                /* Populate the interrupt parameters */
-                hwiInputParams.args     = (void*) contextId;
-                hwiInputParams.callback = (HwiP_FxnCallback) &Sciclient_ISR;
-                hwiInputParams.eventId  = 0;
-                hwiInputParams.intNum   = (uint32_t) gSciclientMap[contextId].respIntrNum;
-
-                /* Clear Interrupt */
-                HwiP_clearInt(hwiInputParams.intNum);
-                /* Register interrupts */
-                gSciclientHandle.respIntr[0] = &gRespIntrObj[0];
-                status =  HwiP_construct(gSciclientHandle.respIntr[0],&hwiInputParams);
-                if(SystemP_SUCCESS != status)
-                {
-                    gSciclientHandle.respIntr[0] = (HwiP_Object*) NULL;
-                }
-                (void)HwiP_enableInt(hwiInputParams.intNum);
-#endif
-            }
-            else
-            {
-                status = CSL_EFAIL;
-            }
-            /* Secure Context */
-            contextId = SCICLIENT_CONTEXT_SEC;
-            if(contextId < SCICLIENT_CONTEXT_MAX_NUM)
-            {
-#if !defined(MCU_PLUS_SDK)
-                OsalRegisterIntrParams_t    intrPrms;
-                rxThread = gSciclientMap[contextId].respThreadId;
-                CSL_secProxyGetDataAddr(pSciclient_secProxyCfg, rxThread, 0U);
-                /* Get the Max Message Size */
-                gSciclient_maxMsgSizeBytes =
-                        CSL_secProxyGetMaxMsgSize(pSciclient_secProxyCfg) -
-                        CSL_SEC_PROXY_RSVD_MSG_BYTES;
-                Sciclient_flush(rxThread, gSciclient_maxMsgSizeBytes);
-                Osal_RegisterInterrupt_initParams(&intrPrms);
-                /* Populate the interrupt parameters */
-                intrPrms.corepacConfig.arg              = (uintptr_t) contextId;
-                intrPrms.corepacConfig.isrRoutine       = &Sciclient_ISR;
-                #if defined (_TMS320C6X)
-                /* On C66x, we use Event Combiner to map the interrupt to the CPU Intc.  To
-                 * do this, OSAL expects that event number holds the interrupt number and we
-                 * use the macro for interrupt number to specify we wish to use Event
-                 * Combiner.
-                 */
-                intrPrms.corepacConfig.corepacEventNum  = (int32_t) gSciclientMap[contextId].respIntrNum;
-                intrPrms.corepacConfig.intVecNum        = OSAL_REGINT_INTVEC_EVENT_COMBINER;
-                #else
-                /* Other (non-C66x) CPUs don't use event number and interrupt number is
-                 * passed in and programmed to CPU Intc directly.
-                 */
-                intrPrms.corepacConfig.corepacEventNum  = 0;
-                intrPrms.corepacConfig.intVecNum        = (int32_t) gSciclientMap[contextId].respIntrNum;
-                #endif
-                #if defined (BUILD_C7X)
-                {
-                    /* Clec interrupt number 1024 is connected to GIC interrupt number 32 in J721E.
-                     * Due to this for CLEC programming one needs to add an offset of 992 (1024 - 32)
-                     * to the event number which is shared between GIC and CLEC.
-                     */
-                    uint32_t evtNum = gSciclientMap[contextId].c7xEvtIn + 992;
-
-                    #if defined (SOC_J721S2) || defined (SOC_J784S4)
-                    CSL_CLEC_EVTRegs * regs = (CSL_CLEC_EVTRegs *) CSL_COMPUTE_CLUSTER0_CLEC_BASE;
-                    #elif defined(SOC_AM62A)
-                    CSL_CLEC_EVTRegs   *regs = (CSL_CLEC_EVTRegs*) CSL_C7X256V0_CLEC_BASE;
-                    #else
-                    CSL_CLEC_EVTRegs * regs = (CSL_CLEC_EVTRegs *) CSL_COMPUTE_CLUSTER0_CLEC_REGS_BASE;
-                    #endif
-                    CSL_ClecEventConfig evtCfg;
-                    evtCfg.secureClaimEnable = 0;
-                    evtCfg.evtSendEnable = 1;
-                    evtCfg.rtMap = 0x3C;
-                    evtCfg.extEvtNum = 0x0;
-                    evtCfg.c7xEvtNum = SCICLIENT_C7X_SECURE_INTERRUPT_NUM;
-                    CSL_clecConfigEvent(regs, evtNum, &evtCfg);
-                    intrPrms.corepacConfig.priority = 1U;
-                }
-                #endif
-#ifdef QNX_OS
-                intrPrms.corepacConfig.intAutoEnable  = 0;
-#endif
-                /* Clear Interrupt */
-                Osal_ClearInterrupt(intrPrms.corepacConfig.corepacEventNum, intrPrms.corepacConfig.intVecNum);
-                /* Register interrupts */
-                status = Osal_RegisterInterrupt(&intrPrms, &gSciclientHandle.respIntr[1]);
-                if(OSAL_INT_SUCCESS != status)
-                {
-                    gSciclientHandle.respIntr[1] = NULL_PTR;
-                }
-#else
-                HwiP_Params                hwiInputParams;
-                rxThread = gSciclientMap[contextId].respThreadId;
-                CSL_secProxyGetDataAddr(pSciclient_secProxyCfg, rxThread, 0U);
-                /* Get the Max Message Size */
-                gSciclient_maxMsgSizeBytes =
-                        CSL_secProxyGetMaxMsgSize(pSciclient_secProxyCfg) -
-                        CSL_SEC_PROXY_RSVD_MSG_BYTES;
-                Sciclient_flush(rxThread, gSciclient_maxMsgSizeBytes);
-                HwiP_Params_init(&hwiInputParams);
-                /* Populate the interrupt parameters */
-                hwiInputParams.args     = (void*) contextId;
-                hwiInputParams.callback = (HwiP_FxnCallback) &Sciclient_ISR;
-                hwiInputParams.eventId  = 0;
-                hwiInputParams.intNum   = (uint32_t) gSciclientMap[contextId].respIntrNum;
-
-
-
-                /* Clear Interrupt */
-                HwiP_clearInt(hwiInputParams.intNum);
-                /* Register interrupts */
-                gSciclientHandle.respIntr[0] = &gRespIntrObj[1];
-                status =  HwiP_construct(gSciclientHandle.respIntr[1],&hwiInputParams);
-                if(SystemP_SUCCESS != status)
-                {
-                    gSciclientHandle.respIntr[1] = (HwiP_Object*) NULL;
-                }
-                (void)HwiP_enableInt(hwiInputParams.intNum);
-#endif
-            }
-            else
-            {
-                status = CSL_EFAIL;
-            }
         }
         if (pCfgPrms != NULL)
         {
@@ -712,7 +531,7 @@ int32_t Sciclient_serviceGetThreadIds (const Sciclient_ReqPrm_t *pReqPrm,
             * Therefore, we force Sciclient to use secure mode in this build
             * configuration.
             */
-            *contextId = SCICLIENT_CONTEXT_SEC;
+            *contextId = SCICLIENT_CONTEXT_DM2TIFS;
         }
         else
         {
@@ -1039,8 +858,7 @@ int32_t Sciclient_serviceSecureProxy(const Sciclient_ReqPrm_t *pReqPrm,
     if ((gSciclientHandle.opModeFlag ==
          SCICLIENT_SERVICE_OPERATION_MODE_INTERRUPT) &&
         (status == CSL_PASS) &&
-        ((header->flags & TISCI_MSG_FLAG_MASK) != 0U) &&
-        (pReqPrm->forwardStatus != SCISERVER_FORWARD_MSG))
+        ((header->flags & TISCI_MSG_FLAG_MASK) != 0U))
     {
         status = SemaphoreP_pend(gSciclientHandle.semHandles[localSeqId],timeToWait);
 #if !defined(MCU_PLUS_SDK)
@@ -1199,23 +1017,27 @@ int32_t Sciclient_deinit(void)
 #endif
             }
             /* De-register interrupts */
-            if (gSciclientHandle.respIntr[0] != NULL)
+            if (gSciclientHandle.respIntr[SCICLIENT_NON_SEC_RESP_INTR_HANDLER] != NULL)
             {
 #if !defined(MCU_PLUS_SDK)
                 contextId = SCICLIENT_CONTEXT_NONSEC;
-                (void) Osal_DeleteInterrupt(gSciclientHandle.respIntr[0], (int32_t) gSciclientMap[contextId].respIntrNum);
+                (void) Osal_DeleteInterrupt(gSciclientHandle.respIntr[SCICLIENT_NON_SEC_RESP_INTR_HANDLER], (int32_t) gSciclientMap[contextId].respIntrNum);
 #else
-                (void) HwiP_destruct(gSciclientHandle.respIntr[0]);
+                (void) HwiP_destruct(gSciclientHandle.respIntr[SCICLIENT_NON_SEC_RESP_INTR_HANDLER]);
 #endif
             }
-            if (gSciclientHandle.respIntr[1] != NULL)
+            if (gSciclientHandle.respIntr[SCICLIENT_SEC_RESP_INTR_HANDLER] != NULL)
             {
 #if !defined(MCU_PLUS_SDK)
                 contextId = SCICLIENT_CONTEXT_SEC;
-                (void) Osal_DeleteInterrupt(gSciclientHandle.respIntr[1], (int32_t) gSciclientMap[contextId].respIntrNum);
+                (void) Osal_DeleteInterrupt(gSciclientHandle.respIntr[SCICLIENT_SEC_RESP_INTR_HANDLER], (int32_t) gSciclientMap[contextId].respIntrNum);
 #else
-                (void) HwiP_destruct(gSciclientHandle.respIntr[1]);
+                (void) HwiP_destruct(gSciclientHandle.respIntr[SCICLIENT_SEC_RESP_INTR_HANDLER]);
 #endif
+            }
+            if (gSciclientHandle.respIntr[SCICLIENT_DM2TIFS_RESP_INTR_HANDLER] != NULL)
+            {
+                (void) HwiP_destruct(gSciclientHandle.respIntr[SCICLIENT_DM2TIFS_RESP_INTR_HANDLER]);
             }
         }
 #if defined(_TMS320C6X)
@@ -1438,8 +1260,8 @@ static void Sciclient_ISR(uintptr_t arg)
 #else
         if ((gSciclientHandle.semStatus[seqId] == 0) && (seqId != 0U))
         {
-            (void) SemaphoreP_post(gSciclientHandle.semHandles[seqId]);
             HwiP_disableInt( (uint32_t) gSciclientMap[contextId].respIntrNum);
+            (void) SemaphoreP_post(gSciclientHandle.semHandles[seqId]);
         }
         else
         {
@@ -1467,6 +1289,55 @@ int32_t Sciclient_contextIdFromIntrNum(uint32_t intrNum)
         retVal = (int32_t)i;
     }
     return retVal;
+}
+
+static int32_t Sciclient_setupRespIntr(uint32_t contextId, uint8_t sciclientRespIntrHandler)
+{
+    int32_t status = CSL_PASS;
+    if(contextId < SCICLIENT_CONTEXT_MAX_NUM)
+    {
+        if ((uint32_t) gSciclientMap[contextId].respIntrNum != 0U)
+        {
+            HwiP_Params  hwiInputParams;
+            uint32_t     rxThread;
+
+            HwiP_clearInt((uint32_t) gSciclientMap[contextId].respIntrNum);
+            rxThread = gSciclientMap[contextId].respThreadId;
+            CSL_secProxyGetDataAddr(pSciclient_secProxyCfg, rxThread, 0U);
+
+            /* Get the Max Message Size */
+            gSciclient_maxMsgSizeBytes =
+                    CSL_secProxyGetMaxMsgSize(pSciclient_secProxyCfg) -
+                    CSL_SEC_PROXY_RSVD_MSG_BYTES;
+            Sciclient_flush(rxThread, gSciclient_maxMsgSizeBytes);
+
+            HwiP_Params_init(&hwiInputParams);
+
+            /* Populate the interrupt parameters */
+            hwiInputParams.intNum   = (uint32_t) gSciclientMap[contextId].respIntrNum;
+            hwiInputParams.callback = (HwiP_FxnCallback) &Sciclient_ISR;
+            hwiInputParams.args     = (void*) contextId;
+
+            /* Disable and Clear Interrupt */
+            HwiP_disableInt(hwiInputParams.intNum);
+            HwiP_clearInt(hwiInputParams.intNum);
+
+            /* Register interrupts based on the corresponding response interrupt handler */
+            gSciclientHandle.respIntr[sciclientRespIntrHandler] = &gRespIntrObj[sciclientRespIntrHandler];
+            status =  HwiP_construct(gSciclientHandle.respIntr[sciclientRespIntrHandler],&hwiInputParams);
+            if(SystemP_SUCCESS != status)
+            {
+                gSciclientHandle.respIntr[sciclientRespIntrHandler] = (HwiP_Object*) NULL;
+            }
+            (void)HwiP_enableInt(hwiInputParams.intNum);
+        }
+    }
+    else
+    {
+        status = CSL_EFAIL;
+    }
+
+    return status;
 }
 
 static void Sciclient_utilByteCopy(uint8_t *src,
