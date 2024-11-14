@@ -218,18 +218,30 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params)
         handle = (I2C_Handle)&(gI2cConfig[idx]);
     }
 
-    DebugP_assert(NULL != gI2cDrvObj.lock);
-    (void)SemaphoreP_pend(&gI2cDrvObj.lockObj, SystemP_WAIT_FOREVER);
+    if(NULL != gI2cDrvObj.lock)
+    {
+        (void)SemaphoreP_pend(&gI2cDrvObj.lockObj, SystemP_WAIT_FOREVER);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
 
     if(SystemP_SUCCESS == status)
     {
         object = (I2C_Object*)handle->object;
-        DebugP_assert(NULL != object);
-        DebugP_assert(NULL != handle->hwAttrs);
-        hwAttrs = (I2C_HwAttrs const *)handle->hwAttrs;
-        if(object->isOpen)
+        if((NULL != object) && (NULL != handle->hwAttrs))
         {
-            /* Handle already opended */
+            hwAttrs = (I2C_HwAttrs const *)handle->hwAttrs;
+            if(object->isOpen)
+            {
+                /* Handle already opended */
+                status = SystemP_FAILURE;
+                handle = NULL;
+            }
+        }
+        else
+        {
             status = SystemP_FAILURE;
             handle = NULL;
         }
@@ -289,69 +301,89 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params)
 
             /* Register interrupts */
             status = HwiP_construct(&object->hwiObj,&hwiPrms);
-            DebugP_assert(status==SystemP_SUCCESS);
         }
 
         /*
          * Construct thread safe handles for this I2C peripheral
          * Semaphore to provide exclusive access to the I2C peripheral
          */
-        status = SemaphoreP_constructMutex(&object->mutex);
-        DebugP_assert(status==SystemP_SUCCESS);
-
-
-        if (object->i2cParams.transferMode == I2C_MODE_BLOCKING)
+        if(status == SystemP_SUCCESS)
         {
-            /*
-            * Semaphore to cause the waiting task to block for the I2C
-            * to finish
-            */
-            status = SemaphoreP_constructBinary(&object->transferComplete, 0);
-            DebugP_assert(status==SystemP_SUCCESS);
-
-            /* Store internal callback function */
-            object->i2cParams.transferCallbackFxn = &I2C_transferCallback;
-        }
-
-        if(object->i2cParams.transferMode == I2C_MODE_CALLBACK)
-        {
-            if (params != NULL)
+            status = SemaphoreP_constructMutex(&object->mutex);
+            if(status == SystemP_SUCCESS)
             {
-            /* Save the callback function pointer */
-            object->i2cParams.transferCallbackFxn = params->transferCallbackFxn;
+                if(object->i2cParams.transferMode == I2C_MODE_BLOCKING)
+                {
+                    /*
+                    * Semaphore to cause the waiting task to block for the I2C
+                    * to finish
+                    */
+                    status = SemaphoreP_constructBinary(&object->transferComplete, 0);
+                    if(status == SystemP_SUCCESS)
+                    {
+                        /* Store internal callback function */
+                       object->i2cParams.transferCallbackFxn = &I2C_transferCallback;
+                    }
+                }
+
+                if(object->i2cParams.transferMode == I2C_MODE_CALLBACK)
+                {
+                    if(params != NULL)
+                    {
+                        /* Save the callback function pointer */
+                        object->i2cParams.transferCallbackFxn = params->transferCallbackFxn;
+                    }
+                }
+
+                if(status == SystemP_SUCCESS)
+                {
+                    /* Clear the head pointer */
+                    object->headPtr = NULL;
+                    object->tailPtr = NULL;
+
+                    /* Initialize LLD driver */
+                    if(I2C_lld_init(i2cLldHandle) == I2C_STS_SUCCESS)
+                    {
+                        status = SystemP_SUCCESS;
+                        /* Store HLD handle insinde LLD Object */
+                        i2cLldHandle->args = handle;
+                        /* Specify the idle state for this I2C peripheral */
+                        object->state = I2C_STATE_IDLE;
+                    }
+                    else
+                    {
+                        status = SystemP_FAILURE;
+                        handle = NULL;
+                    }
+                }
+                else
+                {
+                    handle = NULL;
+                }
+            }
+            else
+            {
+                handle = NULL;
             }
         }
 
-        /* Clear the head pointer */
-        object->headPtr = NULL;
-        object->tailPtr = NULL;
-
-        /* Initialize LLD driver */
-        if(I2C_lld_init(i2cLldHandle) == I2C_STS_SUCCESS)
+        if(NULL != gI2cDrvObj.lock)
         {
-            status = SystemP_SUCCESS;
-            /* Store HLD handle insinde LLD Object */
-            i2cLldHandle->args = handle;
-            /* Specify the idle state for this I2C peripheral */
-            object->state = I2C_STATE_IDLE;
-        }
-        else
-        {
-            status = SystemP_FAILURE;
+            SemaphoreP_post(&gI2cDrvObj.lockObj);
         }
 
-        DebugP_assert(status==SystemP_SUCCESS);
     }
-
-    SemaphoreP_post(&gI2cDrvObj.lockObj);
-    return (handle);
+    if((handle == NULL) && (object != NULL))
+    {
+        object->isOpen = (bool)false;
+    }
+    return handle;
 }
 
 void I2C_close(I2C_Handle handle)
 {
     I2C_Object          *object = NULL;
     I2C_HwAttrs const   *hwAttrs = NULL;
-    int32_t             status = SystemP_SUCCESS;
 
     /* Input parameter validation */
     if (handle != NULL)
@@ -360,40 +392,35 @@ void I2C_close(I2C_Handle handle)
         object = (I2C_Object*)handle->object;
         hwAttrs = (I2C_HwAttrs const *)handle->hwAttrs;
 
-        DebugP_assert(NULL != gI2cDrvObj.lock);
-        (void)SemaphoreP_pend(&gI2cDrvObj.lockObj, SystemP_WAIT_FOREVER);
-
-        /* Check to see if a I2C transaction is in progress */
-        if (object->headPtr == NULL)
+        if(NULL != gI2cDrvObj.lock)
         {
-            if(I2C_lld_deInit(object->i2cLldHandle) == I2C_STS_SUCCESS)
-            {
-                status = SystemP_SUCCESS;
-            }
-            else
-            {
-                status = SystemP_FAILURE;
-            }
-            DebugP_assert(status == SystemP_SUCCESS);
+            (void)SemaphoreP_pend(&gI2cDrvObj.lockObj, SystemP_WAIT_FOREVER);
 
-            if (hwAttrs->enableIntr)
+            /* Check to see if an I2C transaction is in progress */
+            if(object->headPtr == NULL)
             {
-                /* Destruct the Hwi */
-                (void)HwiP_destruct(&object->hwiObj);
+                if(I2C_lld_deInit(object->i2cLldHandle) == I2C_STS_SUCCESS)
+                {
+                    if(hwAttrs->enableIntr)
+                    {
+                        /* Destruct the Hwi */
+                        (void)HwiP_destruct(&object->hwiObj);
+                    }
+                    /* Destruct the instance lock */
+                    (void)SemaphoreP_destruct(&object->mutex);
+
+                    if(I2C_MODE_BLOCKING == object->i2cParams.transferMode)
+                    {
+                        /* Destruct the transfer completion lock */
+                        (void)SemaphoreP_destruct(&object->transferComplete);
+                    }
+
+                    object->isOpen = (bool)false;
+                }
             }
 
-            /* Destruct the instance lock */
-            (void)SemaphoreP_destruct(&object->mutex);
-
-            if (I2C_MODE_BLOCKING == object->i2cParams.transferMode)
-            {
-                /* Destruct the transfer completion lock */
-                (void)SemaphoreP_destruct(&object->transferComplete);
-            }
-
-            object->isOpen = (bool)false;
+            (void)SemaphoreP_post(&gI2cDrvObj.lockObj);
         }
-        SemaphoreP_post(&gI2cDrvObj.lockObj);
     }
     return;
 }
