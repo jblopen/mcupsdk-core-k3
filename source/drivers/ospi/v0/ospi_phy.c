@@ -38,7 +38,6 @@
 #include <kernel/dpl/ClockP.h>
 #include <drivers/ospi.h>
 #include <drivers/hw_include/cslr.h>
-#include "vtm.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -1947,6 +1946,8 @@ int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset)
     /* Use the normal algorithm */
     status = OSPI_phyFindOTP1(handle, flashOffset, &otp);
 
+    VTM_reset();
+
     /* Configure phy for the optimal tuning point */
     OSPI_phySetRdDelayTxRxDLL(handle, &otp);
 
@@ -1985,6 +1986,8 @@ int32_t OSPI_phyTuneSDR(OSPI_Handle handle, uint32_t flashOffset)
 
     /* Use the normal algorithm */
     status = OSPI_phyFindOTP3(handle, flashOffset, &otp);
+
+    VTM_reset();
 
     /* Configure phy for the optimal tuning point */
     OSPI_phySetRdDelayTxRxDLL(handle, &otp);

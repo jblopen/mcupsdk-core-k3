@@ -226,8 +226,6 @@ int32_t VTM_getAverageTemperature(float *temperature)
                                  VTM_TEMPERATURE_SENSOR_CONTINUOUS_MODE_SET);
             code = VTM_getADCDataOutCode(&config1->TMPSENS[count]);
             avgTemp += gPVTPolynomials[code];
-            VTM_resetSensorSetup(&config2->TMPSENS[count], \
-                                 VTM_TEMPERATURE_SENSOR_CONTINUOUS_MODE_RESET);
         }
 
         *temperature = avgTemp / (sensorCount * 1000);
@@ -238,6 +236,26 @@ int32_t VTM_getAverageTemperature(float *temperature)
     }
 
     return status;
+}
+
+void VTM_reset()
+{
+    int32_t sensorCount;
+    const CSL_vtm_cfg1Regs *config1;
+    const CSL_vtm_cfg2Regs *config2;
+
+    config1 = (CSL_vtm_cfg1Regs *)CSL_WKUP_VTM0_MMR_VBUSP_CFG1_BASE;
+    config2 = (CSL_vtm_cfg2Regs *)CSL_WKUP_VTM0_MMR_VBUSP_CFG2_BASE;
+
+    sensorCount = VTM_getSensorCount(config1);
+
+    for(uint32_t count = 0U; count < sensorCount; count++)
+    {
+        VTM_resetSensorSetup(&config2->TMPSENS[count], \
+                             VTM_TEMPERATURE_SENSOR_CONTINUOUS_MODE_RESET);
+    }
+
+    return;
 }
 
 /* ========================================================================== */

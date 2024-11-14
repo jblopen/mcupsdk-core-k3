@@ -76,4 +76,9 @@ void VTM_printPolynomialLookUpTable();
 */
 int32_t VTM_getAverageTemperature(float *temperature);
 
+/**
+ *  \brief This function resets the VTM sensors.
+*/
+void VTM_reset();
+
 /** @} */

@@ -340,6 +340,7 @@ static void test_ospi_phy_tuning(void *args)
     OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
     OSPI_Config *config = NULL;
     uint64_t startTime, endTime;
+    float temperature = 0;
     const char *flashTypeList[] = {"SERIAL NOR","SERIAL NAND","PARALLEL NOR", \
                                    "PARALLEL NAND"};
     const char *flashProtocolList[] = {0,"FLASH_CFG_PROTO_1S_1S_1S",\
@@ -362,6 +363,12 @@ static void test_ospi_phy_tuning(void *args)
     retVal = Board_driversOpen();
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 
+    (void)VTM_getAverageTemperature(&temperature);
+
+    TEST_ASSERT_GREATER_THAN_INT32(0, (int32_t)temperature);
+
+    VTM_reset();
+
     /* Flash the attackVector at a random offset and try the PHY tuning */
     OSPI_phyGetTuningData(&phyTuningData, &phyTuningDataSize);
 
@@ -377,6 +384,7 @@ static void test_ospi_phy_tuning(void *args)
     DebugP_log("\n[TEST OSPI] OSPI PHY tuning time\r\n\n");
     DebugP_log("Flash type: %s\r\n",flashTypeList[modeParams.cfgflashType]);
     DebugP_log("Flash protocol: %s\r\n",flashProtocolList[modeParams.flashProtocol]);
+    DebugP_log("Temperature: %.2f\r\n", temperature);
 
     if(modeParams.phyEnable)
     {

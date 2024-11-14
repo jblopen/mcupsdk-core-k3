@@ -334,6 +334,12 @@ ROM Checksum | R5F            | No
     <td> IPC
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-5554
+    <td> AM62P VTM Temperature outputs value 0
+    <td> OSPI
+    <td> 10.01.00
+</tr>
 </table>
 
 
