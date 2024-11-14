@@ -518,15 +518,22 @@ static int32_t Flash_nandOspiWrite(Flash_Config *config, uint32_t offset, uint8_
     {
         status = SystemP_FAILURE;
     }
-
-    /* Validate address input */
-    if((offset + len) > (attrs->blockCount*attrs->pageCount*attrs->pageSize))
+    
+    if(attrs != NULL)
     {
-        status = SystemP_FAILURE;
-    }
+        /* Validate address input */
+        if((offset + len) > (attrs->blockCount * attrs->pageCount * attrs->pageSize))
+        {
+            status = SystemP_FAILURE;
+        }
 
-    /* Check offset alignment */
-    if(0 != (offset % attrs->pageSize))
+        /* Check offset alignment */
+        if(0 != (offset % attrs->pageSize))
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+    else
     {
         status = SystemP_FAILURE;
     }
@@ -1251,10 +1258,11 @@ static int32_t Flash_NandOspiWriteDirect(Flash_Config *config, OSPI_Transaction 
     int32_t status = SystemP_SUCCESS;
 
     Flash_NandOspiObject *obj;
-    Flash_Attrs *attrs = config->attrs;
+    Flash_Attrs *attrs = NULL;
 
     if(config != NULL)
     {
+        attrs = config->attrs;
         obj = (Flash_NandOspiObject *)(config->object);
     }
     else

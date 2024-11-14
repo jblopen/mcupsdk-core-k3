@@ -393,25 +393,35 @@ void Bootloader_socInitR5FAtcmBtcm(uint32_t cpuId)
     {
         #ifdef BOOTLOADER_SOC_ATCM_FILL
         pAddr = (volatile uint32_t *)addr;
-        for(i=0; i< size/sizeof(uint32_t); i++)
+        if(pAddr != NULL)
         {
-            pAddr[i] = 0xFFFFFFFF;
+            for(i=0; i< size/sizeof(uint32_t); i++)
+            {
+                pAddr[i] = 0xFFFFFFFF;
+            }
         }
         #endif
         pAddr = (volatile uint32_t *)addr;
-        for(i=0; i< (uint32_t)(sizeof(gSOC_r5fVectors)/sizeof(uint32_t)); i++)
+        if(pAddr != NULL)
         {
-            pAddr[i] = gSOC_r5fVectors[i];
+            for(i=0; i< (uint32_t)(sizeof(gSOC_r5fVectors)/sizeof(uint32_t)); i++)
+            {
+                pAddr[i] = gSOC_r5fVectors[i];
+            }
         }
+
     }
     Bootloader_socGetR5fBtcmAddrAndSize(cpuId, &addr, &size);
     #ifdef BOOTLOADER_SOC_BTCM_FILL
     if(addr != BOOTLOADER_INVALID_ID && size > 0)
     {
         pAddr = (volatile uint32_t *)addr;
-        for(i=0; i< size/sizeof(uint32_t); i++)
+        if(pAddr != NULL)
         {
-            pAddr[i] = 0xFFFFFFFF;
+            for(i=0; i< size/sizeof(uint32_t); i++)
+            {
+                pAddr[i] = 0xFFFFFFFF;
+            }
         }
     }
     #endif
