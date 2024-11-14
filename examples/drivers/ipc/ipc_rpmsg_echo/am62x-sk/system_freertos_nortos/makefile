@@ -12,6 +12,8 @@ else
 	PYTHON=python3
 endif
 
+ATF_INTEGRATED_BOOT?=yes
+
 PROFILE?=release
 
 LD=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-ld

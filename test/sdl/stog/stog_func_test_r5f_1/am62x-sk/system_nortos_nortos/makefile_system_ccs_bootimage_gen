@@ -18,6 +18,8 @@ else
 	PYTHON=python3
 endif
 
+ATF_INTEGRATED_BOOT?=yes
+
 ATF_PROFILE?=release
 ifeq ($(PROFILE), Debug)
     ATF_PROFILE=debug

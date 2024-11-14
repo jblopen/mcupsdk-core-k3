@@ -19,6 +19,8 @@ else
 	PYTHON=python3
 endif
 
+ATF_INTEGRATED_BOOT?=yes
+
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
