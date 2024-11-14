@@ -1245,10 +1245,10 @@ static void DispApp_fwlConfigureDssRegion(Dss_Object *appObj)
                      * to DM core.
                      */
                     .permissions[0] = 0xD4FFFF,
-                    /* PRIV_ID = 0x04 implies A53 core, giving read access to
+                    /* PRIV_ID = 0x01 implies A53 core, giving read access to
                      * a53 context.
                      */
-                    .permissions[1] = 0x042222,
+                    .permissions[1] = 0x012222,
 
                     .start_address  = fwlData->fwlRegionData[region].startAddr,
                     .end_address    = fwlData->fwlRegionData[region].endAddr,

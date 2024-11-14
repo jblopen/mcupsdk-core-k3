@@ -113,9 +113,6 @@ void App_printBootloaderLogs()
     Bootloader_profileUpdateAppimageSize(gImageSize);
     Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_EMMC, MMCSD_getInputClk(gMmcsdHandle[CONFIG_MMCSD_SBL]));
 
-    /* Create a critical section to prevent other cores from printing the log in UART0 */
-    vPortEnterCritical();
-
     /* Use CONFIG_UART_SBL (UART0) for SBL logs */
     DebugP_uartSetDrvIndex(CONFIG_UART_SBL);
 
@@ -123,13 +120,10 @@ void App_printBootloaderLogs()
     Bootloader_profilePrintProfileLog();
     DebugP_log("Image loading done, switching to application ...\r\n");
     DebugP_log("Starting linux and RTOS/Baremetal applications\r\n");
+    UART_flushTxFifo(gUartHandle[CONFIG_UART_SBL]);
 
     /* Restore CONFIG_UART_APP (WKUP_UART) for application logs */
     DebugP_uartSetDrvIndex(CONFIG_UART_APP);
-
-    vPortExitCritical();
-
-    UART_flushTxFifo(gUartHandle[CONFIG_UART_SBL]);
 
     /* Deinitialise the flash and driver peripherial used by bootloader before starting other cores,
      * so that other systems can access and reinitialise it.
