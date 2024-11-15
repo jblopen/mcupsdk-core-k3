@@ -109,7 +109,7 @@ uint32_t Sciclient_getContext(uint32_t contextType, uint32_t coreId)
 
 uint32_t Sciclient_getDevId(uint32_t coreId)
 {
-    uint32_t retVal = (uint32_t) UINT32_MAX;
+    uint32_t retVal = SCICLIENT_DEV_ID_MAX;
 
     switch (coreId)
     {
