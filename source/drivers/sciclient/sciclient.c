@@ -463,9 +463,6 @@ int32_t Sciclient_service(const Sciclient_ReqPrm_t *pReqPrm,
 
     if (SystemP_SUCCESS == status)
     {
-        uint8_t * pFlags;
-        uint32_t numBytes;
-
         /* Construct header */
 
         /* This is done to remove stray messages(due to timeout) in a thread
@@ -476,16 +473,7 @@ int32_t Sciclient_service(const Sciclient_ReqPrm_t *pReqPrm,
         header->type = pReqPrm->messageType;
         header->host = (uint8_t) gSciclientMap[contextId].hostId;
         header->seq = localSeqId;
-        pFlags = (uint8_t*)&pReqPrm->flags;
-        /* This is done in such a fashion for CPUs which do not honor a non word aligned
-         * write.
-         */
-        for (numBytes = 0; numBytes < (sizeof(pReqPrm->flags) / sizeof(uint8_t)); numBytes++)
-        {
-            uint8_t *pDestFlags = ((uint8_t*)&header->flags) + numBytes;
-            *pDestFlags = *pFlags;
-            pFlags++;
-        }
+        header->flags = pReqPrm->flags;
 
         gSciclientHandle.currSeqId = (gSciclientHandle.currSeqId + 1U) %
                                     SCICLIENT_MAX_QUEUE_SIZE;
