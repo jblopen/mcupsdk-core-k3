@@ -239,12 +239,12 @@ int32_t Sciclient_abiCheck(void)
 {
     int32_t status = SystemP_SUCCESS;
     /* Send getRevision message for ABI Revision Check */
-    struct tisci_msg_version_req request;
+    struct tisci_msg_version_req request = {0};
     const Sciclient_ReqPrm_t      reqPrm =
     {
         TISCI_MSG_VERSION,
         TISCI_MSG_FLAG_AOP,
-        (uint8_t *) &request,
+        (const uint8_t *) &request,
         sizeof (request),
         SystemP_WAIT_FOREVER
     };
