@@ -226,90 +226,10 @@ void AppViss_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
     {
         tObj->errStat |= errEvents;
 
-        if(errEvents & VHWA_VISS_RAWFE_CFG_ERR_INTR)
+        if(0u != tObj->errStat)
         {
-            errEvents = (errEvents & (~VHWA_VISS_RAWFE_CFG_ERR_INTR));
+            SemaphoreP_post(&tObj->waitForProcessCmpl);
         }
-        if(errEvents & VHWA_VISS_RAWFE_H3A_BUF_OVRFLOW_PULSE_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_RAWFE_H3A_BUF_OVRFLOW_PULSE_INTR));
-        }
-        if(errEvents & VHWA_VISS_NSF4V_LINEMEM_CFG_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_NSF4V_LINEMEM_CFG_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_NSF4V_HBLANK_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_NSF4V_HBLANK_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_NSF4V_VBLANK_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_NSF4V_VBLANK_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_GLBCE_CFG_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_GLBCE_CFG_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_GLBCE_HSYNC_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_GLBCE_HSYNC_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_GLBCE_VSYNC_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_GLBCE_VSYNC_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_FCFA_CFG_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_FCFA_CFG_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_GLBCE_VP_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_GLBCE_VP_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_FCC_CFG_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_FCC_CFG_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_FCC_OUTIF_OVF_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_FCC_OUTIF_OVF_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_FCC_HIST_READ_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_FCC_HIST_READ_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_LSE_SL2_RD_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_LSE_SL2_RD_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_LSE_SL2_WR_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_LSE_SL2_WR_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_LSE_CAL_VP_ERR_INTR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_LSE_CAL_VP_ERR_INTR));
-        }
-        if(errEvents & VHWA_VISS_EE_CFG_ERR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_EE_CFG_ERR));
-        }
-        if(errEvents & VHWA_VISS_EE_SYNCOVF_ERR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_EE_SYNCOVF_ERR));
-        }
-        #if defined VHWA_VPAC_IP_REV_VPAC3 || defined VHWA_VPAC_IP_REV_VPAC3L
-        if(errEvents & VHWA_VISS_CR_CFG_ERR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_CR_CFG_ERR));
-        }
-        #endif
-        #if defined VHWA_VPAC_IP_REV_VPAC3L 
-        if(errEvents & VHWA_VISS_RAWFE_DPC_STATS_READ_ERR)
-        {
-            errEvents = (errEvents & (~VHWA_VISS_RAWFE_DPC_STATS_READ_ERR));
-        }
-        #endif
     }
 }
 
@@ -1465,13 +1385,21 @@ int32_t AppViss_WaitForCompRequest(AppViss_TestParams *tPrms, uint32_t hidx)
     inFrmList = &tObj->inFrmList;
     outFrmList = &tObj->outFrmList;
 
-    status = Fvid2_getProcessedRequest(tObj->handle,
-        inFrmList, outFrmList, 0);
-    if (FVID2_SOK != status)
+    if(0u == tObj->errStat)
     {
-        DebugP_log (" VISS: Failed VISS Handle Cnt %d; status = %x\n",
-            hidx, status);
-        return (status);
+        status = Fvid2_getProcessedRequest(tObj->handle,
+            inFrmList, outFrmList, 0);
+        if (FVID2_SOK != status)
+        {
+            DebugP_log (" VISS: Failed VISS Handle Cnt %d; status = %x\n",
+                hidx, status);
+            return (status);
+        }
+    }
+    else
+    {
+        DebugP_log ("Error interrupt: VISS error interrupt triggered \n");
+        status = FVID2_EFAIL;
     }
 
     return (status);

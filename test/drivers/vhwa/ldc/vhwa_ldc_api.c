@@ -205,33 +205,25 @@ void AppLdc_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
 
     if (NULL != tObj)
     {
-        tObj->errStat |= errEvents;
         errId = 0x1U;
-        while (errId <= VHWA_LDC_VBUSM_RD_ERR)
+        while (errId <= VHWA_LDC_IFR_OUTOFBOUND)
         {
             switch (errEvents & errId)
             {
                 case VHWA_LDC_PIX_IBLK_OUTOFBOUND_ERR:
                     break;
-                case VHWA_LDC_MESH_IBLK_OUTOFBOUND:
-                    break;
-                case VHWA_LDC_PIX_IBLK_MEMOVF:
-                    break;
-                case VHWA_LDC_MESH_IBLK_MEMOVF:
-                    break;
                 case VHWA_LDC_IFR_OUTOFBOUND:
-                    break;
-                case VHWA_LDC_INT_SZOVF:
-                    break;
-                case VHWA_LDC_SL2_WR_ERR:
-                    break;
-                case VHWA_LDC_VBUSM_RD_ERR:
                     break;
             }
 
             errEvents = (errEvents & (~errId));
 
             errId = errId << 1U;
+        }
+        tObj->errStat |= errEvents;
+        if(0u != tObj->errStat)
+        {
+            SemaphoreP_post(&tObj->waitForProcessCmpl);
         }
     }
 }
@@ -860,23 +852,31 @@ int32_t AppLdc_WaitForComplRequest(LdcApp_TestParams *tObj, uint32_t hIdx)
     inFrmList = &appObj->inFrmList;
     outFrmList = &appObj->outFrmList;
 
-    status = Fvid2_getProcessedRequest(appObj->handle,
-        inFrmList, outFrmList, 0);
-    if (FVID2_SOK != status)
+    if(0u == appObj->errStat)
     {
-        DebugP_log (" LDC: Failed LDC Handle Cnt %d; status = %x\n",
-            hIdx, status);
-        return (status);
+        status = Fvid2_getProcessedRequest(appObj->handle,
+            inFrmList, outFrmList, 0);
+        if (FVID2_SOK != status)
+        {
+            DebugP_log (" LDC: Failed LDC Handle Cnt %d; status = %x\n",
+                hIdx, status);
+            return (status);
+        }
+        else
+        {
+            #if defined (VHWA_VPAC_IP_REV_VPAC) || defined (VHWA_VPAC_IP_REV_VPAC3)
+            status = AppLdc_CompareCrc(tObj, hIdx);
+            if (FVID2_SOK != status)
+            {
+                DebugP_log (" LDC: CRC Check Failed Handle Cnt %d\n", hIdx);
+            }
+            #endif
+        }
     }
     else
     {
-        #if defined (VHWA_VPAC_IP_REV_VPAC) || defined (VHWA_VPAC_IP_REV_VPAC3)
-        status = AppLdc_CompareCrc(tObj, hIdx);
-        if (FVID2_SOK != status)
-        {
-            DebugP_log (" LDC: CRC Check Failed Handle Cnt %d\n", hIdx);
-        }
-        #endif
+        DebugP_log ("Error interrupt: LDC error interrupt triggered \n");
+        status = FVID2_EFAIL;
     }
 
     return (status);

@@ -255,15 +255,9 @@ void AppMsc_errorCb(Fvid2_Handle handle, uint32_t errEvents, void *appData)
     if (NULL != tObj)
     {
         tObj->errStat |= errEvents;
-        if(errEvents & VHWA_MSC_VBUSM_RD_ERR)
+        if(0u != tObj->errStat)
         {
-            /* SL2 RD Error */
-            errEvents = (errEvents & (~VHWA_MSC_VBUSM_RD_ERR));
-        }
-        else if(errEvents & VHWA_MSC_SL2_WR_ERR)
-        {
-            /* SL2 WR Error */
-            errEvents = (errEvents & (~VHWA_MSC_SL2_WR_ERR));
+            SemaphoreP_post(&tObj->waitForProcessCmpl);
         }
     }
 }
@@ -604,22 +598,30 @@ int32_t AppMsc_WaitForComplRequest(App_MscTestParams *tObj,
     inFrmList = &appObj->inFrmList;
     outFrmList = &appObj->outFrmList;
 
-    status = Fvid2_getProcessedRequest(appObj->handle,
-        inFrmList, outFrmList, 0);
-    if (FVID2_SOK != status)
+    if(0u == appObj->errStat)
     {
-        DebugP_log
-            (" MSC: Failed MSC Handle Cnt %d; status = %x\n", hndlIdx, status);
+        status = Fvid2_getProcessedRequest(appObj->handle,
+            inFrmList, outFrmList, 0);
+        if (FVID2_SOK != status)
+        {
+            DebugP_log
+                (" MSC: Failed MSC Handle Cnt %d; status = %x\n", hndlIdx, status);
+        }
+        else
+        {
+            #if defined (VHWA_VPAC_IP_REV_VPAC) || defined (VHWA_VPAC_IP_REV_VPAC3)
+            status = AppMsc_CompareCrc(tObj, hndlIdx);
+            if (FVID2_SOK != status)
+            {
+                DebugP_log (" MSC: CRC Check Failed Handle Cnt %d\n", hndlIdx);
+            }
+            #endif
+        }
     }
     else
     {
-        #if defined (VHWA_VPAC_IP_REV_VPAC) || defined (VHWA_VPAC_IP_REV_VPAC3)
-        status = AppMsc_CompareCrc(tObj, hndlIdx);
-        if (FVID2_SOK != status)
-        {
-            DebugP_log (" MSC: CRC Check Failed Handle Cnt %d\n", hndlIdx);
-        }
-        #endif
+        DebugP_log ("Error interrupt: MSC error interrupt triggered \n");
+        status = FVID2_EFAIL;
     }
 
     return (status);
