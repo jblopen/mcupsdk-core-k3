@@ -240,9 +240,9 @@ void AppViss_wdtimerErrorCb(Fvid2_Handle handle, uint32_t wdTimerErrEvents, void
     {
         tObj->wdTimerErrStatus |= wdTimerErrEvents;
 
-        if(wdTimerErrEvents & VHWA_VISS_WDTIMER_ERR)
+        if(0u != tObj->errStat)
         {
-            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_VISS_WDTIMER_ERR));
+            SemaphoreP_post(&tObj->waitForProcessCmpl);
         }
     }
 }
@@ -1385,7 +1385,7 @@ int32_t AppViss_WaitForCompRequest(AppViss_TestParams *tPrms, uint32_t hidx)
     inFrmList = &tObj->inFrmList;
     outFrmList = &tObj->outFrmList;
 
-    if(0u == tObj->errStat)
+    if((0u == tObj->errStat) && (0u == tObj->wdTimerErrStatus))
     {
         status = Fvid2_getProcessedRequest(tObj->handle,
             inFrmList, outFrmList, 0);
@@ -1398,8 +1398,16 @@ int32_t AppViss_WaitForCompRequest(AppViss_TestParams *tPrms, uint32_t hidx)
     }
     else
     {
-        DebugP_log ("Error interrupt: VISS error interrupt triggered \n");
-        status = FVID2_EFAIL;
+        if(0u != tObj->errStat)
+        {
+            DebugP_log ("Error interrupt: VISS error interrupt triggered \n");
+            status = FVID2_EFAIL;
+        }
+        if(0u != tObj->wdTimerErrStatus)
+        {
+            DebugP_log ("HTS stall: VISS watchdog timer error interrupt triggered \n");
+            status = FVID2_ETIMEOUT;
+        }
     }
 
     return (status);

@@ -269,14 +269,10 @@ void AppMsc_wdtimerErrorCb(Fvid2_Handle handle, uint32_t wdTimerErrEvents, void 
     if (NULL != tObj)
     {
         tObj->wdTimerErrStatus |= wdTimerErrEvents;
-
-        if(wdTimerErrEvents & VHWA_MSC0_WDTIMER_ERR)
+        
+        if(0u != tObj->wdTimerErrStatus)
         {
-            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_MSC0_WDTIMER_ERR));
-        }
-        else if(wdTimerErrEvents & VHWA_MSC1_WDTIMER_ERR)
-        {
-            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_MSC1_WDTIMER_ERR));
+            SemaphoreP_post(&tObj->waitForProcessCmpl);
         }
     }
 }
@@ -598,7 +594,7 @@ int32_t AppMsc_WaitForComplRequest(App_MscTestParams *tObj,
     inFrmList = &appObj->inFrmList;
     outFrmList = &appObj->outFrmList;
 
-    if(0u == appObj->errStat)
+    if((0u == appObj->errStat) && (0u == appObj->wdTimerErrStatus))
     {
         status = Fvid2_getProcessedRequest(appObj->handle,
             inFrmList, outFrmList, 0);
@@ -620,8 +616,16 @@ int32_t AppMsc_WaitForComplRequest(App_MscTestParams *tObj,
     }
     else
     {
-        DebugP_log ("Error interrupt: MSC error interrupt triggered \n");
-        status = FVID2_EFAIL;
+        if(0u != appObj->errStat)
+        {
+            DebugP_log ("Error interrupt: MSC error interrupt triggered \n");
+            status = FVID2_EFAIL;
+        }
+        if(0u != appObj->wdTimerErrStatus)
+        {
+            DebugP_log ("HTS stall: MSC watchdog timer error interrupt triggered \n");
+            status = FVID2_ETIMEOUT;
+        }
     }
 
     return (status);

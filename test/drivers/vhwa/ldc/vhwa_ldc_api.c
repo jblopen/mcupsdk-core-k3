@@ -235,9 +235,9 @@ void AppLdc_wdtimerErrorCb(Fvid2_Handle handle, uint32_t wdTimerErrEvents, void 
     {
         tObj->wdTimerErrStatus |= wdTimerErrEvents;
 
-        if(wdTimerErrEvents & VHWA_LDC_WDTIMER_ERR)
+        if(0u != tObj->wdTimerErrStatus)
         {
-            wdTimerErrEvents = (wdTimerErrEvents & (~VHWA_LDC_WDTIMER_ERR));
+            SemaphoreP_post(&tObj->waitForProcessCmpl);
         }
     }
 }
@@ -875,8 +875,16 @@ int32_t AppLdc_WaitForComplRequest(LdcApp_TestParams *tObj, uint32_t hIdx)
     }
     else
     {
-        DebugP_log ("Error interrupt: LDC error interrupt triggered \n");
-        status = FVID2_EFAIL;
+        if(0u != appObj->errStat)
+        {
+            DebugP_log ("Error interrupt: LDC error interrupt triggered \n");
+            status = FVID2_EFAIL;
+        }
+        if(0u != appObj->wdTimerErrStatus)
+        {
+            DebugP_log ("HTS stall: LDC watchdog timer error interrupt triggered \n");
+            status = FVID2_ETIMEOUT;
+        }
     }
 
     return (status);
