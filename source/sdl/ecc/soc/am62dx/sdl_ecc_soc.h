@@ -101,7 +101,7 @@
 #define SDL_MCU_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES 																	(1U)
 #define SDL_MCU_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES 																	(1U)
 #define SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES 																		(1U)
-#define SDL_ECC_Base_Address_TOTAL_ENTRIES 																									(45U)
+#define SDL_ECC_BASE_ADDRESS_TOTAL_ENTRIES 																									(45U)
 
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_PSCSS0_SAM62A_MAIN_PSC_WRAP_ECC_AGGR
@@ -24214,7 +24214,7 @@ static const SDL_RAMIdEntry_t SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR_RamIdTable[S
       SDL_ECC_AGGR0_SAM62A_SEC_HSM_ECC_AGGR_ISAM62A_SEC_BR_MAIN_0_IP2P_SA3_PKTDMA_CRED_SRC_BUSECC_groupEntries },
 };
 
-static SDL_ecc_aggrRegs * const SDL_ECC_aggrBaseAddressTable[SDL_ECC_Base_Address_TOTAL_ENTRIES] =
+static SDL_ecc_aggrRegs * const SDL_ECC_aggrBaseAddressTable[SDL_ECC_BASE_ADDRESS_TOTAL_ENTRIES] =
 {
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PSCSS0_REGS_BASE)),
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_PSRAMECC0_ECC_AGGR_BASE)),

@@ -120,7 +120,7 @@ typedef struct SDL_ECC_Instance_s
 }  SDL_ECC_Instance_t;
 
 /* Global objects */
-static SDL_ECC_Instance_t SDL_ECC_instance[SDL_ECC_Base_Address_TOTAL_ENTRIES];
+static SDL_ECC_Instance_t SDL_ECC_instance[SDL_ECC_BASE_ADDRESS_TOTAL_ENTRIES];
 /* Local functions */
 static int32_t SDL_ECC_getRamId(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType memSubType,
                            uint32_t *ramIdP, uint32_t *pRAMIdType);
