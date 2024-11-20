@@ -8,20 +8,29 @@ LD=$(CGT_GCC_AARCH64_PATH)/bin/aarch64-none-elf-ld
 
 QNX_IMAGE_LIST = \
 	$(ATF_BIN_NAME) \
-	$(OPTEE_BIN_NAME) \
 	$(QNX_BIN_NAME)
+
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
+QNX_IMAGE_LIST+=$(OPTEE_BIN_NAME)
+endif
 
 ifdef FDT_BIN_NAME
 QNX_IMAGE_LIST+=$(FDT_BIN_NAME)
 endif
 
 ATF_RPRC = $(addsuffix .rprc, $(basename $(ATF_BIN_NAME)))
-OPTEE_RPRC := $(addsuffix .rprc, $(basename $(OPTEE_BIN_NAME)))
 QNX_RPRC := $(addsuffix .rprc, $(basename $(QNX_BIN_NAME)))
 
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
+OPTEE_RPRC := $(addsuffix .rprc, $(basename $(OPTEE_BIN_NAME)))
+endif
+
 ATF_ELF = $(addsuffix .elf, $(basename $(ATF_BIN_NAME)))
-OPTEE_ELF := $(addsuffix .elf, $(basename $(OPTEE_BIN_NAME)))
 QNX_ELF := $(addsuffix .elf, $(basename $(QNX_BIN_NAME)))
+
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
+OPTEE_ELF := $(addsuffix .elf, $(basename $(OPTEE_BIN_NAME)))
+endif
 
 ifdef FDT_BIN_NAME
 FDT_RPRC := $(addsuffix .rprc, $(basename $(FDT_BIN_NAME)))
@@ -30,8 +39,11 @@ endif
 
 RPRC_LIST = \
 	$(ATF_RPRC) \
-	$(OPTEE_RPRC) \
 	$(QNX_RPRC)
+
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
+RPRC_LIST += $(OPTEE_RPRC)
+endif
 
 ifdef FDT_BIN_NAME
 RPRC_LIST += $(FDT_RPRC)
@@ -41,8 +53,11 @@ ELF_FILE_LIST = $(RPRC_LIST:.rprc=.elf)
 
 COMBINED_APPIMAGE_PARAMS = \
 	$(BOOTIMAGE_CORE_ID_a53ss0-0) $(ATF_RPRC) \
-	$(BOOTIMAGE_CORE_ID_load_only) $(OPTEE_RPRC) \
 	$(BOOTIMAGE_CORE_ID_load_only) $(QNX_RPRC)
+
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
+COMBINED_APPIMAGE_PARAMS += $(BOOTIMAGE_CORE_ID_load_only) $(OPTEE_RPRC)
+endif
 
 ifdef FDT_BIN_NAME
 COMBINED_APPIMAGE_PARAMS += $(BOOTIMAGE_CORE_ID_load_only) $(FDT_RPRC)
@@ -117,9 +132,11 @@ $(ATF_RPRC): $(ATF_ELF)
 	@echo Creating ATF RPRC image
 	$(OUTRPRC_CMD) $(ATF_ELF) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
 
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
 $(OPTEE_RPRC): $(OPTEE_ELF)
 	@echo Creating OPTEE RPRC image
 	$(OUTRPRC_CMD) $(OPTEE_ELF) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
+endif
 
 $(QNX_RPRC): $(QNX_ELF)
 	@echo Creating QNX RPRC image
@@ -135,9 +152,11 @@ $(ATF_ELF):
 	@echo Creating ATF ELF image
 	$(LD) -b binary -A aarch64 --oformat elf64-littleaarch64 --section-start=.data=$(ATF_LOAD_ADDR) -e $(ATF_LOAD_ADDR) $(PSDK_QNX_PREBUILT_IMAGES)/$(ATF_BIN_NAME) -o $(ATF_ELF)
 
+ifeq ($(ENABLE_OPTEE_BIN),$(filter $(ENABLE_OPTEE_BIN), 1))
 $(OPTEE_ELF):
 	@echo Creating OPTEE ELF image
 	$(LD) -b binary -A aarch64 --oformat elf64-littleaarch64 --section-start=.data=$(OPTEE_LOAD_ADDR) -e $(OPTEE_LOAD_ADDR) $(PSDK_QNX_PREBUILT_IMAGES)/$(OPTEE_BIN_NAME) -o $(OPTEE_ELF)
+endif
 
 $(QNX_ELF):
 	@echo Creating QNX-IFS ELF image

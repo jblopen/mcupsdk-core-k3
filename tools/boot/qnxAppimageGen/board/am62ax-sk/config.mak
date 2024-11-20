@@ -8,6 +8,9 @@ QNX_IFS_PATH=$(PSDK_QNX_PATH)/bootfs
 #Path for prebuit images in Processor SDK QNX
 PSDK_QNX_PREBUILT_IMAGES=$(PSDK_QNX_PATH)/sbl_bootfiles/atf_optee_dir
 
+# With or without OP-TEE (1 or 0). Default value is 1.
+ENABLE_OPTEE_BIN=1
+
 #Input qnx binaries
 ATF_BIN_NAME=bl31.bin
 OPTEE_BIN_NAME=bl32.bin
