@@ -140,6 +140,8 @@ const example_file_list = [
     "source/networking/enet/core/examples/tsn/crftalker_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/dolbyec3listener_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/dolbyec3talker_app/.project/project.js",
+    "source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/.project/project.js",
+    "source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/.project/project.js",
     "examples/sdl/dcc/dcc_modes/.project/project.js",
     "examples/sdl/ecc/.project/project.js",
     "examples/sdl/esm/mcu_esm0/.project/project.js",

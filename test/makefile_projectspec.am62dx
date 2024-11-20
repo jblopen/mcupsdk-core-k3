@@ -4,6 +4,8 @@
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcasp_loopback_multiinst_am62dx-evm_c75ss0-0_freertos_ti-c7000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcasp_loopback_multiinst_am62dx-evm_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcasp_loopback_multiinst_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_build
@@ -21,6 +23,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
 all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  mcasp_loopback_multiinst_am62dx-evm_c75ss0-0_freertos_ti-c7000_build:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am62dx-evm/c75ss0-0_freertos/ti-c7000 -f makefile_projectspec all
@@ -50,6 +58,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcasp_loopback_multiinst_am62dx-evm_c75ss0-0_freertos_ti-c7000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcasp_loopback_multiinst_am62dx-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcasp_loopback_multiinst_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_clean
@@ -67,6 +77,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
 clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  mcasp_loopback_multiinst_am62dx-evm_c75ss0-0_freertos_ti-c7000_clean:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am62dx-evm/c75ss0-0_freertos/ti-c7000 -f makefile_projectspec clean
@@ -96,6 +112,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcasp_loopback_multiinst_am62dx-evm_c75ss0-0_freertos_ti-c7000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcasp_loopback_multiinst_am62dx-evm_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcasp_loopback_multiinst_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_export
@@ -113,6 +131,12 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
 export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  mcasp_loopback_multiinst_am62dx-evm_c75ss0-0_freertos_ti-c7000_export:
 	$(MAKE) -C drivers/mcasp/mcasp_multiinst_loopback/am62dx-evm/c75ss0-0_freertos/ti-c7000 -f makefile_projectspec export
@@ -158,6 +182,8 @@ help:
 	@echo  .
 	@echo  Example ProjectSpec build targets,
 	@echo  ==================================
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am62dx-evm/c75ss0-0_freertos/ti-c7000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am62dx-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am62dx-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec [export all clean]

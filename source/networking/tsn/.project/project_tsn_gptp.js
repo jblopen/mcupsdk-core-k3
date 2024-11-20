@@ -39,6 +39,7 @@ const files = {
         "port_sync_sync_send_sm.c" ,
         "site_sync_sync_sm.c" ,
         "sync_interval_setting_sm.c" ,
+        "gptp_capable_interval_setting_sm.c" ,
         "gptpgcfg.c" ,
         "lld_gptpnet.c" ,
         "lld_gptpclock.c" ,

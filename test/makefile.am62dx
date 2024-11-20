@@ -44,6 +44,8 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/eeprom/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/flash/am62dx-evm/a53ss0-0_nortos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/boot/sbl_test_ddr_copy/am62dx-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -234,6 +236,8 @@ $(BUILD_COMBO_SCRUB_doxy_samples):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_flash_am62dx-evm_a53ss0-0_nortos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += test_ecap_am62dx-evm_a53ss0-0_nortos_gcc-aarch64
@@ -342,6 +346,12 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_eeprom_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C board/eeprom/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -646,6 +656,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecap_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_clean
@@ -754,6 +766,12 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_eeprom_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C board/eeprom/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1058,6 +1076,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecap_am62dx-evm_a53ss0-0_nortos_gcc-aarch64_scrub
@@ -1166,6 +1186,12 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ gptp_slaveapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_slave_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ gptp_masterapp_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C ../source/networking/enet/core/examples/tsn/gptp_cpsw_quicksync_master_app/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_eeprom_am62dx-evm_mcu-r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C board/eeprom/am62dx-evm/mcu-r5fss0-0_freertos/ti-arm-clang -f makefile scrub
