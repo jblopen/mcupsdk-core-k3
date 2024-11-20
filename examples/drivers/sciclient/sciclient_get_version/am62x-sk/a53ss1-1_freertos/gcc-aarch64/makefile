@@ -8,6 +8,7 @@ include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
 CG_TOOL_ROOT=$(CGT_GCC_AARCH64_PATH)
 
+LD=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-ld
 CC=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-gcc
 LNK=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-gcc
 STRIP=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-strip
@@ -17,6 +18,8 @@ ifeq ($(OS), Windows_NT)
 else
 	PYTHON=python3
 endif
+
+ATF_INTEGRATED_BOOT?=yes
 
 PROFILE?=release
 ConfigName:=$(PROFILE)
@@ -36,6 +39,11 @@ TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
+ATF_LOAD_ADDR:=0x88080000
+ATF_OUTNAME:=bl31_a53ss1-1.$(PROFILE).out
+ATF_RPRC_NAME:=bl31_a53ss1-1.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31_a53ss1-1.$(PROFILE).bin
+ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 
 FILES_common := \
 	sciclient_get_version.c \
@@ -251,8 +259,16 @@ else
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
 endif
 
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+MULTI_CORE_IMAGE_PARAMS = \
+	$(ATF_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_a53ss1-1) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_load_only) \
+
+else
 MULTI_CORE_IMAGE_PARAMS = \
 	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_a53ss1-1) \
+
+endif
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_a53ss1-1) \
@@ -261,6 +277,10 @@ $(BOOTIMAGE_NAME): $(OUTNAME)
 	@echo  Boot image: am62x:a53ss1-1:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
+endif
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+	$(LD) -b binary -A aarch64 --oformat elf64-littleaarch64 --section-start=.data=$(ATF_LOAD_ADDR) -e $(ATF_LOAD_ADDR) $(ATF_BUILD_PATH)/$(ATF_BIN_NAME) -o $(ATF_OUTNAME)
+	$(OUTRPRC_CMD) $(ATF_OUTNAME) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
 endif
 	$(OUTRPRC_CMD) $(OUTNAME) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(COPY) $(BOOTIMAGE_RPRC_NAME) $(BOOTIMAGE_RPRC_NAME_TMP)
@@ -275,6 +295,10 @@ endif
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 0  --loadaddr 84000000 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS) --keyversion $(VERSION)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+	$(RM) $(ATF_OUTNAME)
+	$(RM) $(ATF_RPRC_NAME)
+endif
 	@echo  Boot image: am62x:a53ss1-1:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 	@echo  Boot image: am62x:a53ss1-1:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!

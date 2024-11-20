@@ -8,6 +8,7 @@ include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
 CG_TOOL_ROOT=$(CGT_GCC_AARCH64_PATH)
 
+LD=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-ld
 CC=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-gcc
 LNK=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-gcc
 STRIP=$(CG_TOOL_ROOT)/bin/aarch64-none-elf-strip
@@ -17,6 +18,8 @@ ifeq ($(OS), Windows_NT)
 else
 	PYTHON=python3
 endif
+
+ATF_INTEGRATED_BOOT?=yes
 
 PROFILE?=release
 ConfigName:=$(PROFILE)
@@ -32,10 +35,28 @@ BOOTIMAGE_RPRC_NAME_XIP:=test_freertos.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=test_freertos.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=test_freertos.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=test_freertos.$(PROFILE).appimage.hs_fs
-TARGETS := $(BOOTIMAGE_NAME)
+BOOTIMAGE_NAME_NOATF:=test_freertos_noatf.$(PROFILE).appimage
+BOOTIMAGE_NAME_SIGNED_NOATF:=test_freertos_noatf.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME_NOATF:=test_freertos_noatf.$(PROFILE).rprc
+BOOTIMAGE_NAME_HS_NOATF:=test_freertos_noatf.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS_NOATF:=test_freertos_noatf.$(PROFILE).appimage.hs_fs
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+    TARGETS := $(BOOTIMAGE_NAME) $(BOOTIMAGE_NAME_NOATF)
+else
+    TARGETS := $(BOOTIMAGE_NAME)
+endif
 ifeq ($(DEVICE_TYPE), HS)
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+   TARGETS += $(BOOTIMAGE_NAME_HS) $(BOOTIMAGE_NAME_HS_NOATF)
+else
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
+endif
+ATF_LOAD_ADDR:=0x86000000
+ATF_OUTNAME:=bl31_a53ss1-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31_a53ss1-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31_a53ss1-0.$(PROFILE).bin
+ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 
 FILES_common := \
 	test_freertos.c \
@@ -181,6 +202,12 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME_HS_FS)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+	$(RM) $(BOOTIMAGE_NAME_NOATF)
+	$(RM) $(BOOTIMAGE_NAME_HS_NOATF)
+	$(RM) $(BOOTIMAGE_NAME_HS_FS_NOATF)
+	$(RM) $(BOOTIMAGE_RPRC_NAME_NOATF)
+endif
 	$(RMDIR) generated/
 
 scrub:
@@ -256,8 +283,19 @@ else
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.out
 endif
 
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+MULTI_CORE_IMAGE_PARAMS = \
+	$(ATF_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_a53ss1-0) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_load_only) \
+
+MULTI_CORE_IMAGE_PARAMS_NOATF = \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_a53ss1-0) \
+
+else
 MULTI_CORE_IMAGE_PARAMS = \
 	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_a53ss1-0) \
+
+endif
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_a53ss1-0) \
@@ -266,6 +304,10 @@ $(BOOTIMAGE_NAME): $(OUTNAME)
 	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
+endif
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+	$(LD) -b binary -A aarch64 --oformat elf64-littleaarch64 --section-start=.data=$(ATF_LOAD_ADDR) -e $(ATF_LOAD_ADDR) $(ATF_BUILD_PATH)/$(ATF_BIN_NAME) -o $(ATF_OUTNAME)
+	$(OUTRPRC_CMD) $(ATF_OUTNAME) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
 endif
 	$(OUTRPRC_CMD) $(OUTNAME) $(SW_VERSION)>> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(COPY) $(BOOTIMAGE_RPRC_NAME) $(BOOTIMAGE_RPRC_NAME_TMP)
@@ -280,6 +322,10 @@ endif
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 0  --loadaddr 84000000 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS) --keyversion $(VERSION)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+	$(RM) $(ATF_OUTNAME)
+	$(RM) $(ATF_RPRC_NAME)
+endif
 	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
@@ -304,5 +350,45 @@ else
 endif
 	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
+endif
+
+ifeq ($(ATF_INTEGRATED_BOOT), yes)
+$(BOOTIMAGE_NAME_NOATF): $(OUTNAME)
+	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$@ ...
+	$(OUTRPRC_CMD) $(OUTNAME) $(SW_VERSION) $(BOOTIMAGE_RPRC_NAME_NOATF)>> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(COPY) $(BOOTIMAGE_RPRC_NAME_NOATF) $(BOOTIMAGE_RPRC_NAME_TMP)
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_NOATF) $(MULTI_CORE_IMAGE_PARAMS_NOATF) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+# Sign the appimage for HS-FS using appimage signing script
+    #
+    #   Authentication type 0 with load address 0x84000000
+    #
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_NOATF) --authtype 0  --loadaddr 84000000 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS_NOATF) --keyversion $(VERSION)
+	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
+	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS_NOATF) Done !!!
+	@echo  .
+
+$(BOOTIMAGE_NAME_HS_NOATF): $(BOOTIMAGE_NAME_NOATF)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+    #
+    #   Authentication type 0 with load address 0x84000000
+    #
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_NOATF) --authtype 0  --loadaddr 84000000 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_NOATF) --keyversion $(VERSION)
+else
+	@echo Boot image signing: Encryption is enabled.
+    #
+    #   Authentication type 0 with load address 0x84000000
+    #
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME_NOATF) --authtype 0  --loadaddr 84000000 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_HS_NOATF) --keyversion $(VERSION)
+	$(RM) $(BOOTIMAGE_NAME_NOATF)-enc
+endif
+	@echo  Boot image: am62x:a53ss1-0:freertos:gcc-aarch64 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_NOATF) Done !!!
+	@echo  .
+endif
 endif
 -include $(addprefix $(OBJDIR)/, $(DEPS))

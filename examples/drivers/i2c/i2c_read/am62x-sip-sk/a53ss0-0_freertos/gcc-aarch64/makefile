@@ -40,10 +40,10 @@ ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 ATF_LOAD_ADDR:=0x80000000
-ATF_OUTNAME:=bl31.$(PROFILE).out
-ATF_RPRC_NAME:=bl31.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31.bin
-ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/trusted-firmware-a/build/k3/lite/$(PROFILE)
+ATF_OUTNAME:=bl31_a53ss0-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31_a53ss0-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31_a53ss0-0.$(PROFILE).bin
+ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 
 FILES_common := \
 	i2c_read.c \
