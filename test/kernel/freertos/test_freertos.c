@@ -46,7 +46,7 @@
 #include <event_groups.h>
 #include <unity.h>
 #include "ti_drivers_open_close.h"
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__aarch64__)
 #include <stdatomic.h>
 #endif
 
@@ -117,7 +117,7 @@ float floatMultiply();
 
 double gFloat = 10.0;
 
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__aarch64__)
 #define ATOMIC_TEST_LOOP_COUNT  (1000000u)
 #define ATOMIC_TEST_NUM_TASKS   (4u)
 #define ATOMIC_TEST_TASK_PRI    (2u)
@@ -530,7 +530,7 @@ void test_timerIsr(void *args)
     volatile uint32_t *pTimerIsrCount = (uint32_t *)args;
     *pTimerIsrCount = *pTimerIsrCount + 1;
 
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__aarch64__)
     gAtomicIntCounter++;
     gNonAtomicIntCounter++;
 #endif
@@ -554,7 +554,7 @@ void test_timer(void *args)
     TEST_ASSERT_UINT32_WITHIN( 1000, ( 1000000u * delayInMs) / CONFIG_TIMER0_NSEC_PER_TICK_ACTUAL, timerIsrCount);
 }
 
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__aarch64__)
 void test_atomicTaskMain(void *args)
 {
     uint32_t taskId = (uint32_t)args;
@@ -654,7 +654,7 @@ void test_taskLoad(void *args)
 {
     TaskP_Load taskLoad;
     uint32_t cpuLoad;
-    #if defined(__C7504__)
+    #if defined(__C7504__) || defined(__aarch64__)
     uint32_t minExpectedCpuLoad = 2500;
     #else
     uint32_t minExpectedCpuLoad = 3000;
@@ -723,7 +723,7 @@ void ping_main(void *args)
 #endif
     RUN_TEST(test_taskDelay, 280, NULL);
     RUN_TEST(test_timer, 281, NULL);
-#if defined(__ARM_ARCH_7R__)
+#if defined(__ARM_ARCH_7R__) || defined(__aarch64__)
     /* atomics not tested with other architectures */
     RUN_TEST(test_atomics, 1371, NULL);
 #endif
