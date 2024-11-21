@@ -235,6 +235,8 @@ int main()
     Bootloader_profileReset();
 
     Bootloader_socWaitForFWBoot();
+    status = Bootloader_socOpenFirewalls();
+    DebugP_assert(status == SystemP_SUCCESS);
 
     RTC_erratumi2327Init();
 

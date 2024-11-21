@@ -130,6 +130,8 @@ int main()
     int32_t status;
 
     Bootloader_profileReset();
+    status = Bootloader_socOpenFirewalls();
+    DebugP_assert(status == SystemP_SUCCESS);
 
     Bootloader_socWaitForFWBoot();
 

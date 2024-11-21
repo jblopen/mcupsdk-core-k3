@@ -1043,48 +1043,59 @@ int32_t Bootloader_socOpenFirewalls(void)
 {
     int32_t status = SystemP_FAILURE;
 
-    /* Change ownership of firewall to R5F0-0 (Host ID = TISCI_HOST_ID_MAIN_0_R5_0 because SBL would be secure host) */
-    const struct tisci_msg_fwl_change_owner_info_req fwl_owner_req =
+    /* Unlock HSM firewalls. */
+    const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req =
     {
-        .fwl_id = 16,
-        .region = 0,
-        .owner_index = TISCI_HOST_ID_MAIN_0_R5_0,
+        .fwl_id = 641U,
+        .region = 1,
+        .n_permission_regs = 3u,
+        .control = 0x20AU,
+        .permissions[0] = 0xC3FFFF,
+        .permissions[1] = 0xC3FFFF,
+        .permissions[2] = 0xC3FFFF,
+        .start_address  = 0x43C30000,
+        .end_address    = 0x43C3BFFF,
     };
-    struct tisci_msg_fwl_change_owner_info_resp fwl_owner_resp = { 0 };
-    status = Sciclient_firewallChangeOwnerInfo(&fwl_owner_req, &fwl_owner_resp, (uint32_t)SystemP_TIMEOUT);
+    struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp = { 0 };
 
-    if(SystemP_SUCCESS == status)
+    status = Sciclient_firewallSetRegion(&fwl_set_req, &fwl_set_resp, SystemP_TIMEOUT);
+
+    if(status == SystemP_SUCCESS)
     {
-        /* Unlock MSRAM firewalls */
-        const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req =
+        const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req1 =
         {
-            .fwl_id = 16,
-            .region = 0,
-            .n_permission_regs = 3,
-            .control = 0x30A, /* 0x3 - Firewall background region, Unlocked. 0xA - Enable Firewall */
-            /*
-             * The firewall permission register layout is
-             *  ---------------------------------------------------------------------------
-             * |  31:24   |    23:16   |  15:12     |   11:8     |   7:4      |   3:0      |
-             *  ---------------------------------------------------------------------------
-             * | Reserved |   Priv ID  | NSUSR-DCRW | NSPRI-DCRW | SUSER-DCRW | SPRIV-DCRW |
-             *  ---------------------------------------------------------------------------
-             *
-             * PRIV_ID = 0xC3 implies all.
-             * In each of the 4 nibbles from 15:0 the 4 bits means Debug, Cache, Read, Write Access for
-             * Non-secure user, Non-secure Priv, Secure user, Secure Priv respectively. To enable all access
-             * bits for all users, we set each of these nibbles to 0b1111 = 0xF. So 15:0 becomes 0xFFFF
-             *
-             */
+            .fwl_id = 642U,
+            .region = 1,
+            .n_permission_regs = 3u,
+            .control = 0x20AU,
             .permissions[0] = 0xC3FFFF,
             .permissions[1] = 0xC3FFFF,
             .permissions[2] = 0xC3FFFF,
-            .start_address  = 0x70000000,
-            .end_address    = 0x701FF000,
+            .start_address  = 0x43C00000,
+            .end_address    = 0x43C2FFFF,
         };
-        struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp = { 0 };
+        struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp1 = { 0 };
 
-        status = Sciclient_firewallSetRegion(&fwl_set_req, &fwl_set_resp, (uint32_t)SystemP_TIMEOUT);
+        status = Sciclient_firewallSetRegion(&fwl_set_req1, &fwl_set_resp1, SystemP_TIMEOUT);
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
+        const struct tisci_msg_fwl_set_firewall_region_req fwl_set_req2 =
+        {
+            .fwl_id = 642U,
+            .region = 2,
+            .n_permission_regs = 3u,
+            .control = 0x20AU,
+            .permissions[0] = 0xC3FFFF,
+            .permissions[1] = 0xC3FFFF,
+            .permissions[2] = 0xC3FFFF,
+            .start_address  = 0x43C40000,
+            .end_address    = 0x43C4FFFF,
+        };
+        struct tisci_msg_fwl_set_firewall_region_resp fwl_set_resp2 = { 0 };
+
+        status = Sciclient_firewallSetRegion(&fwl_set_req2, &fwl_set_resp2, SystemP_TIMEOUT);
     }
 
     return status;

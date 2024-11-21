@@ -142,6 +142,8 @@ int main()
     Bootloader_profileReset();
 
     Bootloader_socWaitForFWBoot();
+    status = Bootloader_socOpenFirewalls();
+    DebugP_assert(status == SystemP_SUCCESS);
 
     System_init();
 
