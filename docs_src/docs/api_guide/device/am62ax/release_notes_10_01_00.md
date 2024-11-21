@@ -323,6 +323,12 @@ ROM Checksum |MCU-R5F         | No
     <td> OSPI
     <td> 10.01.00
 </tr>
+<tr>
+    <td> SITSW-5184
+    <td> Error in the CCS build of the SBL examples
+    <td> Bootloader
+    <td> 10.01.00
+</tr>
 </table>
 
 ## Known Issues
