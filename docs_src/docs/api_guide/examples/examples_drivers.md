@@ -130,6 +130,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# OSPI
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
+-# RTC
+   -# \subpage EXAMPLES_DRIVERS_RTC_LED_BLINK
 -# SCICLIENT
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_GET_VERSION
 -# SPINLOCK
