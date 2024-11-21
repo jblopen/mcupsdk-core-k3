@@ -110,6 +110,7 @@ It consists of below sub-modules
 \cond SOC_AM62X
 - \subpage DRIVERS_BOOTLOADER_PAGE
 - \subpage DRIVERS_DDR_PAGE
+- \subpage DRIVERS_DEVICE_MANAGER_PAGE
 - \subpage DRIVERS_ECAP_PAGE
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_EQEP_PAGE
@@ -138,6 +139,7 @@ It consists of below sub-modules
 \cond SOC_AM62AX
 - \subpage DRIVERS_BOOTLOADER_PAGE
 - \subpage DRIVERS_DDR_PAGE
+- \subpage DRIVERS_DEVICE_MANAGER_PAGE
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_ECAP_PAGE
 - \subpage DRIVERS_EQEP_PAGE
@@ -163,6 +165,7 @@ It consists of below sub-modules
 \cond SOC_AM62DX
 - \subpage DRIVERS_BOOTLOADER_PAGE
 - \subpage DRIVERS_DDR_PAGE
+- \subpage DRIVERS_DEVICE_MANAGER_PAGE
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_ECAP_PAGE
 - \subpage DRIVERS_EQEP_PAGE
@@ -189,6 +192,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_BOOTLOADER_PAGE
 - \subpage DRIVERS_DDR_PAGE
 - \subpage DRIVERS_DSS_PAGE
+- \subpage DRIVERS_DEVICE_MANAGER_PAGE
 - \subpage DRIVERS_ECAP_PAGE
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_FVID2_PAGE
