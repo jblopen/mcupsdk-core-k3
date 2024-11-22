@@ -44,10 +44,10 @@ MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 % }
 % if (atf_build == true) {
 ATF_LOAD_ADDR:=0x80000000
-ATF_OUTNAME:=bl31.$(PROFILE).out
-ATF_RPRC_NAME:=bl31.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31.bin
-ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/trusted-firmware-a/build/k3/lite/$(PROFILE)
+ATF_OUTNAME:=bl31.a53ss0-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss0-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss0-0.$(PROFILE).bin
+ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 % }
 
 % let numProjects = 0;

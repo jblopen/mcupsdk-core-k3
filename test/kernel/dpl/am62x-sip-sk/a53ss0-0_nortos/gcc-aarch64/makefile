@@ -53,9 +53,9 @@ else
 endif
 endif
 ATF_LOAD_ADDR:=0x80000000
-ATF_OUTNAME:=bl31_a53ss0-0.$(PROFILE).out
-ATF_RPRC_NAME:=bl31_a53ss0-0.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31_a53ss0-0.$(PROFILE).bin
+ATF_OUTNAME:=bl31.a53ss0-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss0-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss0-0.$(PROFILE).bin
 ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 
 FILES_common := \

@@ -32,10 +32,10 @@ MULTI_CORE_BOOTIMAGE_NAME:=$(PROFILE)/$(OUTNAME).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(PROFILE)/$(OUTNAME).appimage.signed
 MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(PROFILE)/$(OUTNAME).appimage_xip
 ATF_LOAD_ADDR:=0x80000000
-ATF_OUTNAME:=bl31.$(PROFILE).out
-ATF_RPRC_NAME:=bl31.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31.bin
-ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/trusted-firmware-a/build/k3/lite/$(ATF_PROFILE)
+ATF_OUTNAME:=bl31.a53ss0-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss0-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss0-0.$(PROFILE).bin
+ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 
 #
 # Generation of multi-core boot image which can be loaded by Secondary Boot Loader (SBL)

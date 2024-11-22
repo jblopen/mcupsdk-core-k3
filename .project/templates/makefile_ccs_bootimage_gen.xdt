@@ -73,27 +73,27 @@ BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
 %if(args.project.device == "am62x"){
 %if (args.project.cpu.match(/a53ss1-1/)) {
 ATF_LOAD_ADDR:=0x88080000
-ATF_OUTNAME:=bl31_a53ss1-1.$(PROFILE).out
-ATF_RPRC_NAME:=bl31_a53ss1-1.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31_a53ss1-1.$(PROFILE).bin
+ATF_OUTNAME:=bl31.a53ss1-1.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss1-1.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss1-1.$(PROFILE).bin
 %}
 %else if (args.project.cpu.match(/a53ss1-0/)) {
 ATF_LOAD_ADDR:=0x86000000
-ATF_OUTNAME:=bl31_a53ss1-0.$(PROFILE).out
-ATF_RPRC_NAME:=bl31_a53ss1-0.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31_a53ss1-0.$(PROFILE).bin
+ATF_OUTNAME:=bl31.a53ss1-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss1-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss1-0.$(PROFILE).bin
 %}
 %else if (args.project.cpu.match(/a53ss0-1/)) {
 ATF_LOAD_ADDR:=0x82080000
-ATF_OUTNAME:=bl31_a53ss0-1.$(PROFILE).out
-ATF_RPRC_NAME:=bl31_a53ss0-1.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31_a53ss0-1.$(PROFILE).bin
+ATF_OUTNAME:=bl31.a53ss0-1.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss0-1.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss0-1.$(PROFILE).bin
 %}
 %else {
 ATF_LOAD_ADDR:=0x80000000
-ATF_OUTNAME:=bl31_a53ss0-0.$(PROFILE).out
-ATF_RPRC_NAME:=bl31_a53ss0-0.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31_a53ss0-0.$(PROFILE).bin
+ATF_OUTNAME:=bl31.a53ss0-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss0-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss0-0.$(PROFILE).bin
 %}
 ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 %}

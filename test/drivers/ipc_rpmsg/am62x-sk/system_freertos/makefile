@@ -24,10 +24,10 @@ MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
 MULTI_CORE_BOOTIMAGE_NAME_XIP:=test_ipc_rpmsg_system.$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 ATF_LOAD_ADDR:=0x80000000
-ATF_OUTNAME:=bl31.$(PROFILE).out
-ATF_RPRC_NAME:=bl31.$(PROFILE).rprc
-ATF_BIN_NAME:=bl31.bin
-ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/trusted-firmware-a/build/k3/lite/$(PROFILE)
+ATF_OUTNAME:=bl31.a53ss0-0.$(PROFILE).out
+ATF_RPRC_NAME:=bl31.a53ss0-0.$(PROFILE).rprc
+ATF_BIN_NAME:=bl31.a53ss0-0.$(PROFILE).bin
+ATF_BUILD_PATH:=$(MCU_PLUS_SDK_PATH)/source/atf/lib/soc/am62x
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
 CORE_1=--script ../m4fss0-0_freertos/example.syscfg --context m4fss0-0 --output ../m4fss0-0_freertos/ti-arm-clang/generated
