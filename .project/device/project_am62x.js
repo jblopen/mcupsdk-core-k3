@@ -153,6 +153,7 @@ const example_file_list = [
     "test/drivers/epwm/.project/project.js",
     "test/drivers/gpio/.project/project.js",
     "test/drivers/gpmc/.project/project.js",
+    "test/drivers/gtc/.project/project.js",
     "test/drivers/i2c/.project/project.js",
     "test/drivers/rtc/.project/project.js",
     "test/drivers/sciclient/sciclient_get_version/.project/project.js",

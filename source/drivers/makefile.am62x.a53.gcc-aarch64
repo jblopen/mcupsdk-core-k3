@@ -25,6 +25,8 @@ FILES_common := \
     epwm.c \
     eqep.c \
     gpio.c \
+    gtc.c \
+    gtc_soc.c \
     elm_v0.c \
     gpmc_v0.c \
     gpmc_dma.c \
@@ -91,6 +93,8 @@ FILES_PATH_common = \
     gpmc/v0 \
     gpmc/v0/dma \
     gpmc/v0/dma/udma \
+    gtc/v0 \
+    gtc/v0/soc/am62x \
     i2c/v0 \
     i2c/v0/lld \
     i2c/v0/soc/am62x \
