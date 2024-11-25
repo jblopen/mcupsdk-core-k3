@@ -27,6 +27,13 @@ FILES_common := \
     led_ioexp.c \
     ioexp_tca6424.c \
     nor_spi_sfdp.c \
+    phy_common_priv.c \
+    dp83tc812.c \
+    dp83tg720.c \
+    dp83869.c \
+    dp83867.c \
+    dp83822.c \
+    dp83826.c \
 
 FILES_PATH_common = \
     flash \
@@ -36,9 +43,13 @@ FILES_PATH_common = \
     null \
     led \
     eeprom \
+    ethphy/enet/rtos_drivers/src \
+    ethphy/enet/rtos_drivers/include \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
 
 DEFINES_common := \
     -DSOC_AM62AX \

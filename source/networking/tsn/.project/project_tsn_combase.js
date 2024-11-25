@@ -27,6 +27,7 @@ const filedirs = {
 
 const includes = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
@@ -47,6 +48,7 @@ const includes = {
 
 const includes_a53 = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
@@ -266,7 +268,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.cflags = cflags_a53;
 
         return build_property;
-        
+
     }
 
     includes.common = _.union(includes.common, deviceSpecificIncludes[device]);

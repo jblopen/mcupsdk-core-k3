@@ -49,6 +49,13 @@ FILES_common := \
     pmic_power_lp8764x.c \
     pmic_power_tps6594x.c \
     pmic_wdg.c \
+    phy_common_priv.c \
+    dp83tc812.c \
+    dp83tg720.c \
+    dp83869.c \
+    dp83867.c \
+    dp83822.c \
+    dp83826.c \
 
 FILES_PATH_common = \
     eeprom \
@@ -65,6 +72,8 @@ FILES_PATH_common = \
     pmic/pmic_lld/src/cfg/lp8764x \
     pmic/pmic_lld/src/cfg/tps6522x \
     pmic/pmic_lld/src/cfg/tps6594x \
+    ethphy/enet/rtos_drivers/src \
+    ethphy/enet/rtos_drivers/include \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -79,9 +88,13 @@ INCLUDES_common := \
     -Ipmic/pmic_lld/src/cfg/lp8764x \
     -Ipmic/pmic_lld/src/cfg/tps6522x \
     -Ipmic/pmic_lld/src/cfg/tps6594x \
+    -Iethphy/enet/rtos_drivers/include \
+    -Iethphy/port \
 
 DEFINES_common := \
     -DSOC_AM62PX \
+    -DMCU_SDK_BUILD \
+    -DPHY_CFG_TRACE_LEVEL=3 \
     -DSW_VERSION=$(SW_VERSION)
 
 CFLAGS_common := \

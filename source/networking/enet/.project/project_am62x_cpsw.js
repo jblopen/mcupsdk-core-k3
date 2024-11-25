@@ -69,8 +69,6 @@ const files = {
         /* Enet utils */
         "enetphy.c",
         "generic_phy.c",
-        "dp83869.c",
-        "dp83867.c",
 
         /* Enet utils */
         "enet_apputils.c",
@@ -127,6 +125,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am62x",
+
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
     ],
 };
 
@@ -173,7 +173,7 @@ const defines_a53 = {
 };
 
 const buildOptionCombos = [
-    
+
     { device: device, cpu: "a53", cgt: "gcc-aarch64"},
 ];
 
@@ -196,7 +196,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.files = files;
     build_property.includes = includes;
-    
 
     if(buildOption.cpu.match(/a53*/)) {
         build_property.cflags = cflags_a53;

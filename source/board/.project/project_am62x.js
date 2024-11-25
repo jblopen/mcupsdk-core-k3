@@ -26,6 +26,13 @@ const files_r5f={
         "led_tpic2810.c",
         "led_ioexp.c",
         "nor_spi_sfdp.c",
+        "phy_common_priv.c",
+        "dp83tc812.c",
+		"dp83tg720.c",
+		"dp83869.c",
+		"dp83867.c",
+		"dp83822.c",
+		"dp83826.c",
     ],
 }
 
@@ -43,6 +50,13 @@ const files_a53 = {
         "led_tpic2810.c",
         "led_ioexp.c",
         "nor_spi_sfdp.c",
+        "phy_common_priv.c",
+        "dp83tc812.c",
+		"dp83tg720.c",
+		"dp83869.c",
+		"dp83867.c",
+		"dp83822.c",
+		"dp83826.c",
     ],
 };
 
@@ -56,6 +70,22 @@ const filedirs = {
         "ioexp",
         "led",
         "eeprom",
+        "ethphy/enet/rtos_drivers/src",
+        "ethphy/enet/rtos_drivers/include",
+    ],
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/port",
+    ],
+}
+
+const defines_a53 = {
+    common: [
+        "MCU_SDK_BUILD",
+        "PHY_CFG_TRACE_LEVEL=3",
     ],
 };
 
@@ -88,6 +118,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
+    build_property.includes = includes;
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.files = files_m4f;
     }
@@ -97,6 +128,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/a53*/)) {
         build_property.files = files_a53;
         build_property.cflags = cflags_a53;
+        build_property.defines = defines_a53;
     }
 
     return build_property;

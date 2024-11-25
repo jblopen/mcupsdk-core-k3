@@ -30,6 +30,7 @@ temp_stdout_*.txt
 ccs_projects/
 generated/
 source/atf/trusted-firmware-a/
+source/board/ethphy/enet/
 source/commercial/
 source/kernel/freertos/FreeRTOS-Kernel
 source/kernel/freertos/FreeRTOS-Kernel-smp

@@ -60,6 +60,7 @@ const filedirs = {
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/r5f",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
@@ -82,6 +83,7 @@ const includes = {
 const includes_a53 = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/a53",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/",
@@ -302,7 +304,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.cflags = cflags_a53;
 
         return build_property;
-        
+
     }
 
     includes.common = _.union(includes.common, deviceSpecificIncludes[device]);

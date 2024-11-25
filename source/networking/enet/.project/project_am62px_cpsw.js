@@ -69,8 +69,6 @@ const files = {
         /* Enet utils */
         "enetphy.c",
         "generic_phy.c",
-        "dp83869.c",
-        "dp83867.c",
 
         /* Enet utils */
         "enet_apputils.c",
@@ -127,6 +125,8 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am62px",
+
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
     ],
 };
 
@@ -232,7 +232,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.cflags = cflags;
         build_property.defines = defines_r5f;
     }
-    
+
     if(buildOption.cpu.match(/wkup-r5f*/)) {
         build_property.cflags = cflags;
         build_property.defines = defines_wkup_r5f;

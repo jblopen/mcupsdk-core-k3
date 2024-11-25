@@ -2,6 +2,9 @@
 let common = system.getScript("/common");
 
 const driverVer = {
+    "ethphy": {
+        version: "v1",
+    },
     "flash": {
         version: "v0",
     },
@@ -13,7 +16,7 @@ const driverVer = {
     },
     "panel" : {
         version: "v0",
-    }
+    },
 };
 
 const topModules_mcu_r5 = [
@@ -23,6 +26,7 @@ const topModules_mcu_r5 = [
 ];
 const topModules_wkup_r5 = [
     "/board/eeprom/eeprom",
+    "/board/ethphy_cpsw_icssg/ethphy_cpsw_icssg",
     "/board/flash/flash",
     "/board/led/led",
     "/board/panel/panel"

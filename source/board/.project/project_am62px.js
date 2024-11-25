@@ -38,6 +38,13 @@ const files_r5f={
         "pmic_power_lp8764x.c",
         "pmic_power_tps6594x.c",
         "pmic_wdg.c",
+        "phy_common_priv.c",
+        "dp83tc812.c",
+		"dp83tg720.c",
+		"dp83869.c",
+		"dp83867.c",
+		"dp83822.c",
+		"dp83826.c",
     ],
 };
 
@@ -57,6 +64,8 @@ const filedirs = {
         "pmic/pmic_lld/src/cfg/lp8764x",
         "pmic/pmic_lld/src/cfg/tps6522x",
         "pmic/pmic_lld/src/cfg/tps6594x",
+        "ethphy/enet/rtos_drivers/src",
+        "ethphy/enet/rtos_drivers/include",
     ],
 };
 
@@ -72,6 +81,15 @@ const includes = {
         "pmic/pmic_lld/src/cfg/lp8764x",
         "pmic/pmic_lld/src/cfg/tps6522x",
         "pmic/pmic_lld/src/cfg/tps6594x",
+        "ethphy/enet/rtos_drivers/include",
+        "ethphy/port",
+    ],
+};
+
+const defines_r5f = {
+    common: [
+        "MCU_SDK_BUILD",
+        "PHY_CFG_TRACE_LEVEL=3",
     ],
 };
 
@@ -99,6 +117,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/))
     {
         build_property.files = files_r5f;
+        build_property.defines = defines_r5f;
     }
 
     return build_property;

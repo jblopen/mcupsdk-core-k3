@@ -37,6 +37,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am62ax \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am62ax \
 
