@@ -1,4 +1,5 @@
 let path = require('path');
+const device_project = require("../../../../.project/device/project_am62ax.js");
 
 let device = "am62ax";
 
@@ -432,10 +433,12 @@ const buildOptionCombos = [
     { device: device, cpu: "a53ss0-0",     cgt: "gcc-aarch64",  board: "am62ax-sk", os: "freertos"},
     { device: device, cpu: "a53ss0-0",     cgt: "gcc-aarch64",  board: "am62ax-sk", os: "freertos-smp"},
     { device: device, cpu: "c75ss0-0",     cgt: "ti-c7000",     board: "am62ax-sk", os: "freertos"},
+];
+
+const buildOptionCombosThreadx = [
     { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "threadx"},
     { device: device, cpu: "a53ss0-0",     cgt: "gcc-aarch64",  board: "am62ax-sk", os: "threadx"},
 ];
-
 function getComponentProperty() {
     let property = {};
 
@@ -445,7 +448,14 @@ function getComponentProperty() {
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
-
+    if (device_project.getThreadXEnabled())
+    {
+        property.buildOptionCombos = buildOptionCombos.concat(buildOptionCombosThreadx);
+    }
+    else
+    {
+        property.buildOptionCombos = buildOptionCombos;
+    }
     return property;
 }
 

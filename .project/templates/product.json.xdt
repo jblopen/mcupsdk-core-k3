@@ -53,8 +53,6 @@
         "/fs/fs",
         "/networking/networking",
 % }
-
-
 % if((args.device == "am62ax")) {
         "/kernel/dpl",
         "/drivers/drivers",
@@ -63,7 +61,7 @@
         "/security/security",
 %if((isDevelopmentMode)) {
         "/networking/networking",
-%}
+% }
 % }
 % if((args.device == "am62dx")) {
         "/kernel/dpl",
