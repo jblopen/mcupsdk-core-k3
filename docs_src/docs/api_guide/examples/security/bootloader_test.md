@@ -21,6 +21,17 @@ In this example the appimage is copied from flash to ddr memory to do authentica
 
 \endcond
 
+\cond SOC_AM62PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | wkup-r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/boootloader_test
+
+\endcond
+
 # Steps to Run the Example
 
 ## Build the example
@@ -37,7 +48,6 @@ Since this is a bootloader application, the example will be run every time you b
 
 ## Run the example
 
-\cond SOC_AM62AX
 - This example is the SBL which needs to be flashed on the EVM flash, along with application images for MCU R5 Appimage.
 \note For HS-SE device, use **default_security_bootloader_test_hs.cfg** as the cfg file.
 
@@ -58,9 +68,14 @@ Since this is a bootloader application, the example will be run every time you b
 
         cd ~/ti/mcu_plus_sdk/tools/boot
         python uart_uniflash.py -p /dev/ttyUSB0 --cfg=~/ti/mcu_plus_sdk/examples/security/bootloader_test/@VAR_BOARD_NAME_LOWER/default_security_bootloader_test_hs.cfg
+
+\cond SOC_AM62AX
+- Boot the EVM in OSPI NAND boot mode.
 \endcond
 
-- Boot the EVM in OSPI NAND boot mode.
+\cond SOC_AM62PX
+- Boot the EVM in OSPI NOR boot mode.
+\endcond
 
 # Sample Output
 

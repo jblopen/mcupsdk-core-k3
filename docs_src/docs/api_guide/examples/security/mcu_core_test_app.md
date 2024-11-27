@@ -21,6 +21,17 @@ This example should be booted through \ref EXAMPLES_BOOTLOADER_TEST application 
 
 \endcond
 
+\cond SOC_AM62PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | mcu-r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/security/mcu_core_test_app
+
+\endcond
+
 # Steps to Run the Example
 
 \note This example runs on HS-SE devices so the DEVICE_TYPE in {SDK_PATH}/devconfig/devconfig.mak must be set to HS.
