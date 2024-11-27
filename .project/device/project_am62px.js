@@ -118,6 +118,7 @@ const example_file_list = [
     "examples/otp/ext_otp/.project/project.js",
     "examples/otp/otp_revision/.project/project.js",
     "examples/safety/safety_app/.project/project.js",
+    "examples/security/bootloader_test/.project/project.js",
     "examples/security/fwl_exception_log/.project/project.js",
     "examples/security/fwl_exception_trigger/.project/project.js",
     "examples/security/tisci_msg/.project/project.js",
