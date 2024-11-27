@@ -247,7 +247,7 @@ ULONG   _tx_misra_time_stamp_get(VOID);
    for the multiple macros is so that backward compatibility can be maintained with
    existing ThreadX kernel awareness modules.  */
 
-#define TX_THREAD_EXTENSION_0
+#define TX_THREAD_EXTENSION_0          int bsd_errno;
 #define TX_THREAD_EXTENSION_1
 #define TX_THREAD_EXTENSION_2
 #define TX_THREAD_EXTENSION_3
