@@ -610,7 +610,8 @@ let dss_module = {
             displayName: "Pipeline Frames",
             description: "Number of frames per pipeline",
             default: 2,
-            displayFormat : "dec"
+            displayFormat : "dec",
+            hidden: false,
         },
         {
             name : "dispShare",
@@ -897,6 +898,7 @@ let dss_module = {
                             ui.vidGlobalAlpha.hidden = false;
                             ui.vidPremultiplyAlpha.hidden = false;
                             ui.vidScaler.hidden = false;
+                            ui.vidSafetyConfig.hidden = false;
 
                             ui.vidlFrameFormat.hidden = false;
                             ui.vidlInputFrameWidth.hidden = false;
@@ -907,7 +909,14 @@ let dss_module = {
                             ui.vidlPosY.hidden = false;
                             ui.vidlGlobalAlpha.hidden = false;
                             ui.vidlPremultiplyAlpha.hidden = false;
+                            ui.vidlSafetyConfig.hidden = false;
                             ui.selectVideoPipeline.hidden = false;
+
+                            ui.dispShare.hidden = false;
+                            ui.numFramesPerPipeline.hidden = false;
+                            ui.vpSafetyConfig.hidden = false;
+                            ui.zorder0.hidden = false;
+                            ui.zorder1.hidden = false;
                         }
                         else
                         {
@@ -921,6 +930,7 @@ let dss_module = {
                             ui.vidGlobalAlpha.hidden = true;
                             ui.vidPremultiplyAlpha.hidden = true;
                             ui.vidScaler.hidden = true;
+                            ui.vidSafetyConfig.hidden = true;
 
                             ui.vidlFrameFormat.hidden = true;
                             ui.vidlInputFrameWidth.hidden = true;
@@ -931,7 +941,14 @@ let dss_module = {
                             ui.vidlPosY.hidden = true;
                             ui.vidlGlobalAlpha.hidden = true;
                             ui.vidlPremultiplyAlpha.hidden = true;
+                            ui.vidlSafetyConfig.hidden = true;
                             ui.selectVideoPipeline.hidden = true;
+
+                            ui.dispShare.hidden = true;
+                            ui.numFramesPerPipeline.hidden = true;
+                            ui.vpSafetyConfig.hidden = true;
+                            ui.zorder0.hidden = true;
+                            ui.zorder1.hidden = true;
                         }
                     }
                 },
@@ -973,6 +990,7 @@ let dss_module = {
                             name: "zorder0",
                             displayName: "Layer 0 Input",
                             default: "VID1",
+                            hidden: false,
                             options: [
                                 { name: "VID1", displayName: "VID" },
                                 { name: "VIDL1", displayName: "VIDL" }
@@ -1157,6 +1175,7 @@ let dss_module = {
                             name : "vpSafetyConfig",
                             displayName : "Enable VP Safety Config",
                             default : "false",
+                            hidden: false,
                             options: [
                                 { name : "false", displayName: "Disable" },
                                 { name : "true", displayName : "Enable" },

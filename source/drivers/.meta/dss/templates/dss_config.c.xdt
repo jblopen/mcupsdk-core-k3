@@ -63,6 +63,7 @@ Dss_DctrlAdvVpParams gDssAdvVpParams =
 % }
 };
 
+% if(config.colorBarEnable == "false") {
 % if(config.vpSafetyConfig == "true") {
 /* DSS VP Safety Params */
 Dss_DctrlVpSafetyChkParams gDssVpSafetyParams[CONFIG_DSS_NUM_SAFETY_REGIONS] =
@@ -113,6 +114,7 @@ Dss_DctrlVpSafetyChkParams gDssVpSafetyParams[CONFIG_DSS_NUM_SAFETY_REGIONS] =
 % }
 };
 % }
+%}
 
 /* DSS Overlay Params */
 Dss_DctrlOverlayParams gDssOverlayParams =
@@ -135,6 +137,7 @@ Dss_DctrlOverlayParams gDssOverlayParams =
 % }
 };
 
+% if(config.colorBarEnable == "false") {
 /* DSS Overlay Layer Params */
 Dss_DctrlOverlayLayerParams gDssOverlayLayerParams =
 {
@@ -167,6 +170,7 @@ Dss_DctrlOverlayLayerParams gDssOverlayLayerParams =
     %}
 % }
 };
+% }
 
 % if(config.selectDisplayInterface == "OLDI") {
 /* DSS OLDI Panel Params */
@@ -308,6 +312,7 @@ static Dss_FirewallRegionConfig gDssFwlRegions =
 };
 % }
 
+% if(config.colorBarEnable == "false") {
 /* DSS Pipeline Safety Params */
 Dss_DispPipeSafetyChkParams gDssPipelineSafetyParams[CSL_DSS_VID_PIPE_ID_MAX] =
 {
@@ -400,6 +405,7 @@ Dss_DispPipeSafetyChkParams gDssPipelineSafetyParams[CSL_DSS_VID_PIPE_ID_MAX] =
 % }
 % }
 };
+% }
 
 % if(config.colorBarEnable == "false") {
 /* DSS Pipeline Configuration Params */

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -202,19 +202,16 @@ static void DispApp_initDssParams(Dss_Object *appObj)
     Dss_DctrlVpParams *vpParams;
     Dss_DctrlAdvVpParams *advVpParams;
     Dss_DctrlOverlayParams *overlayParams;
-    Dss_DctrlOverlayLayerParams *layerParams;
     Dss_DctrlGlobalDssParams *globalDssParams;
 
     vpParams = &appObj->vpParams;
     overlayParams = &appObj->overlayParams;
-    layerParams = &appObj->layerParams;
     advVpParams = &appObj->advVpParams;
     globalDssParams= &appObj->globalDssParams;
 
     Dss_dctrlVpParamsInit(vpParams);
     Dss_dctrlAdvVpParamsInit(advVpParams);
     Dss_dctrlOverlayParamsInit(overlayParams);
-    Dss_dctrlOverlayLayerParamsInit(layerParams);
     Dss_dctrlGlobalDssParamsInit(globalDssParams);
 
 
@@ -249,11 +246,6 @@ static void DispApp_initDssParams(Dss_Object *appObj)
     overlayParams->overlayCfg.colorKeyEnable =  gDssOverlayParams.overlayCfg.colorKeyEnable;
     overlayParams->overlayCfg.colorKeySel =  gDssOverlayParams.overlayCfg.colorKeySel;
     overlayParams->overlayCfg.backGroundColor =  gDssOverlayParams.overlayCfg.backGroundColor;
-
-    /* Configure Overlay Layer params */
-    layerParams->overlayId = gDssOverlayLayerParams.overlayId;
-    memcpy((void*)layerParams->pipeLayerNum, (void* )gDssOverlayLayerParams.pipeLayerNum, \
-    sizeof(gDssOverlayLayerParams.pipeLayerNum));
 
 }
 
