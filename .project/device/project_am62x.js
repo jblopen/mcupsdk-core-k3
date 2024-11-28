@@ -154,6 +154,8 @@ const example_file_list = [
     "test/drivers/boot/sbl_uart_custom_boardconfig/.project/project.js",
     "test/drivers/device_manager/sciclient_direct/.project/project.js",
     "test/drivers/device_manager/sciclient_tisci_msg/.project/project.js",
+    "test/drivers/dss/dss_dpi_interface/.project/project.js",
+    "test/drivers/dss/dss_oldi_interface/.project/project.js",
     "test/drivers/ecap/.project/project.js",
     "test/drivers/epwm/.project/project.js",
     "test/drivers/gpio/.project/project.js",
