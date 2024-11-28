@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2020-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -51,6 +51,7 @@ extern "C"
 #include <drivers/hw_include/am62x/csl_psilcfg_thread_map.h>
 #include <drivers/hw_include/am62x/cslr_psc.h>
 #include <drivers/hw_include/am62x/csl_soc_psc.h>
+#include <drivers/hw_include/am62x/csl_soc_firewalls.h>
 #include <drivers/hw_include/am62x/cslr_intr_gicss0_common_0.h>
 
 #ifdef __cplusplus

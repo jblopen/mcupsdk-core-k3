@@ -11,6 +11,9 @@ const driverVer = {
     "serialFlash": {
         version: "v0",
     },
+    "panel" : {
+        version: "v0",
+    },
     "parallelFlash": {
         version: "v0",
     },
@@ -30,6 +33,7 @@ const topModules_a53 = [
     "/board/ethphy_cpsw_icssg/ethphy_cpsw_icssg",
     "/board/flash/flash",
     "/board/led/led",
+    "/board/panel/panel"
 ];
 
 const topModules = [

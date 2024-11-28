@@ -32,7 +32,7 @@
 
 /**
  *  \ingroup DRV_DSS_MODULE
- *  \defgroup DRV_DSS_SOC_MODULE DSS SoC Config
+ *  \defgroup DRV_DSS_SOC_MODULE Display SoC Config
  *            This is DSS documentation specific to AM62x SoC
  *
  *  @{
@@ -198,7 +198,7 @@ extern "C" {
 #define DSS_DCTRL_MAX_EDGES            ((uint32_t) 8U)
 
 /**< \brief DSS Functional Interrupt Number for R5 */
-#define DSS_FUNC_IRQ_DEFAULT_NUM       (CSLR_WKUP_R5FSS0_CORE0_INTR_DSS0_DISPC_INTR_REQ_0_0)
+#define DSS_FUNC_IRQ_DEFAULT_NUM       (CSLR_GICSS0_COMMON_0_SPI_DSS0_DISPC_INTR_REQ_0_0)
 
 /**
  *  \anchor Dss_EvtMgrInstId

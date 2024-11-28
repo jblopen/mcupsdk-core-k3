@@ -2,6 +2,9 @@
 let common = system.getScript("/common");
 
 const driverVer = {
+    "dss": {
+        version: "v0",
+    },
     "ecap": {
         version: "v0",
     },
@@ -103,6 +106,7 @@ const topModules_mcu = [
 ];
 
 const topModules_a53 = [
+    "/drivers/dss/dss",
     "/drivers/ecap/ecap",
     "/drivers/epwm/epwm",
     "/drivers/eqep/eqep",

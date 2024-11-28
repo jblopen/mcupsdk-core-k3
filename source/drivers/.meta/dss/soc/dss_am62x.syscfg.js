@@ -43,11 +43,11 @@ const dss_oldi_panel_attributes =
     }
 ];
 
-const dss_config_r5fss = [
+const dss_config_a53ss = [
     {
         name                : "DSS0",
         pixelClock          :  dss_pixel_clk_freq_oldi,
-        clockIds            : [ "TISCI_DEV_DSS0" , "TISCI_DEV_OLDI0_VD", "TISCI_DEV_OLDI1_VD"],
+        clockIds            : [ "TISCI_DEV_DSS0"],
         clockFrequencies    : [
                                 {
                                     moduleId: "TISCI_DEV_DSS0",
@@ -55,7 +55,7 @@ const dss_config_r5fss = [
                                     clkRate : dss_pixel_clk_freq_oldi,
                                 }
                               ],
-        clockIdsVP1         : [ "TISCI_DEV_DSS0" , "TISCI_DEV_OLDI0_VD", "TISCI_DEV_OLDI1_VD"],
+        clockIdsVP1         : [ "TISCI_DEV_DSS0" ],
         clockIdsVP2         : [ "TISCI_DEV_DSS0" ],
         clockFrequenciesVP1 : [
                                 {
@@ -76,12 +76,12 @@ const dss_config_r5fss = [
 
 function getDefaultConfig()
 {
-    return dss_config_r5fss[0];
+    return dss_config_a53ss[0];
 }
 
 function getConfigArr() {
 
-    return dss_config_r5fss;
+    return dss_config_a53ss;
 }
 
 function getDefaultVideoPort()

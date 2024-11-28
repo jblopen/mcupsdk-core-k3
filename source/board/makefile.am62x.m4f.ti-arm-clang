@@ -23,16 +23,18 @@ FILES_common := \
     ioexp_tca6424.c \
 
 FILES_PATH_common = \
-    null \
-    flash \
-    flash/ospi \
-    flash/sfdp \
-    flash/gpmc \
-    ioexp \
-    led \
     eeprom \
     ethphy/enet/rtos_drivers/src \
     ethphy/enet/rtos_drivers/include \
+    flash \
+    flash/gpmc \
+    flash/ospi \
+    flash/sfdp \
+    ioexp \
+    led \
+    null \
+    panel \
+    panel/i2c \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
