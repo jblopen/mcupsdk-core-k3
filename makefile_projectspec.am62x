@@ -63,6 +63,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_colorbar_test_am62x-sk-lp_a53ss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_display_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_display_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_display_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_safety_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_safety_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dss_safety_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_build
@@ -713,6 +716,15 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  dss_display_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/drivers/dss/dss_display_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dss_safety_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dss_safety_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ dss_safety_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
 
  ecap_apwm_mode_am62x-sk_a53ss0-0_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
@@ -2169,6 +2181,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_colorbar_test_am62x-sk-lp_a53ss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_display_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_display_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_display_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_safety_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_safety_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dss_safety_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean
@@ -2819,6 +2834,15 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  dss_display_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/drivers/dss/dss_display_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dss_safety_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dss_safety_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ dss_safety_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
 
  ecap_apwm_mode_am62x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
@@ -4275,6 +4299,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_colorbar_test_am62x-sk-lp_a53s
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_display_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_display_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_display_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_safety_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_safety_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dss_safety_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_export
@@ -4925,6 +4952,15 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  dss_display_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/drivers/dss/dss_display_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dss_safety_test_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dss_safety_test_am62x-sip-sk_a53ss0-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ dss_safety_test_am62x-sk-lp_a53ss0-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/drivers/dss/dss_safety_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
 
  ecap_apwm_mode_am62x-sk_a53ss0-0_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
@@ -6397,6 +6433,9 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/dss/dss_display_test/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/dss/dss_display_test/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/dss/dss_display_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dss/dss_safety_test/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dss/dss_safety_test/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/dss/dss_safety_test/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am62x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am62x-sip-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am62x-sk-lp/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
