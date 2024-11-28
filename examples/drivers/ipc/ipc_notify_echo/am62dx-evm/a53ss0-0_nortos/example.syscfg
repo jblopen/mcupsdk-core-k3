@@ -28,18 +28,11 @@ debug_log.enableSharedMemLog = true;
 mmu_armv81.size  = 0x80000000;
 mmu_armv81.$name = "SOC_MEM_REGION";
 
-mmu_armv82.$name             = "ATF_REGION";
-mmu_armv82.vAddr             = 0x80000000;
-mmu_armv82.pAddr             = 0x80000000;
-mmu_armv82.size              = 0x80000;
-mmu_armv82.accessPermissions = "Privilege RO, User None";
-mmu_armv82.shareable         = "Non Shareable";
-
-mmu_armv83.size      = 0x80000000;
-mmu_armv83.attribute = "MAIR4";
-mmu_armv83.$name     = "DDR_REGION";
-mmu_armv83.vAddr     = 0x80080000;
-mmu_armv83.pAddr     = 0x80080000;
+mmu_armv82.vAddr     = 0x80000000;
+mmu_armv82.pAddr     = 0x80000000;
+mmu_armv82.size      = 0x80000000;
+mmu_armv82.attribute = "MAIR4";
+mmu_armv82.$name     = "DDR_REGION";
 
 mmu_armv83.$name     = "LOG_SHM_MEM";
 mmu_armv83.vAddr     = 0xA1000000;
