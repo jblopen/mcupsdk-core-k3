@@ -339,6 +339,9 @@ typedef struct
     uint32_t isTuning;
     /* Is transaction used for tuning */
 
+    uint32_t retries;
+    /* Number of transaction retries */
+
     uint32_t response[4];
     /**< Command response per MMC device specification */
 
@@ -467,10 +470,13 @@ typedef struct
     /*< Command CRC error flag */
 
     volatile uint32_t cmdEBError;
-    /*< Command CRC error flag */
+    /*< Command EndBit error flag */
 
     volatile uint32_t cmdIndexError;
     /*< Command Index error flag */
+
+    volatile uint32_t dataTimeoutError;
+    /*< Data Timeout error flag */
 
     volatile uint32_t dataCRCError;
     /*< Data CRC error flag */
