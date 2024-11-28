@@ -4,11 +4,12 @@
 
 all:
 	$(MAKE) -f makefile.am62ax libs
+	$(MAKE) -f makefile.am62ax libs-external
 	$(MAKE) -f makefile.am62ax sbl
 	$(MAKE) -f makefile.am62ax examples
 
-clean: libs-clean sbl-clean examples-clean
-scrub: libs-scrub sbl-scrub examples-scrub
+clean: libs-clean libs-external-clean sbl-clean examples-clean
+scrub: libs-scrub libs-external-scrub sbl-scrub examples-scrub
 
 help:
 	@echo  Notes,
@@ -210,6 +211,9 @@ BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
 
+# Combine all External Components
+BUILD_COMBO_EXTERNAL_ALL =
+
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
@@ -217,6 +221,8 @@ BUILD_COMBO_PREBUILT_ALL =
 BUILD_COMBO_PRIVATE_ALL =
 
 libs: $(BUILD_COMBO_ALL)
+
+libs-external: $(BUILD_COMBO_EXTERNAL_ALL)
 
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
@@ -284,10 +290,15 @@ BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
 
+# Combine all External Components Clean
+BUILD_COMBO_EXTERNAL_CLEAN_ALL =
+
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs-external-clean: $(BUILD_COMBO_EXTERNAL_CLEAN_ALL)
 
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
@@ -353,10 +364,15 @@ BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
 
+# Combine all External Components Scrub Targets
+BUILD_COMBO_EXTERNAL_SCRUB_ALL =
+
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs-external-scrub: $(BUILD_COMBO_EXTERNAL_SCRUB_ALL)
 
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
@@ -1888,6 +1904,7 @@ host-emu-scrub:
 
 .PHONY: all clean scrub help
 .PHONY: libs libs-clean libs-scrub
+.PHONY: libs-external libs-external-clean libs-external-scrub
 .PHONY: libs-private
 .PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
 .PHONY: examples examples-clean examples-scrub

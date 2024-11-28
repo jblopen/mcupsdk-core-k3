@@ -14,6 +14,7 @@ function getComponentProperty() {
     property.type = "library";
     property.name = "atf";
     property.isInternal = false;
+    property.isExternalLibrary = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

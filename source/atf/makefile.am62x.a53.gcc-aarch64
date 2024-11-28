@@ -6,17 +6,17 @@ PROFILE?=release
 ATF_LIB_DIR:=lib/soc/$(DEVICE)
 
 all: $(ATF_LIB_DIR)
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x80080000 ATF_CORE=a53ss0-0
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x82100000 ATF_CORE=a53ss0-1
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x86080000 ATF_CORE=a53ss1-0
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x88100000 ATF_CORE=a53ss1-1
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x80080000 ATF_CORE=a53ss0-0
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x82100000 ATF_CORE=a53ss0-1
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x86080000 ATF_CORE=a53ss1-0
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_JUMP_ADDR=0x88100000 ATF_CORE=a53ss1-1
 clean:
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss0-0 clean
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss0-1 clean
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss1-0 clean
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss1-1 clean
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss0-0 clean
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss0-1 clean
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss1-0 clean
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 ATF_CORE=a53ss1-1 clean
 scrub:
-	$(MAKE) -s -f makefile.am62x.a53_atf.gcc-aarch64 scrub
+	$(MAKE) -f makefile.am62x.a53_atf.gcc-aarch64 scrub
 	$(RMDIR)  $(ATF_LIB_DIR)
 
 $(ATF_LIB_DIR) :

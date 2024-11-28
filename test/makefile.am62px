@@ -4,11 +4,12 @@
 
 all:
 	$(MAKE) -f makefile.am62px libs
+	$(MAKE) -f makefile.am62px libs-external
 	$(MAKE) -f makefile.am62px sbl
 	$(MAKE) -f makefile.am62px examples
 
-clean: libs-clean sbl-clean examples-clean
-scrub: libs-scrub sbl-scrub examples-scrub
+clean: libs-clean libs-external-clean sbl-clean examples-clean
+scrub: libs-scrub libs-external-scrub sbl-scrub examples-scrub
 
 help:
 	@echo  Notes,
@@ -114,6 +115,9 @@ BUILD_COMBO_unity = unity_r5f.ti-arm-clang
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_doxy_samples) $(BUILD_COMBO_unity)
 
+# Combine all External Components
+BUILD_COMBO_EXTERNAL_ALL =
+
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
@@ -121,6 +125,8 @@ BUILD_COMBO_PREBUILT_ALL =
 BUILD_COMBO_PRIVATE_ALL =
 
 libs: $(BUILD_COMBO_ALL)
+
+libs-external: $(BUILD_COMBO_EXTERNAL_ALL)
 
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
@@ -140,10 +146,15 @@ BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_doxy_samples) $(BUILD_COMBO_CLEAN_unity)
 
+# Combine all External Components Clean
+BUILD_COMBO_EXTERNAL_CLEAN_ALL =
+
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs-external-clean: $(BUILD_COMBO_EXTERNAL_CLEAN_ALL)
 
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
@@ -161,10 +172,15 @@ BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub_scrub
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_doxy_samples) $(BUILD_COMBO_SCRUB_unity)
 
+# Combine all External Components Scrub Targets
+BUILD_COMBO_EXTERNAL_SCRUB_ALL =
+
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs-external-scrub: $(BUILD_COMBO_EXTERNAL_SCRUB_ALL)
 
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
@@ -932,6 +948,7 @@ sbl-scrub:
 
 .PHONY: all clean scrub help
 .PHONY: libs libs-clean libs-scrub
+.PHONY: libs-external libs-external-clean libs-external-scrub
 .PHONY: libs-private
 .PHONY: libs-prebuilt libs-prebuilt-clean libs-prebuilt-scrub
 .PHONY: examples examples-clean examples-scrub
