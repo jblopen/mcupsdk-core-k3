@@ -88,6 +88,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MAIN_ESM
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MCU_ESM
       -# \subpage EXAMPLES_DRIVERS_DDR_PERF
+-# DSS
+   -# \subpage EXAMPLES_DRIVERS_DSS_COLORBAR_TEST
+   -# \subpage EXAMPLES_DRIVERS_DSS_DISPLAY_TEST
+   -# \subpage EXAMPLES_DRIVERS_DSS_SAFETY_TEST
 -# ECAP
    -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
    -# \subpage EXAMPLES_DRIVERS_ECAP_EPWM_LOOPBACK
