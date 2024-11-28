@@ -32,6 +32,10 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
         component_make.name = property.name;
         component_make.tag = tag;
         component_make.relpath = common.path.relative(path.normalize(__dirname + `/../${genFolder}`), property.dirPath);
+        if(property.isExternalLibrary === true)
+        {
+            component_make.isExternalLibrary = true;
+        }
         if(property.isSkipTopLevelBuild === true)
         {
             component_make.isSkipTopLevelBuild = true;

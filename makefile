@@ -82,6 +82,15 @@ libs-clean:
 libs-scrub:
 	$(MAKE) -C . -f makefile.$(DEVICE) libs-scrub PROFILE=$(PROFILE)
 
+libs-external:
+	$(MAKE) -C . -f makefile.$(DEVICE) libs-external PROFILE=$(PROFILE) DEVICE_TYPE=$(DEVICE_TYPE)
+
+libs-external-clean:
+	$(MAKE) -C . -f makefile.$(DEVICE) libs-external-clean PROFILE=$(PROFILE)
+
+libs-external-scrub:
+	$(MAKE) -C . -f makefile.$(DEVICE) libs-external-scrub PROFILE=$(PROFILE)
+
 examples:
 	$(MAKE) -C . -f makefile.$(DEVICE) examples PROFILE=$(PROFILE)
 
@@ -114,6 +123,7 @@ devconfig:
 
 .PHONY: all clean scrub
 .PHONY: libs libs-clean libs-scrub
+.PHONY: libs-external libs-external-clean libs-external-scrub
 .PHONY: examples examples-clean examples-scrub
 .PHONY: help
 .PHONY: sbl sbl-clean sbl-scrub
@@ -148,7 +158,7 @@ gen-buildfiles:
 gen-buildfiles-clean:
 	$(NODE) ./.project/project.js --device $(DEVICE) --target clean
 
-tests: libs
+tests: libs libs-external
 	$(MAKE) -C test -f makefile.$(DEVICE) all PROFILE=$(PROFILE)
 
 tests-clean:
@@ -157,7 +167,7 @@ tests-clean:
 tests-scrub:
 	$(MAKE) -C test -f makefile.$(DEVICE) scrub PROFILE=$(PROFILE)
 
-tests-libs: libs
+tests-libs: libs libs-external
 	$(MAKE) -C test -f makefile.$(DEVICE) libs PROFILE=$(PROFILE)
 
 tests-libs-clean:
