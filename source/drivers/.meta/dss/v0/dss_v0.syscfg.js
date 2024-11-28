@@ -443,6 +443,16 @@ function getPanelAttributes(dispInterface, resolution)
     }
 }
 
+function getDisplayShareFunctionality(hidecofigs)
+{
+    if(common.getSocName() == "am62x")
+    {
+        return true;
+    }
+
+    return hidecofigs;
+}
+
 function getDisplayInterfaceChange(inst,ui)
 {
     let hidecofigs = false;
@@ -617,7 +627,7 @@ let dss_module = {
             name : "dispShare",
             displayName : "Display Share With HLOS",
             default : false,
-            hidden: false,
+            hidden: getDisplayShareFunctionality(false),
             onChange: function(inst,ui){
 
                 if(inst.dispShare == true)
@@ -912,7 +922,7 @@ let dss_module = {
                             ui.vidlSafetyConfig.hidden = false;
                             ui.selectVideoPipeline.hidden = false;
 
-                            ui.dispShare.hidden = false;
+                            ui.dispShare.hidden = getDisplayShareFunctionality(false);
                             ui.numFramesPerPipeline.hidden = false;
                             ui.vpSafetyConfig.hidden = false;
                             ui.zorder0.hidden = false;
@@ -944,7 +954,7 @@ let dss_module = {
                             ui.vidlSafetyConfig.hidden = true;
                             ui.selectVideoPipeline.hidden = true;
 
-                            ui.dispShare.hidden = true;
+                            ui.dispShare.hidden = getDisplayShareFunctionality(true);
                             ui.numFramesPerPipeline.hidden = true;
                             ui.vpSafetyConfig.hidden = true;
                             ui.zorder0.hidden = true;
