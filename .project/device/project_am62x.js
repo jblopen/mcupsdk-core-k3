@@ -68,6 +68,7 @@ const example_file_list = [
     "examples/drivers/ddr/ddr_ecc_test_main_esm/.project/project.js",
     "examples/drivers/ddr/ddr_ecc_test_mcu_esm/.project/project.js",
     "examples/drivers/ddr/ddr_perf/.project/project.js",
+    "examples/drivers/dss/dss_display_test/.project/project.js",
     "examples/drivers/ecap/ecap_apwm_mode/.project/project.js",
     "examples/drivers/ecap/ecap_epwm_loopback/.project/project.js",
     "examples/drivers/epwm/epwm_duty_cycle/.project/project.js",

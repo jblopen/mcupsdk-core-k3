@@ -30,93 +30,30 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-%%{
-	let options = args.options;
-
-	let stackSize = 0x10000;
-	let heapSize =  0x20000;
-
-	let isSingleCore = true;
-	let useDdr = true;
-	let addrBaseDdr = 0x80080000;
-	let codeDataSizeDdr = 0x1000000;
-    let addrAtfJump = 0x80080000;
-    let dssFrameBuf = "false";
-
-	/* if no options given use defaults */
-	if(options && options.stackSize)
-		stackSize = options.stackSize;
-	if(options && options.heapSize)
-		heapSize = options.heapSize;
-
-	if(isSingleCore == true) {
-		codeDataAddrDdr = addrBaseDdr;
-		codeDataSizeDdr = 0x1000000 * 2;
-	}
-	else {
-		if(args.project.cpu == "a53ss0-0") {
-			codeDataAddrDdr = addrBaseDdr + codeDataSizeDdr * 0;
-		}
-		if(args.project.cpu == "a53ss0-1") {
-			codeDataAddrDdr = addrBaseDdr + codeDataSizeDdr * 1;
-		}
-	}
-
-	if(options && options.addrBaseDdr)
-		addrBaseDdr = options.addrBaseDdr;
-	if(options && options.codeDataSizeDdr)
-		codeDataSizeDdr = options.codeDataSizeDdr;
-	if (options && options.enableDMARegion && options.dmaHeapSize) {
-		codeDataSizeDdr -= options.dmaHeapSize;
-	}
-    if(options && options.dssFrameBuf)
-        dssFrameBuf = options.dssFrameBuf;
-
-    let globalScratchBuf = "false";
-    if(options && options.globalScratchBuf)
-    globalScratchBuf = options.globalScratchBuf;
-	%%}
 
 ENTRY(_c_int00)
 
-	__TI_STACK_SIZE = `stackSize`;
-	__TI_HEAP_SIZE = `heapSize`;
+	__TI_STACK_SIZE = 65536;
+	__TI_HEAP_SIZE = 131072;
 
 MEMORY {
 
-	% if(useDdr) {
-	DDR : ORIGIN =  0x`(codeDataAddrDdr).toString(16).toUpperCase()`, LENGTH = 0x`(codeDataSizeDdr).toString(16).toUpperCase()`
-	% if (options && options.enableDMARegion && options.dmaHeapSize) {
-	DDR_DMA : ORIGIN =  0x`(codeDataAddrDdr+codeDataSizeDdr).toString(16).toUpperCase()`, LENGTH = 0x`(options.dmaHeapSize).toString(16).toUpperCase()`
-	% }
-	% }
+	DDR : ORIGIN =  0x80080000, LENGTH = 0x2000000
 
-    % if(dssFrameBuf == "true") {
     /* DSS frame buffer region in DDR (128 MiB) */
     DDR1           (RWIX)      : ORIGIN = 0x93500000 LENGTH = 0x08000000
-    % }
 	/* shared memory segments */
 	/* On A53,
 	 * - make sure there is a MMU entry which maps below regions as non-cache
 	 */
     USER_SHM_MEM            : ORIGIN = 0x82000000, LENGTH = 0x80
-    % if(args.project.isLogSHM === true){
-    LOG_SHM_MEM             : ORIGIN = 0xA1000000, LENGTH = 0x40000
-    %}
-    % if(args.project.ipcVringRTOS === true){
-    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x9C800000, LENGTH = 0x300000
-    %}
-    % if(globalScratchBuf == "true") {
-    /* global scratch buffer region in DDR (32 MB) */
-    GLOBAL_SCRATCH_BUFF  (RWIX): ORIGIN = 0x82000080 LENGTH = 0x02000000
-    % }
 }
 
 SECTIONS {
 
 
     /* Keeping the .text.boot:_c_int00 section of the code at the ATF Jump address to ensure the code entry point is from this address. */
-    .text.boot:_c_int00 : AT (0x`(addrAtfJump).toString(16).toUpperCase()`) {} > DDR
+    .text.boot:_c_int00 : AT (0x80080000) {} > DDR
     .vecs : {} > DDR
 		.text : {} > DDR
 		.rodata : {} > DDR
@@ -132,24 +69,10 @@ SECTIONS {
 
     /* General purpose user shared memory, used in some examples */
     .bss.user_shared_mem (NOLOAD) : { KEEP(*(.bss.user_shared_mem)) } > USER_SHM_MEM
-     % if(args.project.isLogSHM === true){
-    /* this is used when Debug log's to shared memory is enabled, else this is not used */
-    .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
-    % }
-    % if(args.project.ipcVringRTOS === true) {
-    /* this is used only when IPC RPMessage is enabled, else this is not used */
-    .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
-    % }
-    % if(dssFrameBuf == "true") {
 
     /* DSS frame buffer region */
     .dssFrameBuffer (NOLOAD) : {} > DDR1
-    % }
 
-    % if(globalScratchBuf == "true") {
-    /* global scratch buffer region */
-    .globalScratchBuffer (NOLOAD) : {} > GLOBAL_SCRATCH_BUFF
-    % }
     .bss : {
         __bss_start__ = .;
         *(.bss)
@@ -172,10 +95,4 @@ SECTIONS {
         KEEP(*(.stack))
         . = . + __TI_STACK_SIZE;
     } > DDR
-    % if (options && options.enableDMARegion) {
-
-    .enet_dma_mem (NOLOAD) : {
-        *(*ENET_DMA_PKT_MEMPOOL)
-     } > DDR_DMA
-    % }
 }
