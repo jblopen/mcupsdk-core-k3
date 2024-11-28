@@ -55,16 +55,20 @@ static HeapP_Object gMyHeapObj;
 
 /* user defined ISR and semaphore to signal from ISR to main thread */
 static SemaphoreP_Object gMyISRDoneSem;
+#if defined (__aarch64__)
 static SemaphoreP_Object gMyISRDoneSgiSem;
+#endif
 static void myISR(void *arg)
 {
     SemaphoreP_post(&gMyISRDoneSem);
 }
 
+#if defined (__aarch64__)
 static void DplDemo_sgiISR(void *arg)
 {
     SemaphoreP_post(&gMyISRDoneSgiSem);
 }
+#endif
 
 void dpl_demo_main(void *args)
 {
@@ -98,7 +102,8 @@ void dpl_demo_main(void *args)
         HwiP_destruct(&hwiObj);
         SemaphoreP_destruct(&gMyISRDoneSem);
     }
-    /* example usage of SGI Interrupts */
+    /* example usage of SGI Interrupts for A53 */
+#if defined (__aarch64__)
     {
         HwiP_Params hwiParams;
         HwiP_Object hwiObj;
@@ -122,6 +127,7 @@ void dpl_demo_main(void *args)
         HwiP_destruct(&hwiObj);
         SemaphoreP_destruct(&gMyISRDoneSgiSem);
     }
+#endif
     /* example usage of Clock and time measurement APIs */
     {
         uint32_t cycleCount, sleepTimeInMs = 100;
@@ -190,11 +196,11 @@ void dpl_demo_main(void *args)
 
         HeapP_destruct(&gMyHeapObj);
     }
-    #if defined (AMP_A53)
+#if defined (AMP_A53)
     DebugP_log("All tests have passed on a53_core%d !!\r\n", Armv8_getCoreId());
-    #else
+#else
     DebugP_log("All tests have passed!!\r\n");
-    #endif
+#endif
 
 }
 
