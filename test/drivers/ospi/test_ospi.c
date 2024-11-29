@@ -38,11 +38,12 @@
 #include <string.h>
 #include <inttypes.h>
 #include <unity.h>
+#include <drivers/ospi.h>
+#include <drivers/soc.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/ClockP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <drivers/ospi.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -265,6 +266,7 @@ void tearDown(void)
 static void test_ospi_read_write_1s1s1s_config(void *args)
 {
     int32_t retVal = SystemP_SUCCESS;
+    int32_t status = SystemP_SUCCESS;
     uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
 
 
@@ -297,8 +299,27 @@ static void test_ospi_read_write_1s1s1s_config(void *args)
     }else if( modeParams.cfgflashType == CONFIG_FLASH_TYPE_SERIAL_NAND)
     {
         uint32_t blk, page;
+
+        OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+        OSPI_Config *config = (OSPI_Config*)ospiHandle;
+        OSPI_Attrs attrs;
+
+        memcpy((void*)&attrs, config->attrs, sizeof(OSPI_Attrs));
+
         test_ospi_gdevcfg_set_flash_protocol(FLASH_CFG_PROTO_1S_1S_1S);
+
         Drivers_ospiClose();
+
+        /* Set phyEnable to false for 1s_1s_1s mode. */
+        attrs.phyEnable = FALSE;
+        const OSPI_Attrs *tempAttrs = config->attrs;
+        config->attrs = &attrs;
+
+        /* Set frequency to 200Mhz. */
+        status = SOC_moduleSetClockFrequency(TISCI_DEV_FSS0_OSPI_0,
+                 TISCI_DEV_FSS0_OSPI_0_OSPI_RCLK_CLK, 200000000);
+        DebugP_assert(status == SystemP_SUCCESS);
+
         Drivers_ospiOpen();
         retVal = Board_driversOpen();
 
@@ -328,7 +349,16 @@ static void test_ospi_read_write_1s1s1s_config(void *args)
         retVal = memcmp(gOspiTestRxBuf, gOspiTestTxBulkBuf, TEST_OSPI_2KB_SIZE);
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
         Board_driversClose();
+        
+        config->attrs = tempAttrs;
+
         test_ospi_gdevcfg_set_flash_protocol(FLASH_CFG_PROTO_1S_8S_8S);
+
+        /* Set frequency to 166Mhz. */
+        status = SOC_moduleSetClockFrequency(TISCI_DEV_FSS0_OSPI_0,
+                 TISCI_DEV_FSS0_OSPI_0_OSPI_RCLK_CLK, 166666666);
+        DebugP_assert(status == SystemP_SUCCESS);
+
     }
 }
 
