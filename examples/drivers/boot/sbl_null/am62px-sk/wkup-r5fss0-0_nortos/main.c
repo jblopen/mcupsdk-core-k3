@@ -239,14 +239,16 @@ int main()
     }
 
     Board_driversClose();
-    Drivers_close();
     App_boardDriversClose();
-    App_driversClose();
-    
+
     /* Call DPL deinit to close the tick timer and disable interrupts before jumping to DM */
     Dpl_deinit();
 
     Bootloader_JumpSelfCpu();
+
+    Drivers_close();
+    App_driversClose();
+    
     Board_deinit();
     System_deinit();
 
