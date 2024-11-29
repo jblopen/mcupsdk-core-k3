@@ -25,6 +25,7 @@ const mpu_armv74  = mpu_armv7.addInstance();
 const mpu_armv75  = mpu_armv7.addInstance();
 const mpu_armv76  = mpu_armv7.addInstance();
 const mpu_armv77  = mpu_armv7.addInstance();
+const mpu_armv78  = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -56,8 +57,8 @@ debug_log.sysfwUartLog.UART.CTSn.$assign          = "MCASP0_AXR3";
 
 mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv71.allowExecute      = false;
-mpu_armv71.attributes        = "NonCached";
 mpu_armv71.$name             = "FULL_32_BIT_ADDRESS_SPACE";
+mpu_armv71.attributes        = "Device";
 
 mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv72.size              = 7;
@@ -85,6 +86,12 @@ mpu_armv77.baseAddr     = 0x2800000;
 mpu_armv77.attributes   = "Device";
 mpu_armv77.allowExecute = false;
 mpu_armv77.$name        = "UART0";
+
+mpu_armv78.$name        = "MMCSD_REGISTERS";
+mpu_armv78.baseAddr     = 0xFA10000;
+mpu_armv78.size         = 15;
+mpu_armv78.allowExecute = false;
+mpu_armv78.attributes   = "Device";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
