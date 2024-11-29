@@ -107,6 +107,15 @@ void SafetyApp_main(void *args)
 {
     uint32_t  status = SystemP_SUCCESS;
 
+    /* Due to AM62a's design, DMSS CSI is not turned on by default */
+#if defined(SOC_AM62AX)
+    status = Sciclient_pmSetModuleState(TISCI_DEV_DMASS1_INTAGGR_0,
+                                        TISCI_MSG_VALUE_DEVICE_SW_STATE_ON,
+                                        (TISCI_MSG_FLAG_AOP |
+                                        TISCI_MSG_FLAG_DEVICE_RESET_ISO),
+                                        0xFFFFFFFFU);
+#endif
+
     /* Creating a binary semaphore to sync the main task and safety loop*/
     status = SemaphoreP_constructBinary(&gBinarySemTaskSync, 0);
     if(status != SystemP_SUCCESS)
