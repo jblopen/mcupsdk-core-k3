@@ -615,6 +615,10 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
                         DebugP_logWarn("Failed to authenticate and copy on the go, reading the image to DDR.\n\r");
                         ddrCopy = 1;
                     }
+                    else
+                    {
+                        authStatus = SystemP_SUCCESS;
+                    }
                 }
                 else
                 {
@@ -655,7 +659,10 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
         /* Check if the certificate length is within valid range */
         if((certLen > (uint32_t)0x100) && (certLen < (uint32_t)0x800) && status == SystemP_SUCCESS)
         {
-            authStatus = Bootloader_socAuthImage(certLoadAddr);
+            if(authStatus != SystemP_SUCCESS)
+            {
+                authStatus = Bootloader_socAuthImage(certLoadAddr);
+            }
 
             if(config->bootMedia == BOOTLOADER_MEDIA_BUFIO)
             {
