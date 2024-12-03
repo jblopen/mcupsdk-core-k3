@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM62SIP" --package "AMK" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.0+3587"}
+ * @cliArgs --device "AM62x" --package "ALW" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -30,7 +30,6 @@ const mpu_armv76  = mpu_armv7.addInstance();
 const mpu_armv77  = mpu_armv7.addInstance();
 const mpu_armv78  = mpu_armv7.addInstance();
 const mpu_armv79  = mpu_armv7.addInstance();
-const mpu_armv710 = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -45,6 +44,7 @@ bootloader2.EMMCAppImageOffset = "0x80000";
 
 ddr1.$name                    = "CONFIG_DDR0";
 ddr1.ddrConfigIncludeFileName = "drivers/ddr/v0/soc/am62x/am62x_SIP_ddrReginit-50-800.h";
+
 
 mmcsd1.$name            = "CONFIG_MMCSD0";
 bootloader1.MMCSDDriver = mmcsd1;
@@ -72,7 +72,7 @@ debug_log.sysfwUartLog.UART.CTSn.$assign          = "MCASP0_AXR3";
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv71.allowExecute      = false;
-mpu_armv71.attributes        = "Device";
+mpu_armv71.attributes        = "NonCached";
 
 mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
@@ -110,12 +110,6 @@ mpu_armv79.size         = 9;
 mpu_armv79.baseAddr     = 0x2800000;
 mpu_armv79.attributes   = "Device";
 mpu_armv79.allowExecute = false;
-
-mpu_armv710.$name        = "MMCSD_REGISTERS";
-mpu_armv710.baseAddr     = 0xFA10000;
-mpu_armv710.size         = 15;
-mpu_armv710.attributes   = "Device";
-mpu_armv710.allowExecute = false;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
