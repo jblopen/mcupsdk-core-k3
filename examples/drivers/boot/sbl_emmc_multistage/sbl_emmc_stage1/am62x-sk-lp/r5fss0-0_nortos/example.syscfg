@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM62x" --package "AMC" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -73,36 +73,38 @@ mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv72.size              = 7;
 
-mpu_armv73.$name             = "CONFIG_MPU_REGION2";
-mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv73.baseAddr          = 0x41C00000;
-mpu_armv73.size              = 19;
+mpu_armv73.$name    = "CONFIG_MPU_REGION4";
+mpu_armv73.baseAddr = 0x80000000;
+mpu_armv73.size     = 31;
 
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 16;
+mpu_armv74.$name      = "CONFIG_MPU_REGION5";
+mpu_armv74.baseAddr   = 0x41010000;
+mpu_armv74.size       = 15;
+mpu_armv74.attributes = "NonCached";
 
-mpu_armv75.$name    = "CONFIG_MPU_REGION4";
-mpu_armv75.baseAddr = 0x80000000;
-mpu_armv75.size     = 31;
+mpu_armv75.$name      = "CONFIG_MPU_REGION6";
+mpu_armv75.size       = 15;
+mpu_armv75.attributes = "NonCached";
 
-mpu_armv76.$name      = "CONFIG_MPU_REGION5";
-mpu_armv76.baseAddr   = 0x41010000;
-mpu_armv76.size       = 15;
-mpu_armv76.attributes = "NonCached";
+mpu_armv76.$name    = "CONFIG_MPU_REGION8";
+mpu_armv76.baseAddr = 0x43C00000;
+mpu_armv76.size     = 18;
 
-mpu_armv77.$name      = "CONFIG_MPU_REGION6";
-mpu_armv77.size       = 15;
-mpu_armv77.attributes = "NonCached";
+mpu_armv77.$name        = "CONFIG_MPU_REGION7";
+mpu_armv77.size         = 9;
+mpu_armv77.baseAddr     = 0x2800000;
+mpu_armv77.attributes   = "Device";
+mpu_armv77.allowExecute = false;
 
-mpu_armv78.$name    = "CONFIG_MPU_REGION8";
-mpu_armv78.baseAddr = 0x43C00000;
-mpu_armv78.size     = 18;
+mpu_armv78.$name        = "MMCSD0_CTL_CFG_REGISTERS";
+mpu_armv78.baseAddr     = 0xFA10000;
+mpu_armv78.size         = 12;
+mpu_armv78.attributes   = "Device";
+mpu_armv78.allowExecute = false;
 
-mpu_armv79.$name        = "CONFIG_MPU_REGION7";
-mpu_armv79.size         = 9;
-mpu_armv79.baseAddr     = 0x2800000;
+mpu_armv79.$name        = "MMCSD0_SS_CFG_REGISTERS";
+mpu_armv79.baseAddr     = 0xFA18000;
+mpu_armv79.size         = 10;
 mpu_armv79.attributes   = "Device";
 mpu_armv79.allowExecute = false;
 
