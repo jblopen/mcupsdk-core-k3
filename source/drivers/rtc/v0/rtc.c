@@ -695,20 +695,22 @@ void RTC_erratumi2327Init(void)
 	 * can be used for all practical purposes.
 	 */
     uint64_t counter = RTC_getSecondCount(RTC_BASEADDR);
-    int32_t status = SystemP_SUCCESS;
 
-    if(counter >= 1ULL)
+    /* Enable write access to RTC */
+    if((RTC_isUnlocked(RTC_BASEADDR) & RTC_UNLOCK_MASK) == 0U)
     {
-        status = SystemP_FAILURE;
-    }
-	/*
-	 * Need to set this up at the very start
-	 * MUST BE DONE under 1 second of boot.
-	 */
-    if(status == SystemP_SUCCESS)
-    {
-        /* Enable write access to RTC */
-        RTC_enableWriteAccess(RTC_BASEADDR, KICK0_UNLOCK_VALUE, KICK1_UNLOCK_VALUE);
+       /*
+        * Need to set this up at the very start
+        * MUST BE DONE under 1 second of boot.
+        */
+        if(counter < 1ULL)
+        {
+            RTC_enableWriteAccess(RTC_BASEADDR, KICK0_UNLOCK_VALUE, KICK1_UNLOCK_VALUE);
+        }
+        else
+        {
+            DebugP_logInfo("Erratum i2327: Enabling RTC write access failed within 1 second of boot!\n\r");
+        }
     }
     return;
 }
