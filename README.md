@@ -110,7 +110,7 @@ After the repo is initialized, do a
 repo sync
 ```
 
-This should clone all the repositories required for MCU+ SDK development. 
+This should clone all the repositories required for MCU+ SDK development.
 
 You can start the repositories with adefault branch `dev` by doing below:
 
@@ -136,7 +136,7 @@ folders.
 This will install all the required dependencies including Code Composer Studio (CCS).
 The script assumes that `mcu_plus_sdk` folder is in the same location from where
 you have invoked the script, and that dependencies are installed into `${HOME}/ti`
-location. 
+location.
 
 Set up node modules by running below commands
 ```bash
@@ -145,7 +145,7 @@ npm ci
 cd ..
 ```
 
-Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the platform you are using. This is not installed by the script. 
+Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the platform you are using. This is not installed by the script.
 
 - [PROCESSOR-SDK-LINUX-AM62X](https://www.ti.com/tool/download/PROCESSOR-SDK-LINUX-AM62X)
 - [PROCESSOR-SDK-LINUX-AM62A](https://www.ti.com/tool/download/PROCESSOR-SDK-LINUX-AM62A)
@@ -250,6 +250,13 @@ Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the
    ```bash
    make -s -C examples/hello_world/am62ax-sk/mcu-r5fss0-0_nortos/ti-arm-clang all PROFILE=debug
    ```
+   `Note`: For AM62x, an external library named `atf` is added. Make sure to build external libraries
+   before building any example for Am62x as follows. The below command will not have any effect for
+   other SoCs.
+   ```bash
+   make -s -j4 libs-external DEVICE=am62x PROFILE=debug
+   ```
+
 
 4. Following are the commands to build **all libraries** and **all examples**. Valid PROFILE's are "release" or "debug"
 
@@ -263,33 +270,33 @@ Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the
 1. Run the following command to create makefiles
 
    ```bash
-   make gen-buildfiles DEVICE=am62ax 
+   make gen-buildfiles DEVICE=am62ax
    ```
-    Valid DEVICE options are, 
+    Valid DEVICE options are,
 
         am62x
         am62ax
         am62px
-        
+
 2. Build bootloder and all the examples required for running the SBL
 
    ```bash
-   make -s -j4 all   DEVICE=am62ax   
+   make -s -j4 all   DEVICE=am62ax
    ```
 3. Build HSM app image
 
    ```bash
-   make -C tools/boot/HSMAppimageGen BOARD=am62ax-sk 
+   make -C tools/boot/HSMAppimageGen BOARD=am62ax-sk
    ```
-    Valid BOARD options are, 
+    Valid BOARD options are,
 
-        am62x-sk 
-        am62x-sk-lp 
-        am62x-sip-sk 
-        am62ax-sk 
+        am62x-sk
+        am62x-sk-lp
+        am62x-sip-sk
+        am62ax-sk
         am62px-sk
 
-4. Install Processor SDK Linux and update PSDK_LINUX_PATH in linuxAppimageGen config file. 
+4. Install Processor SDK Linux and update PSDK_LINUX_PATH in linuxAppimageGen config file.
 
    ```bash
    vi mcu_plus_sdk/tools/boot/linuxAppimageGen/board/am62ax-sk/config.mak
@@ -298,9 +305,9 @@ Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the
 5. Build Linux app image
 
    ```bash
-   make -C tools/boot/linuxAppimageGen BOARD=am62ax-sk 
+   make -C tools/boot/linuxAppimageGen BOARD=am62ax-sk
    ```
-6. Set the board in UART bootmode 
+6. Set the board in UART bootmode
 
 - [AM62 bootmode settings](https://software-dl.ti.com/mcu-plus-sdk/esd/AM62X/latest/exports/docs/api_guide_am62x/EVM_SETUP_PAGE.html#autotoc_md21)
 - [AM62A bootmode settings](https://software-dl.ti.com/mcu-plus-sdk/esd/AM62AX/latest/exports/docs/api_guide_am62ax/EVM_SETUP_PAGE.html#autotoc_md21)
@@ -321,8 +328,8 @@ Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the
       | am62x-sip-sk | OSPI NOR  | sbl_prebuilt/am62x-sip-sk/default_sbl_ospi_linux.cfg        |
       | am62ax-sk    | OSPI NAND | sbl_prebuilt/am62ax-sk/default_sbl_ospi_nand_linux.cfg      |
       | am62px-sk    | OSPI NOR  | sbl_prebuilt/am62px-sk/default_sbl_ospi_linux.cfg           |
-   
-8. After the flashing is completed, change the bootmode to OSPI NOR/NAND based on the platform. 
+
+8. After the flashing is completed, change the bootmode to OSPI NOR/NAND based on the platform.
 
 9. Connect to /dev/ttyUSB0 through minicom and powercycle the board to see the boot logs appear on /dev/ttyUSB0
 
