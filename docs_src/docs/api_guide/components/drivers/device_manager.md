@@ -38,6 +38,10 @@ DM, specifically Sciclient Direct, can be run in Polling Mode (Default) as well 
 \endcond
   - Rebuild the libraries and application.
 
+## Registering Suspend and Resume Hook for Low Power Mode {#REGISTER_SUSPEND_RESUME_HOOK_LPM}
+
+During low power mode, the DM R5 will suspend its sciclient services, stop the scheduler, turn off the main domain and go to WFI for power saving. If the application that is running along with DM requires something to be saved before going to low power mode and needs to be restored during resume, it can use the *Sciclient_initLPMSusResHook* function to register suspend and resume hooks. One suspend hook and one resume hook can be passed to this function. These hooks will get invoked during low power mode entry and exit.
+
 ## Disabling Low Power Mode {#DISABLE_LPM}
 
 During low power mode, DDR is kept in self refresh, which means DM R5 cannot run from DDR. As a result, DM R5 run from the TCM memory instead. However, if users want to use the TCM memory for a user application, low power mode can be disabled, and then the TCM memory will be available for the user application. To do so, follow the steps below:
