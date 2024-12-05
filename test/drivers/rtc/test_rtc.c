@@ -83,6 +83,9 @@ static SemaphoreP_Object gOffOnSemObj;
 
 void test_main(void *args)
 {
+    /* Open RTC instance */
+    gRTCHandle[CONFIG_RTC0] = RTC_open(CONFIG_RTC0, &gRTCParams[CONFIG_RTC0]);
+
     /* Open drivers to open the UART driver for console */
     UNITY_BEGIN();
 
@@ -91,6 +94,13 @@ void test_main(void *args)
     RUN_TEST(test_rtc_multiple_off_on_interrupts, 5824, NULL);
 
     UNITY_END();
+
+    /* Close RTC instance */
+    if(gRTCHandle[CONFIG_RTC0] != NULL)
+    {
+        RTC_close(gRTCHandle[CONFIG_RTC0]);
+        gRTCHandle[CONFIG_RTC0] = NULL;
+    }
 
     return;
 }
@@ -118,7 +128,13 @@ static void test_rtc_set_get_time(void* args)
     DebugP_log("RTC set and get time test starting...\r\n");
 
     /* Store handle for Local use */
-    rtcHandle = gRTCHandle[CONFIG_RTC0];
+    if(gRTCHandle[CONFIG_RTC0] != NULL)
+    {
+        rtcHandle = gRTCHandle[CONFIG_RTC0];
+    }
+    else {
+        status = SystemP_FAILURE;
+    }
 
     /* Set the current time (e.g., 5th November 2024, 14:42:10) */
     setTime.year = 2024U;
@@ -150,7 +166,13 @@ static void test_rtc_multiple_on_off_interrupts(void* args)
     DebugP_log("RTC multiple on-off interrupt test starting...\r\n");
 
     /* Store handle for Local use */
-    rtcHandle = gRTCHandle[CONFIG_RTC0];
+    if(gRTCHandle[CONFIG_RTC0] != NULL)
+    {
+        rtcHandle = gRTCHandle[CONFIG_RTC0];
+    }
+    else {
+        status = SystemP_FAILURE;
+    }
 
     SemaphoreP_constructBinary(&gOnOffSemObj, 0U);
 
@@ -190,7 +212,13 @@ static void test_rtc_multiple_off_on_interrupts(void* args)
     DebugP_log("RTC multiple off-on interrupt test starting...\r\n");
 
     /* Store handle for Local use */
-    rtcHandle = gRTCHandle[CONFIG_RTC0];
+    if(gRTCHandle[CONFIG_RTC0] != NULL)
+    {
+        rtcHandle = gRTCHandle[CONFIG_RTC0];
+    }
+    else {
+        status = SystemP_FAILURE;
+    }
 
     SemaphoreP_constructBinary(&gOffOnSemObj, 0U);
 

@@ -57,12 +57,6 @@ let rtc_module = {
             driver_config: "/drivers/rtc/templates/rtc.h.xdt",
         },
 
-        "/drivers/system/drivers_open_close.c.xdt": {
-            driver_open_close_config: "/drivers/rtc/templates/rtc_open_close_config.c.xdt",
-            driver_open: "/drivers/rtc/templates/rtc_open.c.xdt",
-            driver_close: "/drivers/rtc/templates/rtc_close.c.xdt",
-        },
-
         "/drivers/system/drivers_open_close.h.xdt": {
             driver_open_close_config: "/drivers/rtc/templates/rtc_open_close.h.xdt",
         },

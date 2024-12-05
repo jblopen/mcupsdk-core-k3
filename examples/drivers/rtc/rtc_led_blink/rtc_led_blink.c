@@ -88,6 +88,15 @@ void rtc_led_blink(void *args)
 
     DebugP_log("[RTC LED Blink Test] Starting ...\r\n");
 
+    /* Open RTC instance */
+    gRTCHandle[CONFIG_RTC0] = RTC_open(CONFIG_RTC0, &gRTCParams[CONFIG_RTC0]);
+
+    if(NULL == gRTCHandle[CONFIG_RTC0])
+    {
+        DebugP_logError("RTC open failed for instance %d !!!\r\n", CONFIG_RTC0);
+        status = SystemP_FAILURE;
+    }
+
     rtcHandle = gRTCHandle[CONFIG_RTC0];
 
     /* Get address after translation translate */
@@ -154,6 +163,13 @@ void rtc_led_blink(void *args)
     else
     {
         DebugP_log("RTC LED blink test failed!!\r\n");
+    }
+
+    /* Close RTC instance */
+     if(gRTCHandle[CONFIG_RTC0] != NULL)
+    {
+        RTC_close(gRTCHandle[CONFIG_RTC0]);
+        gRTCHandle[CONFIG_RTC0] = NULL;
     }
 }
 

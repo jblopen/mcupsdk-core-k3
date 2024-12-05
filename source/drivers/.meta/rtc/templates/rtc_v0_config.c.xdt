@@ -6,6 +6,23 @@
  * RTC
  */
 
+/* RTC Driver handles */
+RTC_Handle gRTCHandle[RTC_NUM_INSTANCES];
+
+/* RTC Driver Parameters */
+RTC_Params gRTCParams[RTC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .isfreezemode = `config.isFreezeMode`,
+        .onOffCallback = `config.on_offCallback`,
+        .offOnCallback = `config.off_onCallback`,
+    },
+% }
+};
+
 /* RTC Callback */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
