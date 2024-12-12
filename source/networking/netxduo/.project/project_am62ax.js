@@ -644,6 +644,8 @@ const filedirs = {
 
 const includes = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
+        "${MCU_PLUS_SDK_PATH}/source/board/ethphy/port",
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_a53/inc",
         "${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/inc",
@@ -652,6 +654,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/ports/cortex_a5/gnu/inc/",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",

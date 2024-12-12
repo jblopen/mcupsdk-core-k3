@@ -594,6 +594,8 @@ FILES_PATH_common = \
 
 INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include \
+    -I${MCU_PLUS_SDK_PATH}/source/board/ethphy/port \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/ports/ti_arm_gcc_clang_cortex_a53/inc \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/threadx/threadx_src/common/inc \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/common/inc \
@@ -602,6 +604,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_enet \
     -I${MCU_PLUS_SDK_PATH}/source/networking/netxduo/netxduo_src/ports/cortex_a5/gnu/inc/ \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet \
