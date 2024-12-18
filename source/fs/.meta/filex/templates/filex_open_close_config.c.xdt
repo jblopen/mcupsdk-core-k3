@@ -103,8 +103,6 @@ int32_t EclipseThreadx_FilexOpen(void)
             % driver_data = '(void *)' + filex_inst.peripheralDriver.$name;
             % sec_cnt = 'sec_cnt';
         
-            uint32_t blk_cnt;
-            uint32_t blk_sz;
             uint32_t sec_cnt;
             MMCSD_Handle mmcsd_hndl;
             
