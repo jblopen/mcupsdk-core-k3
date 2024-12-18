@@ -15,6 +15,15 @@ This page lists all the examples related to Ethernet Communication.
 ### LLDP Example on FreeRTOS
 \endcond
 
+\cond SOC_AM62AX
+### TCP/IP Examples using NetxDuo Stack on ThreadX
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_MAC
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_SWITCH
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPCLIENT
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_TCPSERVER
+-# \subpage EXAMPLES_ENET_NETXDUO_CPSW_UDPCLIENT
+\endcond
+
 \cond SOC_AM62X
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
