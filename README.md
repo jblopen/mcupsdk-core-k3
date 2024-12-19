@@ -104,6 +104,12 @@ To download the recent tag,
 repo init -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m am62ax/main.xml -b k3_main
 ```
 
+**For am62ax threadx setup**
+
+```bash
+repo init -u https://github.com/TexasInstruments/mcupsdk-manifests.git -m releases/10_01_00/am62ax/mcusdk_threadx.xml -b k3_main
+```
+
 After the repo is initialized, do a
 
 ```bash
@@ -117,6 +123,15 @@ You can start the repositories with adefault branch `dev` by doing below:
 ```bash
 repo start dev --all
 ```
+
+---
+
+**NOTE**
+
+- Threadx is only supported for am62ax.
+
+---
+
 Now download and install the dependencies.
 
 #### Downloading And Installing Dependencies
@@ -257,8 +272,20 @@ Download and install PSDK Linux on **${HOME}/ti** directory corresponding to the
    make -s -j4 libs-external DEVICE=am62x PROFILE=debug
    ```
 
+4. **Building threadx libraries and examples:**
 
-4. Following are the commands to build **all libraries** and **all examples**. Valid PROFILE's are "release" or "debug"
+   Follow makefile creating and library building steps for AM62A as follows.
+   ```bash
+   make gen-buildfiles DEVICE=am62ax
+   make -s -j4 libs DEVICE=am62ax PROFILE=debug
+   ```
+   Then build required example. For example, to build Hello World example for AM62A, run the following:
+   ```bash
+   make -s -C examples/kernel/threadx/hello_world/am62ax-sk/r5fss0-0_threadx/ti-arm-clang all PROFILE=debug
+   ```
+
+5. Following are the commands to build **all libraries** and **all examples**. Valid PROFILE's are "release" or "debug".
+   Same commands are applicable for building all libraries and all examples for am62ax threadx.
 
    ```bash
    make -s -j4 clean DEVICE=am62ax PROFILE=debug
@@ -367,4 +394,32 @@ The documentation can also be generated as mentioned in the below section.
 
 - Also note that code snippets added to “docs_src\docs\api_guide\doxy_samples” is valid code that can compile.
   Above command also compiles the code snippets.
+
+### ThreadX features supported
+
+- Kernel Cortex-R5 with TI toolchain split mode dual instance.
+- Support for A53 core in single core configuration
+- GPIO, I2C, SPI/McSPI, UART & Timers
+- Filex, RAMDISK, SDCard
+- Sysconfig integration.
+- DMA for supported peripherals.
+- NETX, Ethernet
+- IPC Port for Azure(for supported cores)
+- OSPI flash (serial NAND)
+- LevelX support
+
+### Threadx examples
+- Kernel
+  - Hello World
+  - Task Switch
+
+- Filex
+  - Hello World
+
+- NetX Duo
+  - Enet NetxDuo CPSW Mac
+  - Enet NetxDuo CPSW Switch
+  - Enet NetxDuo TCP Client
+  - Enet NetxDuo TCP Server
+  - Enet NetxDuo UDP Client
 
