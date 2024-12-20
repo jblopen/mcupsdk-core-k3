@@ -12,8 +12,8 @@ ethernet driver (ENET)
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
   - It uses ethernet driver underneath with NetxDuo TCP/IP networking stack
-  - CPSW can be configured in two modes: Switch or MAC. For more details, \ref ENET_LWIP_CPSW_OPERATING_MODES
-
+  - CPSW can be configured in two modes: Switch or MAC.
+  
 This example does the following
 - Initializes the ethernet driver for the underlying HW.
 - Initializes the NetxDuo stack for TCP/UDP IP.
