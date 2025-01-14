@@ -312,7 +312,7 @@ const buildOptionCombos = [
 const buildOptionCombos_threadx = [
     { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "threadx", isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "c75ss0-0", cgt: "ti-c7000", board: "am62ax-sk", os: "threadx", isPartOfSystemProject: true},
+    // { device: device, cpu: "c75ss0-0", cgt: "ti-c7000", board: "am62ax-sk", os: "threadx", isPartOfSystemProject: true},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am62ax-sk", os: "nortos", isPartOfSystemProject: true},
     { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64", board: "am62ax-sk", os: "freertos-smp"},
 ];
@@ -343,7 +343,7 @@ const systemProjects_threadx = [
         projects: [
             { device: device, cpu: "r5fss0-0",     cgt: "ti-arm-clang", board: "am62ax-sk", os: "freertos", isPartOfSystemProject: false},
             { device: device, cpu: "mcu-r5fss0-0", cgt: "ti-arm-clang", board: "am62ax-sk", os: "threadx", isPartOfSystemProject: true},
-            { device: device, cpu: "c75ss0-0",     cgt: "ti-c7000",     board: "am62ax-sk", os: "threadx", isPartOfSystemProject: true},
+            // { device: device, cpu: "c75ss0-0",     cgt: "ti-c7000",     board: "am62ax-sk", os: "threadx", isPartOfSystemProject: true},
             { device: device, cpu: "a53ss0-0",     cgt: "gcc-aarch64",  board: "am62ax-sk", os: "nortos",   isPartOfSystemProject: true},
         ],
     },

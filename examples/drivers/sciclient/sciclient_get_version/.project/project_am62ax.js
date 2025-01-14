@@ -168,7 +168,7 @@ const buildOptionCombos = [
 ];
 
 const buildOptionCombos_threadx = [
-    { device: device, cpu: "c75ss0-0", cgt: "ti-c7000", board: "am62ax-sk", os: "threadx"},
+    // { device: device, cpu: "c75ss0-0", cgt: "ti-c7000", board: "am62ax-sk", os: "threadx"},
 ];
 
 function getComponentProperty() {
