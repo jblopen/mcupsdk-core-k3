@@ -1,3 +1,4 @@
+\cond THREADX
 # Enet NetxDuo TCP Server Example {#EXAMPLES_ENET_NETXDUO_CPSW_TCPSERVER}
 
 [TOC]
@@ -220,3 +221,4 @@ Socket deleted
 
 # See Also
 \ref NETWORKING
+\endcond

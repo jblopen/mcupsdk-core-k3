@@ -1,3 +1,4 @@
+\cond THREADX
 # ThreadX Hello World Example {#EXAMPLES_KERNEL_THREADX_HELLO_WORLD}
 
 [TOC]
@@ -41,3 +42,4 @@ Hello world!
 Hello world!
 Hello world!
 \endcode
+\endcond
